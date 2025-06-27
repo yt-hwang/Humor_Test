@@ -14,6 +14,8 @@ const likertLabels = [
   "매우 그렇다",
 ];
 
+export const dynamic = "force-dynamic";
+
 export default function QuizPage() {
   const router = useRouter();
   const [current, setCurrent] = useState(0);
