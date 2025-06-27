@@ -1,6 +1,6 @@
 "use client";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { questions } from "../../data/questions";
 import { calculateResult } from "../../data/results";
 
@@ -14,7 +14,8 @@ const likertLabels = [
   "매우 그렇다",
 ];
 
-export default function QuizPage() {
+function ResultContent() {
+  const searchParams = useSearchParams();
   const router = useRouter();
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState<(number | null)[]>(Array(questions.length).fill(null));
@@ -93,5 +94,13 @@ export default function QuizPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function ResultPage() {
+  return (
+    <Suspense fallback={<div>결과를 불러오는 중...</div>}>
+      <ResultContent />
+    </Suspense>
   );
 } 
