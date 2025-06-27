@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, Suspense } from "react";
 import { useRouter } from "next/navigation";
-import { questions } from "../../data/questions";
-import { calculateResult } from "../../data/results";
+import { questions } from "../../src/data/questions";
+import { calculateResult } from "../../src/data/results";
 
 const likertLabels = [
   "전혀 그렇지 않다",
