@@ -47,12 +47,6 @@ export default function QuizPage() {
     }
   };
 
-  const handleNext = () => {
-    if (current < questions.length - 1) {
-      setCurrent(current + 1);
-    }
-  };
-
   const handlePrev = () => {
     if (current > 0) setCurrent(current - 1);
   };
