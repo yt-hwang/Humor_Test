@@ -1,22 +1,20 @@
-// page.tsx
 import Link from "next/link";
 
-interface SearchParams {
-  searchParams: {
-    code?: string;
-    nickname?: string;
-    summary?: string;
-    description?: string;
-    examples?: string;
-  };
-}
-
-export default function ResultPage({ searchParams }: SearchParams) {
-  const code = searchParams.code || "ONVB";
-  const nickname = searchParams.nickname || "온빛";
-  const summary = searchParams.summary || "항상 준비된 밝은 개그러!";
-  const description = searchParams.description || "체계적으로 준비하고, 상황에 맞는 센스 있는 개그를 구사합니다.";
-  const examples = searchParams.examples?.split(",") || ["유재석", "무한도전", "런닝맨"];
+export default function ResultPage({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
+  const code = (searchParams?.code as string) || "ONVB";
+  const nickname = (searchParams?.nickname as string) || "온빛";
+  const summary = (searchParams?.summary as string) || "항상 준비된 밝은 개그러!";
+  const description =
+    (searchParams?.description as string) ||
+    "체계적으로 준비하고, 상황에 맞는 센스 있는 개그를 구사합니다.";
+  const examples =
+    typeof searchParams?.examples === "string"
+      ? searchParams.examples.split(",")
+      : ["유재석", "무한도전", "런닝맨"];
 
   const handleShare = () => {
     alert("공유 기능은 추후 구현 예정입니다!");
