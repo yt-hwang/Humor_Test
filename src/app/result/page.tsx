@@ -1,18 +1,24 @@
+// src/app/result/page.tsx
+
 import Link from "next/link";
 
 export default function ResultPage({
   searchParams,
 }: {
-  searchParams?: { [key: string]: string | string[] | undefined };
+  searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const code = (searchParams?.code as string) || "ONVB";
-  const nickname = (searchParams?.nickname as string) || "온빛";
-  const summary = (searchParams?.summary as string) || "항상 준비된 밝은 개그러!";
-  const description =
-    (searchParams?.description as string) ||
-    "체계적으로 준비하고, 상황에 맞는 센스 있는 개그를 구사합니다.";
+  const getParam = (key: string, fallback: string): string =>
+    typeof searchParams[key] === "string" ? (searchParams[key] as string) : fallback;
+
+  const code = getParam("code", "ONVB");
+  const nickname = getParam("nickname", "온빛");
+  const summary = getParam("summary", "항상 준비된 밝은 개그러!");
+  const description = getParam(
+    "description",
+    "체계적으로 준비하고, 상황에 맞는 센스 있는 개그를 구사합니다."
+  );
   const examples =
-    typeof searchParams?.examples === "string"
+    typeof searchParams.examples === "string"
       ? searchParams.examples.split(",")
       : ["유재석", "무한도전", "런닝맨"];
 
