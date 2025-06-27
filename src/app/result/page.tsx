@@ -1,10 +1,9 @@
 "use client";
 import React, { Suspense } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 function ResultContent() {
-  const searchParams = useSearchParams();
   const router = useRouter();
 
   // 쿼리 파라미터에서 결과 데이터 읽기

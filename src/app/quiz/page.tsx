@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { questions } from "../../data/questions";
 import { calculateResult } from "../../data/results";
 
@@ -15,7 +15,6 @@ const likertLabels = [
 ];
 
 function ResultContent() {
-  const searchParams = useSearchParams();
   const router = useRouter();
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState<(number | null)[]>(Array(questions.length).fill(null));
