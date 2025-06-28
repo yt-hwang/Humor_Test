@@ -58,7 +58,7 @@ function ResultContent() {
           <span>Q{current + 1} / {questions.length}</span>
           <span>{Math.round(((current + 1) / questions.length) * 100)}%</span>
         </div>
-        <h2 className="text-lg font-bold mb-6 text-center min-h-[48px]">{questions[current].text}</h2>
+        <h2 className="text-xl font-bold mb-6 text-center min-h-[48px] text-gray-900 leading-relaxed">{questions[current].text}</h2>
         <div className="flex flex-col gap-2 w-full mb-6">
           <div className="flex justify-between text-xs text-gray-500 px-1">
             <span>{likertLabels[0]}</span>
