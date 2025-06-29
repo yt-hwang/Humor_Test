@@ -7,7 +7,7 @@ interface Props {
 }
 
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
-  const params = await searchParams;
+  const params = searchParams;
   const code = (params.code as string) || "ONVB";
   const nickname = (params.nickname as string) || "온빛";
   const summary = (params.summary as string) || "항상 준비된 밝은 개그러!";
