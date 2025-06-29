@@ -22,7 +22,7 @@ export const questions: Question[] = [
   { id: 11, text: "나는 말을 통해 타이밍이나 표현을 세밀하게 조절하는 개그가 재밌다.", axis: "VP", reverse: false },
   { id: 12, text: "내가 좋아하는 개그는 모두가 편하게 웃을 수 있는 내용이 많다.", axis: "BD", reverse: false },
   { id: 13, text: "계획 없이 분위기에 따라 드립을 치는 것이 내 스타일이다.", axis: "OI", reverse: true },
-  { id: 14, text: "계연성이나 현실성성과 상관없이 독특한 아이디어로 웃기는 개그를 좋아한다.", axis: "NB", reverse: true },
+  { id: 14, text: "계연성이나 현실성과 상관없이 독특한 아이디어로 웃기는 개그를 좋아한다.", axis: "NB", reverse: true },
   { id: 15, text: "과장된 제스처나 표정으로 분위기를 띄우는 것이 좋다.", axis: "VP", reverse: true },
   { id: 16, text: "조금은 어두운 주제나 사회 풍자를 개그에 녹여내는 것이 센스있게 느껴진다.", axis: "BD", reverse: true },
   { id: 17, text: "나는 남을 웃기기 위해 사전에 성대모사, 드립, 혹은 웃긴 썰을 준비하는 것을 좋아한다.", axis: "OI", reverse: false },
