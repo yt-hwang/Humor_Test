@@ -135,9 +135,8 @@ export const shareToTikTok = (data: ShareData) => {
   }
 };
 
-export const shareToFacebook = (data: ShareData) => {
+export const shareToFacebook = () => {
   const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
-  
   window.open(shareUrl, '_blank', 'width=600,height=400');
 };
 
