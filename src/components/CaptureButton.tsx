@@ -22,7 +22,6 @@ export default function CaptureButton({ code, nickname, summary, description, ex
       await new Promise(resolve => setTimeout(resolve, 100));
       
       const imageDataUrl = await captureResult();
-      const filename = `개그유형_${code}_${nickname}.png`;
       
       // 네이티브 공유 시도
       await shareImage(imageDataUrl);
@@ -47,8 +46,6 @@ export default function CaptureButton({ code, nickname, summary, description, ex
         examples
       });
       
-      const filename = `개그유형_스토리_${code}_${nickname}.png`;
-      
       // 네이티브 공유 시도
       await shareImage(imageDataUrl);
       
@@ -67,9 +64,8 @@ export default function CaptureButton({ code, nickname, summary, description, ex
       await new Promise(resolve => setTimeout(resolve, 100));
       
       const imageDataUrl = await captureResult();
-      const filename = `개그유형_${code}_${nickname}.png`;
       
-      downloadImage(imageDataUrl, filename);
+      downloadImage(imageDataUrl, `개그유형_${code}_${nickname}.png`);
       
     } catch (error) {
       console.error('다운로드 실패:', error);

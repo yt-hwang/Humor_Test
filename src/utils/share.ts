@@ -7,8 +7,8 @@ export interface ShareData {
 }
 
 // 플랫폼별 해시태그 전략
-const getHashtags = (platform: string, data: ShareData) => {
-  const baseTags = ['#개그유형테스트', `#${data.code}`, `#${data.nickname}`];
+const getHashtags = (platform: string, _data: ShareData) => {
+  const baseTags = ['#개그유형테스트', `#${_data.code}`, `#${_data.nickname}`];
   
   switch (platform) {
     case 'instagram':
@@ -82,8 +82,8 @@ export const shareToKakao = (data: ShareData) => {
         ],
       });
       return;
-    } catch (error) {
-      console.error('카카오톡 SDK 공유 실패:', error);
+    } catch (_err) {
+      console.error('카카오톡 SDK 공유 실패:', _err);
     }
   }
   
@@ -100,7 +100,7 @@ export const shareToInstagram = (data: ShareData) => {
   if (navigator.clipboard) {
     navigator.clipboard.writeText(text).then(() => {
       alert('📸 인스타그램 공유 준비 완료!\n\n1. 인스타그램 스토리로 이동\n2. 텍스트를 붙여넣기\n3. 링크 스티커 추가: ' + window.location.href + '\n4. 해시태그도 함께 공유하세요!');
-    }).catch(() => {
+    }).catch((_err) => {
       fallbackCopyTextToClipboard(text);
     });
   } else {
@@ -125,7 +125,7 @@ export const shareToTikTok = (data: ShareData) => {
   if (navigator.clipboard) {
     navigator.clipboard.writeText(text).then(() => {
       alert(tiktokGuide);
-    }).catch(() => {
+    }).catch((_err) => {
       fallbackCopyTextToClipboard(text);
       alert(tiktokGuide);
     });
@@ -155,8 +155,8 @@ const fallbackCopyTextToClipboard = (text: string) => {
   try {
     document.execCommand('copy');
     alert('텍스트가 클립보드에 복사되었습니다!\n인스타그램에서 붙여넣기 하세요.');
-  } catch (err) {
-    console.error('클립보드 복사 실패:', err);
+  } catch (_err) {
+    console.error('클립보드 복사 실패:', _err);
     alert('클립보드 복사에 실패했습니다. 수동으로 복사해주세요.');
   }
   
@@ -172,8 +172,8 @@ export const shareNative = async (data: ShareData) => {
         text: `${data.summary}\n\n${data.description}\n\n#개그유형테스트 #${data.code}`,
         url: window.location.href,
       });
-    } catch (err) {
-      console.error('네이티브 공유 실패:', err);
+    } catch (_err) {
+      console.error('네이티브 공유 실패:', _err);
       // 네이티브 공유가 실패하면 카카오톡으로 fallback
       shareToKakao(data);
     }
@@ -191,7 +191,7 @@ export const copyLink = async (data: ShareData) => {
     try {
       await navigator.clipboard.writeText(text);
       alert('✅ 링크가 클립보드에 복사되었습니다!\n\n어디든 붙여넣기해서 공유하세요!');
-    } catch (err) {
+    } catch (_err) {
       fallbackCopyTextToClipboard(text);
     }
   } else {
