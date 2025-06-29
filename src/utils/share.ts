@@ -7,8 +7,8 @@ export interface ShareData {
 }
 
 // 플랫폼별 해시태그 전략
-const getHashtags = (platform: string, _data: ShareData) => {
-  const baseTags = ['#개그유형테스트', `#${_data.code}`, `#${_data.nickname}`];
+const getHashtags = (platform: string, data: ShareData) => {
+  const baseTags = ['#개그유형테스트', `#${data.code}`, `#${data.nickname}`];
   
   switch (platform) {
     case 'instagram':
