@@ -34,7 +34,7 @@ export const gagResults: Record<string, GagResult> = {
   },
   INVB: {
     code: "INVB",
-    nickname: "국민MC",
+    nickname: "국민 MC",
     summary: "즉석 상황에서 기막힌 말타이밍으로 대화 분위기를 주도하는 센스형 리액터",
     description: `돌발 멘트로 순풍처럼 웃음 몰아침.\n볼 때: "타이밍 진짜 천재다ㅋㅋ"\n할 때: 상황 감지 즉시 한방` ,
     examples: ["재치있는 멘트", "센스 폭발형", "회식 천재"]
