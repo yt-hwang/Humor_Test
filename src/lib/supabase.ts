@@ -3,11 +3,10 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = 'https://ylmvppmredooilpdoezi.supabase.co'
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-if (!supabaseKey) {
-  throw new Error('Missing NEXT_PUBLIC_SUPABASE_ANON_KEY environment variable')
-}
+// 빌드 시에는 기본값 사용, 런타임에서만 에러 처리
+const clientSupabaseKey = supabaseKey || 'dummy-key-for-build'
 
-export const supabase = createClient(supabaseUrl, supabaseKey)
+export const supabase = createClient(supabaseUrl, clientSupabaseKey)
 
 // 사용자 방문 기록을 위한 타입 정의
 export interface VisitRecord {

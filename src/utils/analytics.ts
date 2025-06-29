@@ -8,6 +8,12 @@ export function generateSessionId(): string {
 // 사용자 방문 기록
 export async function recordVisit(page: string): Promise<void> {
   try {
+    // Supabase가 제대로 초기화되지 않았으면 스킵
+    if (!supabase) {
+      console.warn('Supabase client not initialized, skipping visit record')
+      return
+    }
+
     const sessionId = getSessionId()
     const userAgent = navigator.userAgent
     const timestamp = new Date().toISOString()
@@ -31,13 +37,19 @@ export async function recordVisit(page: string): Promise<void> {
   }
 }
 
-// 테스트 결과 기록
+// 사용자 테스트 결과 기록
 export async function recordTestResult(
   resultType: string,
   resultTitle: string,
   resultDescription: string
 ): Promise<void> {
   try {
+    // Supabase가 제대로 초기화되지 않았으면 스킵
+    if (!supabase) {
+      console.warn('Supabase client not initialized, skipping test result record')
+      return
+    }
+
     const sessionId = getSessionId()
     const timestamp = new Date().toISOString()
 
@@ -74,6 +86,12 @@ function getSessionId(): string {
 // 통계 데이터 가져오기 (관리자용)
 export async function getAnalytics() {
   try {
+    // Supabase가 제대로 초기화되지 않았으면 null 반환
+    if (!supabase) {
+      console.warn('Supabase client not initialized, returning null analytics')
+      return null
+    }
+
     // 총 방문자 수
     const { count: totalVisits, error: visitsError } = await supabase
       .from('visits')
