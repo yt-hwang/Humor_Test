@@ -1,6 +1,15 @@
+'use client'
+
 import Link from "next/link";
+import { useEffect } from "react";
+import { recordVisit } from "../src/utils/analytics";
 
 export default function Home() {
+  useEffect(() => {
+    // 페이지 방문 기록
+    recordVisit('/')
+  }, [])
+
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-yellow-50 to-pink-50">
       <div className="w-full max-w-md p-8 bg-white rounded-2xl shadow-xl flex flex-col items-center">

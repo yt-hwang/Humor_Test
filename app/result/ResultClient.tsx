@@ -2,8 +2,10 @@
 
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { useEffect } from "react";
 import ShareButtons from "../../src/components/ShareButtons";
 import CaptureButton from "../../src/components/CaptureButton";
+import { recordVisit } from "../../src/utils/analytics";
 
 export default function ResultClient() {
   const searchParams = useSearchParams();
@@ -14,6 +16,11 @@ export default function ResultClient() {
   const description =
     searchParams.get("description") || "체계적으로 준비하고, 상황에 맞는 센스 있는 개그를 구사합니다.";
   const examples = searchParams.get("examples")?.split(",") || ["유재석", "무한도전", "런닝맨"];
+
+  useEffect(() => {
+    // 결과 페이지 방문 기록
+    recordVisit('/result')
+  }, [])
 
   const shareData = {
     code,

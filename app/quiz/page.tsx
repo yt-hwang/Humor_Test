@@ -1,8 +1,9 @@
 "use client";
-import React, { useState, Suspense } from "react";
+import React, { useState, Suspense, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { questions } from "../../src/data/questions";
 import { calculateResult } from "../../src/data/results";
+import { recordVisit, recordTestResult } from "../../src/utils/analytics";
 
 const likertLabels = [
   "전혀 그렇지 않다",
@@ -19,8 +20,21 @@ function ResultContent() {
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState<(number | null)[]>(Array(questions.length).fill(null));
 
+  useEffect(() => {
+    // 퀴즈 페이지 방문 기록
+    recordVisit('/quiz')
+  }, [])
+
   const goToResult = (finalAnswers: (number | null)[]) => {
     const result = calculateResult(finalAnswers);
+    
+    // 테스트 결과 기록
+    recordTestResult(
+      result.code,
+      result.nickname,
+      result.summary
+    )
+    
     const params = new URLSearchParams({
       code: result.code,
       nickname: result.nickname,
