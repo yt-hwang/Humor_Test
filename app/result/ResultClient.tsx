@@ -19,8 +19,18 @@ export default function ResultClient() {
 
   useEffect(() => {
     // 결과 페이지 방문 기록
-    recordVisit('/result')
-  }, [])
+    recordVisit('/result');
+    
+    // 결과 페이지 공유 통계
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'view_item', {
+        content_type: 'test_result',
+        item_id: code,
+        item_name: nickname,
+        value: 1
+      });
+    }
+  }, [code, nickname]);
 
   const shareData = {
     code,
@@ -31,8 +41,8 @@ export default function ResultClient() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-pink-100 to-yellow-100">
-      <div id="result-container" className="w-full max-w-md p-6 bg-white rounded-2xl shadow-lg flex flex-col items-center">
+    <main className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-pink-100 to-yellow-100 p-4">
+      <div id="result-container" className="w-full max-w-md bg-white rounded-2xl shadow-lg flex flex-col items-center p-6">
         <h1 className="text-3xl font-bold mb-4 text-center">나의 개그유형 결과</h1>
 
         <div className="text-2xl font-mono font-bold mb-2 text-blue-600">{code}</div>
@@ -53,7 +63,13 @@ export default function ResultClient() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-3 w-full">
+        {/* 공유 섹션 */}
+        <div className="w-full space-y-4">
+          <div className="text-center">
+            <h3 className="text-sm font-medium text-gray-700 mb-2">🎉 결과를 공유해보세요!</h3>
+            <p className="text-xs text-gray-500 mb-3">친구들과 함께 재미있는 개그유형 테스트를 해보세요</p>
+          </div>
+          
           <div className="flex gap-3 justify-center">
             <a
               href="/quiz"
@@ -75,9 +91,26 @@ export default function ResultClient() {
           </div>
         </div>
 
-        <Link href="/" className="mt-4 text-sm text-gray-500 hover:text-gray-700 transition-colors">
-          홈으로 돌아가기
-        </Link>
+        {/* 공유 팁 */}
+        <div className="mt-6 p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg border border-purple-100">
+          <h4 className="text-sm font-medium text-purple-800 mb-2">💡 공유 팁</h4>
+          <div className="text-xs text-purple-700 space-y-1">
+            <div>• <strong>인스타그램:</strong> 스토리에 링크 스티커 추가</div>
+            <div>• <strong>틱톡:</strong> 챌린지 영상으로 제작</div>
+            <div>• <strong>카카오톡:</strong> 친구들과 단톡방에 공유</div>
+            <div>• <strong>이미지:</strong> 결과를 이미지로 저장해서 공유</div>
+          </div>
+        </div>
+
+        {/* 하단 링크 */}
+        <div className="mt-6 text-center">
+          <Link 
+            href="/" 
+            className="text-xs text-gray-500 hover:text-gray-700 transition-colors"
+          >
+            ← 메인으로 돌아가기
+          </Link>
+        </div>
       </div>
     </main>
   );
