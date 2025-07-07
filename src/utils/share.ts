@@ -39,7 +39,6 @@ const getHashtags = (platform: string, data: ShareData) => {
 // 플랫폼별 공유 텍스트 최적화 (보고서 기반)
 const getShareText = (platform: string, data: ShareData) => {
   const hashtags = getHashtags(platform, data).join(' ');
-  const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
   
   switch (platform) {
     case 'instagram':
