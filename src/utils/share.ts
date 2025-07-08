@@ -70,23 +70,23 @@ export const shareToKakao = async (data: ShareData) => {
           description: `${data.summary}\n\n${data.description}`,
           imageUrl: `${window.location.origin}/images/result/${data.code}.png`,
           link: {
-            mobileWebUrl: window.location.href,
-            webUrl: window.location.href,
+            mobileWebUrl: window.location.origin + '/quiz',
+            webUrl: window.location.origin + '/quiz',
           },
         },
         buttons: [
           {
             title: '🎯 테스트 하러가기',
             link: {
-              mobileWebUrl: window.location.origin,
-              webUrl: window.location.origin,
+              mobileWebUrl: window.location.origin + '/quiz',
+              webUrl: window.location.origin + '/quiz',
             },
           },
           {
             title: '📸 결과 이미지로 공유',
             link: {
-              mobileWebUrl: window.location.href,
-              webUrl: window.location.href,
+              mobileWebUrl: window.location.origin + '/quiz',
+              webUrl: window.location.origin + '/quiz',
             },
           },
         ],
@@ -182,13 +182,6 @@ export const shareToTikTok = async (data: ShareData) => {
   }
 };
 
-// 페이스북 공유
-export const shareToFacebook = (data: ShareData) => {
-  const text = getShareText('default', data);
-  const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(text)}`;
-  window.open(shareUrl, '_blank', 'width=600,height=400');
-};
-
 // 클립보드 복사 fallback 함수
 const fallbackCopyTextToClipboard = (text: string) => {
   const textArea = document.createElement('textarea');
@@ -218,7 +211,7 @@ export const shareNative = async (data: ShareData) => {
       await navigator.share({
         title: `🎭 나의 개그유형: ${data.code} - ${data.nickname}`,
         text: `${data.summary}\n\n${data.description}\n\n#개그유형테스트 #${data.code}`,
-        url: window.location.href,
+        url: window.location.origin + '/quiz',
       });
     } catch (error) {
       console.error('네이티브 공유 실패:', error);
@@ -233,7 +226,7 @@ export const shareNative = async (data: ShareData) => {
 
 // 링크 복사 기능 개선
 export const copyLink = async (data: ShareData) => {
-  const text = `🎭 나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n테스트 하러가기: ${window.location.href}\n\n#개그유형테스트 #${data.code} #${data.nickname}`;
+  const text = `🎭 나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n테스트 하러가기: ${window.location.origin}/quiz\n\n#개그유형테스트 #${data.code} #${data.nickname}`;
   
   if (navigator.clipboard) {
     try {

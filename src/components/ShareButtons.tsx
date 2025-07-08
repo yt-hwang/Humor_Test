@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from 'react';
-import { ShareData, shareToKakao, shareToInstagram, shareToTwitter, shareToFacebook, shareToTikTok, shareNative, copyLink, trackShare } from '../utils/share';
+import { ShareData, shareToKakao, shareToTwitter, shareToTikTok, shareNative, copyLink, trackShare } from '../utils/share';
+import { captureResult, downloadImage } from '../utils/capture';
 
 interface ShareButtonsProps {
   data: ShareData;
@@ -24,23 +25,24 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
           await shareToKakao(data);
           break;
         case 'instagram':
-          await shareToInstagram(data);
+          await handleInstagramShare();
           setCopiedPlatform('instagram');
           break;
         case 'twitter':
-          await shareToTwitter(data);
+          await handleTwitterShare();
           setCopiedPlatform('twitter');
           break;
-        case 'facebook':
-          shareToFacebook(data);
-          break;
         case 'tiktok':
-          await shareToTikTok(data);
+          await handleTikTokShare();
           setCopiedPlatform('tiktok');
           break;
         case 'copy':
           await copyLink(data);
           setCopiedPlatform('copy');
+          break;
+        case 'image':
+          await handleImageDownload();
+          setCopiedPlatform('image');
           break;
         default:
           break;
@@ -50,7 +52,7 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
       trackShare(platform, data);
       
       // 3초 후 복사 상태 초기화
-      if (['instagram', 'tiktok', 'copy', 'twitter'].includes(platform)) {
+      if (['instagram', 'tiktok', 'copy', 'twitter', 'image'].includes(platform)) {
         setTimeout(() => setCopiedPlatform(null), 3000);
       }
       
@@ -61,6 +63,82 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
     }
     
     setShowShareOptions(false);
+  };
+
+  const handleInstagramShare = async () => {
+    try {
+      // 결과 이미지 캡처
+      const imageDataUrl = await captureResult();
+      
+      // 네이티브 공유 시도
+      const response = await fetch(imageDataUrl);
+      const blob = await response.blob();
+      const file = new File([blob], '개그유형결과.png', { type: 'image/png' });
+      
+      if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          title: `🎭 나의 개그유형: ${data.code} - ${data.nickname}`,
+          text: `${data.summary}\n\n${data.description}\n\n#개그유형테스트 #${data.code} #${data.nickname}`,
+          files: [file],
+          url: window.location.origin + '/quiz',
+        });
+      } else {
+        // 네이티브 공유가 지원되지 않으면 다운로드
+        downloadImage(imageDataUrl, '개그유형결과.png');
+        alert('📸 인스타그램 공유 준비 완료!\n\n1. 다운로드된 이미지를 인스타그램에 업로드\n2. 캡션에 다음 텍스트 추가:\n\n' + 
+              `${data.summary}\n\n${data.description}\n\n#개그유형테스트 #${data.code} #${data.nickname}\n\n🔗 ${window.location.origin}/quiz`);
+      }
+    } catch (error) {
+      console.error('인스타그램 공유 실패:', error);
+      alert('이미지 생성에 실패했습니다. 다시 시도해주세요.');
+    }
+  };
+
+  const handleTwitterShare = async () => {
+    try {
+      // 결과 이미지 캡처 및 다운로드
+      const imageDataUrl = await captureResult();
+      downloadImage(imageDataUrl, '개그유형결과.png');
+      
+      // 트위터 공유 URL 생성 (짧은 링크 사용)
+      const text = `🎭 나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n#개그유형테스트 #${data.code} #${data.nickname}`;
+      const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.location.origin + '/quiz')}`;
+      
+      // 트위터 공유 창 열기
+      window.open(shareUrl, '_blank', 'width=600,height=400');
+      
+      alert('🐦 트위터 공유 준비 완료!\n\n1. 다운로드된 이미지를 트위터에 업로드\n2. 새로 열린 창에서 트윗 내용 확인\n3. 이미지와 함께 게시하세요!');
+    } catch (error) {
+      console.error('트위터 공유 실패:', error);
+      alert('이미지 생성에 실패했습니다. 다시 시도해주세요.');
+    }
+  };
+
+  const handleTikTokShare = async () => {
+    try {
+      // 결과 이미지 캡처 및 다운로드
+      const imageDataUrl = await captureResult();
+      downloadImage(imageDataUrl, '개그유형결과.png');
+      
+      const text = `🎭 나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n#개그유형테스트 #${data.code} #${data.nickname} #심리테스트 #성격테스트 #MBTI #ForYou #fyp #개그 #유머 #테스트 #재미 #챌린지 #친구랑_테스트\n\n💡 사이트는 bio 참고!`;
+      
+      alert('🎬 틱톡 공유 준비 완료!\n\n1. 다운로드된 이미지를 틱톡에 업로드\n2. 캡션에 다음 텍스트 추가:\n\n' + 
+            `${text}\n\n💡 팁: "개그유형테스트 챌린지"로 친구들 태그해보세요!`);
+    } catch (error) {
+      console.error('틱톡 공유 실패:', error);
+      alert('이미지 생성에 실패했습니다. 다시 시도해주세요.');
+    }
+  };
+
+  const handleImageDownload = async () => {
+    try {
+      const imageDataUrl = await captureResult();
+      downloadImage(imageDataUrl, `개그유형_${data.code}_${data.nickname}.png`);
+      alert('✅ 이미지가 다운로드되었습니다!\n\n갤러리에서 확인하고 원하는 곳에 공유하세요!');
+    } catch (error) {
+      console.error('이미지 다운로드 실패:', error);
+      alert('이미지 생성에 실패했습니다. 다시 시도해주세요.');
+    }
   };
 
   const getButtonText = (platform: string) => {
@@ -78,8 +156,8 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
       case 'instagram': return '인스타그램';
       case 'twitter': return '트위터';
       case 'tiktok': return '틱톡';
-      case 'facebook': return '페이스북';
       case 'copy': return '링크 복사';
+      case 'image': return '이미지 저장';
       default: return platform;
     }
   };
@@ -177,16 +255,16 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
               <span>{getButtonText('tiktok')}</span>
             </button>
 
-            {/* 페이스북 */}
+            {/* 이미지 저장 */}
             <button
-              onClick={() => handleShare('facebook')}
-              className={getButtonStyle('facebook')}
+              onClick={() => handleShare('image')}
+              className={getButtonStyle('image')}
               disabled={isLoading !== null}
             >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              <span>{getButtonText('facebook')}</span>
+              <span>{getButtonText('image')}</span>
             </button>
 
             {/* 링크 복사 */}
@@ -209,6 +287,7 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
               <div>• <strong>카카오톡:</strong> 자동으로 공유 창이 열립니다</div>
               <div>• <strong>인스타그램:</strong> 결과 이미지가 자동으로 공유됩니다</div>
               <div>• <strong>트위터/틱톡:</strong> 이미지 다운로드 후 업로드하세요</div>
+              <div>• <strong>이미지 저장:</strong> 갤러리에 저장해서 공유하세요</div>
             </div>
           </div>
         </div>
