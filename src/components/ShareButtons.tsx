@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { ShareData, shareToKakao, shareToTwitter, shareToTikTok, shareNative, copyLink, trackShare } from '../utils/share';
+import { ShareData, shareToKakao, shareNative, copyLink, trackShare } from '../utils/share';
 import { captureResult, downloadImage } from '../utils/capture';
 
 interface ShareButtonsProps {
