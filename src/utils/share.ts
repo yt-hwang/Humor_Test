@@ -39,7 +39,6 @@ const getHashtags = (platform: string, data: ShareData) => {
 // 플랫폼별 공유 텍스트 최적화 (보고서 기반)
 const getShareText = (platform: string, data: ShareData) => {
   const hashtags = getHashtags(platform, data).join(' ');
-  const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
   
   switch (platform) {
     case 'instagram':
@@ -59,8 +58,8 @@ const getShareText = (platform: string, data: ShareData) => {
   }
 };
 
-// 카카오톡 공유 개선 (보고서 기반)
-export const shareToKakao = (data: ShareData) => {
+// 카카오톡 공유 - SDK를 사용한 자동 공유
+export const shareToKakao = async (data: ShareData) => {
   // 카카오톡 SDK가 있는 경우 사용
   if (typeof window !== 'undefined' && window.Kakao && window.Kakao.isInitialized()) {
     try {
@@ -71,23 +70,23 @@ export const shareToKakao = (data: ShareData) => {
           description: `${data.summary}\n\n${data.description}`,
           imageUrl: `${window.location.origin}/images/result/${data.code}.png`,
           link: {
-            mobileWebUrl: window.location.href,
-            webUrl: window.location.href,
+            mobileWebUrl: window.location.origin + '/quiz',
+            webUrl: window.location.origin + '/quiz',
           },
         },
         buttons: [
           {
             title: '🎯 테스트 하러가기',
             link: {
-              mobileWebUrl: window.location.origin,
-              webUrl: window.location.origin,
+              mobileWebUrl: window.location.origin + '/quiz',
+              webUrl: window.location.origin + '/quiz',
             },
           },
           {
             title: '📸 결과 이미지로 공유',
             link: {
-              mobileWebUrl: window.location.href,
-              webUrl: window.location.href,
+              mobileWebUrl: window.location.origin + '/quiz',
+              webUrl: window.location.origin + '/quiz',
             },
           },
         ],
@@ -98,71 +97,89 @@ export const shareToKakao = (data: ShareData) => {
     }
   }
   
-  // SDK가 없거나 실패한 경우 URL 복사로 fallback
-  const text = getShareText('kakao', data);
-  const shareText = `${text}\n\n테스트 하러가기: ${window.location.href}`;
-  
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(shareText).then(() => {
-      alert('✅ 카카오톡 공유 준비 완료!\n\n복사된 내용을 카카오톡에 붙여넣기 하세요!');
-    }).catch(() => {
-      fallbackCopyTextToClipboard(shareText);
-    });
-  } else {
-    fallbackCopyTextToClipboard(shareText);
+  // SDK가 없거나 실패한 경우 안내
+  alert('카카오톡 앱이 설치되어 있지 않거나 SDK 초기화에 실패했습니다.\n\n다른 공유 방법을 이용해주세요.');
+};
+
+// 인스타그램 공유 - 이미지 캡처 후 네이티브 공유
+export const shareToInstagram = async (data: ShareData) => {
+  try {
+    // 결과 이미지 캡처
+    const { captureResult } = await import('./capture');
+    const imageDataUrl = await captureResult();
+    
+    // Blob으로 변환
+    const response = await fetch(imageDataUrl);
+    const blob = await response.blob();
+    
+    // 파일 생성
+    const file = new File([blob], '개그유형결과.png', { type: 'image/png' });
+    
+    // 네이티브 공유 API 사용
+    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({
+        title: `🎭 나의 개그유형: ${data.code} - ${data.nickname}`,
+        text: `${data.summary}\n\n${data.description}\n\n#개그유형테스트 #${data.code} #${data.nickname}`,
+        files: [file],
+        url: window.location.href,
+      });
+    } else {
+      // 네이티브 공유가 지원되지 않으면 다운로드 안내
+      const { downloadImage } = await import('./capture');
+      downloadImage(imageDataUrl, '개그유형결과.png');
+      alert('📸 인스타그램 공유 준비 완료!\n\n1. 다운로드된 이미지를 인스타그램에 업로드\n2. 캡션에 다음 텍스트 추가:\n\n' + 
+            `${data.summary}\n\n${data.description}\n\n#개그유형테스트 #${data.code} #${data.nickname}\n\n🔗 ${window.location.href}`);
+    }
+  } catch (error) {
+    console.error('인스타그램 공유 실패:', error);
+    alert('이미지 생성에 실패했습니다. 다시 시도해주세요.');
   }
 };
 
-// 인스타그램 공유 개선 (스토리 중심)
-export const shareToInstagram = (data: ShareData) => {
-  const text = getShareText('instagram', data);
-  
-  // 인스타그램 스토리 공유 (클립보드에 텍스트 복사)
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(() => {
-      alert('📸 인스타그램 스토리 공유 준비 완료!\n\n1. 인스타그램 스토리로 이동\n2. 텍스트를 붙여넣기\n3. 링크 스티커 추가: ' + window.location.href + '\n4. 해시태그도 함께 공유하세요!\n\n💡 팁: 결과 이미지를 스크린샷해서 함께 올리면 더 효과적!');
-    }).catch(() => {
-      fallbackCopyTextToClipboard(text);
-    });
-  } else {
-    fallbackCopyTextToClipboard(text);
+// 트위터 공유 - 이미지 캡처 후 다운로드 안내
+export const shareToTwitter = async (data: ShareData) => {
+  try {
+    // 결과 이미지 캡처
+    const { captureResult } = await import('./capture');
+    const imageDataUrl = await captureResult();
+    
+    // 이미지 다운로드
+    const { downloadImage } = await import('./capture');
+    downloadImage(imageDataUrl, '개그유형결과.png');
+    
+    // 트위터 공유 URL 생성
+    const text = getShareText('twitter', data);
+    const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.location.href)}`;
+    
+    // 트위터 공유 창 열기
+    window.open(shareUrl, '_blank', 'width=600,height=400');
+    
+    alert('🐦 트위터 공유 준비 완료!\n\n1. 다운로드된 이미지를 트위터에 업로드\n2. 새로 열린 창에서 트윗 내용 확인\n3. 이미지와 함께 게시하세요!');
+  } catch (error) {
+    console.error('트위터 공유 실패:', error);
+    alert('이미지 생성에 실패했습니다. 다시 시도해주세요.');
   }
 };
 
-// 트위터 공유 개선 (미리보기 카드 최적화)
-export const shareToTwitter = (data: ShareData) => {
-  const text = getShareText('twitter', data);
-  
-  const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.location.href)}`;
-  
-  window.open(shareUrl, '_blank', 'width=600,height=400');
-};
-
-// 틱톡 공유 개선 (챌린지 형태)
-export const shareToTikTok = (data: ShareData) => {
-  const text = getShareText('tiktok', data);
-  
-  // 틱톡 챌린지 가이드 (보고서 기반)
-  const tiktokGuide = `🎬 틱톡 챌린지 공유 가이드\n\n1. 결과 화면을 스크린샷하거나 녹화\n2. 틱톡에서 15-60초 영상 제작\n3. 설명에 다음 텍스트 복사:\n\n${text}\n\n4. 해시태그 추가하여 업로드!\n\n💡 팁: "개그유형테스트 챌린지"로 친구들 태그해보세요!\n\n🎯 영상 아이디어:\n- 결과를 보고 반응하는 영상\n- 테스트 진행 과정 녹화\n- 친구들과 함께 테스트하는 모습`;
-  
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(() => {
-      alert(tiktokGuide);
-    }).catch(() => {
-      fallbackCopyTextToClipboard(text);
-      alert(tiktokGuide);
-    });
-  } else {
-    fallbackCopyTextToClipboard(text);
-    alert(tiktokGuide);
+// 틱톡 공유 - 이미지 캡처 후 다운로드 안내
+export const shareToTikTok = async (data: ShareData) => {
+  try {
+    // 결과 이미지 캡처
+    const { captureResult } = await import('./capture');
+    const imageDataUrl = await captureResult();
+    
+    // 이미지 다운로드
+    const { downloadImage } = await import('./capture');
+    downloadImage(imageDataUrl, '개그유형결과.png');
+    
+    const text = getShareText('tiktok', data);
+    
+    alert('🎬 틱톡 공유 준비 완료!\n\n1. 다운로드된 이미지를 틱톡에 업로드\n2. 캡션에 다음 텍스트 추가:\n\n' + 
+          `${text}\n\n💡 팁: "개그유형테스트 챌린지"로 친구들 태그해보세요!`);
+  } catch (error) {
+    console.error('틱톡 공유 실패:', error);
+    alert('이미지 생성에 실패했습니다. 다시 시도해주세요.');
   }
-};
-
-// 페이스북 공유
-export const shareToFacebook = (data: ShareData) => {
-  const text = getShareText('default', data);
-  const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(text)}`;
-  window.open(shareUrl, '_blank', 'width=600,height=400');
 };
 
 // 클립보드 복사 fallback 함수
@@ -194,7 +211,7 @@ export const shareNative = async (data: ShareData) => {
       await navigator.share({
         title: `🎭 나의 개그유형: ${data.code} - ${data.nickname}`,
         text: `${data.summary}\n\n${data.description}\n\n#개그유형테스트 #${data.code}`,
-        url: window.location.href,
+        url: window.location.origin + '/quiz',
       });
     } catch (error) {
       console.error('네이티브 공유 실패:', error);
@@ -209,7 +226,7 @@ export const shareNative = async (data: ShareData) => {
 
 // 링크 복사 기능 개선
 export const copyLink = async (data: ShareData) => {
-  const text = `🎭 나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n테스트 하러가기: ${window.location.href}\n\n#개그유형테스트 #${data.code} #${data.nickname}`;
+  const text = `🎭 나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n테스트 하러가기: ${window.location.origin}/quiz\n\n#개그유형테스트 #${data.code} #${data.nickname}`;
   
   if (navigator.clipboard) {
     try {

@@ -4,7 +4,6 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useEffect } from "react";
 import ShareButtons from "../../src/components/ShareButtons";
-import CaptureButton from "../../src/components/CaptureButton";
 import { recordVisit } from "../../src/utils/analytics";
 
 export default function ResultClient() {
@@ -79,26 +78,16 @@ export default function ResultClient() {
             </a>
             <ShareButtons data={shareData} />
           </div>
-          
-          <div className="flex justify-center">
-            <CaptureButton 
-              code={code} 
-              nickname={nickname} 
-              summary={summary}
-              description={description}
-              examples={examples}
-            />
-          </div>
         </div>
 
         {/* 공유 팁 */}
         <div className="mt-6 p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg border border-purple-100">
           <h4 className="text-sm font-medium text-purple-800 mb-2">💡 공유 팁</h4>
           <div className="text-xs text-purple-700 space-y-1">
-            <div>• <strong>인스타그램:</strong> 스토리에 링크 스티커 추가</div>
-            <div>• <strong>틱톡:</strong> 챌린지 영상으로 제작</div>
-            <div>• <strong>카카오톡:</strong> 친구들과 단톡방에 공유</div>
-            <div>• <strong>이미지:</strong> 결과를 이미지로 저장해서 공유</div>
+            <div>• <strong>카카오톡:</strong> 자동으로 공유 창이 열립니다</div>
+            <div>• <strong>인스타그램:</strong> 결과 이미지가 자동으로 공유됩니다</div>
+            <div>• <strong>트위터/틱톡:</strong> 이미지 다운로드 후 업로드하세요</div>
+            <div>• <strong>이미지 저장:</strong> 갤러리에 저장해서 공유하세요</div>
           </div>
         </div>
 

@@ -43,7 +43,8 @@ export default function KakaoSDK() {
         script.async = true;
         script.onload = () => {
           console.log('카카오 SDK 로드 완료');
-          checkKakaoSDK();
+          // SDK 로드 후 잠시 대기 후 초기화
+          setTimeout(checkKakaoSDK, 500);
         };
         script.onerror = () => {
           console.error('카카오 SDK 로드 실패');
@@ -54,7 +55,17 @@ export default function KakaoSDK() {
       }
     };
 
-    loadKakaoSDK();
+    // 페이지 로드 완료 후 SDK 로드 시작
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadKakaoSDK);
+    } else {
+      loadKakaoSDK();
+    }
+
+    return () => {
+      // 클린업: 이벤트 리스너 제거
+      document.removeEventListener('DOMContentLoaded', loadKakaoSDK);
+    };
   }, []);
 
   return null; // 이 컴포넌트는 UI를 렌더링하지 않음
