@@ -180,31 +180,7 @@ export default function ResultClient() {
           </div>
         </div>
 
-        {/* 공유 팁 */}
-        <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 mb-6 border border-purple-100">
-          <h4 className="text-sm font-semibold text-purple-800 mb-3 flex items-center gap-2">
-            <span>💡</span>
-            공유 팁
-          </h4>
-          <div className="text-xs text-purple-700 space-y-2">
-            <div className="flex items-start gap-2">
-              <span className="text-purple-500 mt-0.5">•</span>
-              <span><strong>카카오톡:</strong> 자동으로 공유 창이 열립니다</span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="text-purple-500 mt-0.5">•</span>
-              <span><strong>인스타그램:</strong> 결과 이미지가 자동으로 공유됩니다</span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="text-purple-500 mt-0.5">•</span>
-              <span><strong>트위터/틱톡:</strong> 이미지 다운로드 후 업로드하세요</span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="text-purple-500 mt-0.5">•</span>
-              <span><strong>이미지 저장:</strong> 갤러리에 저장해서 공유하세요</span>
-            </div>
-          </div>
-        </div>
+
 
         {/* 하단 링크들 */}
         <div className="text-center space-y-3">

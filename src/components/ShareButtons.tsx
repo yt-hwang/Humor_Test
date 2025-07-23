@@ -121,17 +121,17 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
 
   const getButtonText = (platform: string) => {
     if (isLoading === platform) {
-      return '⏳';
+      return '처리중...';
     }
     
     if (copiedPlatform === platform) {
-      return '✅';
+      return '완료!';
     }
     
     switch (platform) {
-      case 'copy': return '📋';
-      case 'kakao': return '💬';
-      case 'instagram': return '📸';
+      case 'copy': return '링크복사';
+      case 'kakao': return '카카오톡 공유';
+      case 'instagram': return '인스타그램 공유';
       default: return platform;
     }
   };
