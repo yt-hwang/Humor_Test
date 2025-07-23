@@ -39,7 +39,6 @@ function ResultContent() {
       code: result.code,
       nickname: result.nickname,
       summary: result.summary,
-      description: result.description,
       examples: result.examples.join(",")
     });
     router.push(`/result?${params.toString()}`);
