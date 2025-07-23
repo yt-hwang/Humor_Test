@@ -128,16 +128,12 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
       return '완료!';
     }
     
-    switch (platform) {
-      case 'copy': return '링크복사';
-      case 'kakao': return '카카오톡 공유';
-      case 'instagram': return '인스타그램 공유';
-      default: return platform;
-    }
+    // 텍스트 제거하고 빈 문자열 반환
+    return '';
   };
 
   const getButtonStyle = (platform: string) => {
-    const baseStyle = "flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 transform hover:scale-105";
+    const baseStyle = "flex items-center justify-center w-12 h-12 rounded-xl text-sm font-medium transition-all duration-300 transform hover:scale-105";
     
     if (isLoading === platform) {
       return `${baseStyle} bg-blue-100 text-blue-700 cursor-not-allowed`;
@@ -191,9 +187,9 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
         onClick={() => handleShare('copy')}
         className={getButtonStyle('copy')}
         disabled={isLoading !== null}
+        title="링크 복사"
       >
         {getButtonIcon('copy')}
-        <span>{getButtonText('copy')}</span>
       </button>
 
       {/* 카카오톡 공유 버튼 */}
@@ -201,9 +197,9 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
         onClick={() => handleShare('kakao')}
         className={getButtonStyle('kakao')}
         disabled={isLoading !== null}
+        title="카카오톡 공유"
       >
         {getButtonIcon('kakao')}
-        <span>{getButtonText('kakao')}</span>
       </button>
 
       {/* 인스타그램 공유 버튼 */}
@@ -211,9 +207,9 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
         onClick={() => handleShare('instagram')}
         className={getButtonStyle('instagram')}
         disabled={isLoading !== null}
+        title="인스타그램 공유"
       >
         {getButtonIcon('instagram')}
-        <span>{getButtonText('instagram')}</span>
       </button>
     </div>
   );
