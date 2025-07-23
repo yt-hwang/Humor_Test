@@ -7,11 +7,10 @@ interface CaptureButtonProps {
   code: string;
   nickname: string;
   summary: string;
-  description: string;
   examples: string[];
 }
 
-export default function CaptureButton({ code, nickname, summary, description, examples }: CaptureButtonProps) {
+export default function CaptureButton({ code, nickname, summary, examples }: CaptureButtonProps) {
   const [isCapturing, setIsCapturing] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
 
@@ -43,7 +42,6 @@ export default function CaptureButton({ code, nickname, summary, description, ex
         code,
         nickname,
         summary,
-        description,
         examples
       });
       
@@ -84,7 +82,6 @@ export default function CaptureButton({ code, nickname, summary, description, ex
         code,
         nickname,
         summary,
-        description,
         examples
       });
       

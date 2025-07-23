@@ -11,14 +11,13 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
   const code = (params.code as string) || "ONVB";
   const nickname = (params.nickname as string) || "온빛";
   const summary = (params.summary as string) || "항상 준비된 밝은 개그러!";
-  const description = (params.description as string) || "체계적으로 준비하고, 상황에 맞는 센스 있는 개그를 구사합니다.";
 
   return {
     title: `개그유형 테스트 결과 - ${code} ${nickname}`,
-    description: `${summary} ${description}`,
+    description: summary,
     openGraph: {
       title: `개그유형 테스트 결과 - ${code} ${nickname}`,
-      description: `${summary} ${description}`,
+      description: summary,
       type: "website",
       locale: "ko_KR",
       siteName: "개그유형 테스트",
@@ -34,7 +33,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     twitter: {
       card: "summary_large_image",
       title: `개그유형 테스트 결과 - ${code} ${nickname}`,
-      description: `${summary} ${description}`,
+      description: summary,
       images: ["/og-image.png"],
     },
   };

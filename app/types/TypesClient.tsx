@@ -75,7 +75,7 @@ export default function TypesClient() {
                   return (
                     <Link 
                       key={typeCode} 
-                      href={`/result?code=${typeCode}&nickname=${encodeURIComponent(typeData.nickname)}&summary=${encodeURIComponent(typeData.summary)}&description=${encodeURIComponent(typeData.description)}&examples=${encodeURIComponent(typeData.examples.join(','))}`}
+                      href={`/result?code=${typeCode}&nickname=${encodeURIComponent(typeData.nickname)}&summary=${encodeURIComponent(typeData.summary)}&examples=${encodeURIComponent(typeData.examples.join(','))}`}
                       className="group"
                     >
                       <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 border border-white/30 hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">

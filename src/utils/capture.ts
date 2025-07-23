@@ -23,7 +23,6 @@ export const captureInstagramStory = async (data: {
   code: string;
   nickname: string;
   summary: string;
-  description: string;
   examples: string[];
 }): Promise<string> => {
   // 스토리용 임시 컨테이너 생성
