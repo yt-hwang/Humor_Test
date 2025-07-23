@@ -68,7 +68,7 @@ export default function ResultClient() {
 
           {/* 요약 */}
           <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 mb-6 border border-blue-100">
-            <p className="text-center text-gray-800 leading-relaxed font-medium text-lg">
+            <p className="text-center text-gray-800 leading-relaxed font-medium text-lg break-keep hyphens-auto">
               {summary}
             </p>
           </div>
