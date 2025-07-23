@@ -63,16 +63,16 @@ export default function Home() {
         <div className="mt-6 bg-white/60 backdrop-blur-sm rounded-2xl p-4 border border-white/30">
           <div className="flex items-center justify-center gap-6 text-sm text-gray-600">
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+              <span className="text-green-500">✓</span>
               <span>무료 테스트</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+              <span className="text-blue-500">⏱️</span>
               <span>5분 소요</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-              <span>정확한 결과</span>
+              <span className="text-purple-500">🎯</span>
+              <span>상세한 분석</span>
             </div>
           </div>
         </div>
