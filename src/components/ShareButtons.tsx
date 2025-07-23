@@ -119,19 +119,6 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
     }
   };
 
-  const getButtonText = (platform: string) => {
-    if (isLoading === platform) {
-      return '처리중...';
-    }
-    
-    if (copiedPlatform === platform) {
-      return '완료!';
-    }
-    
-    // 텍스트 제거하고 빈 문자열 반환
-    return '';
-  };
-
   const getButtonStyle = (platform: string) => {
     const baseStyle = "flex items-center justify-center w-14 h-14 rounded-2xl text-sm font-medium transition-all duration-300 transform hover:scale-105 aspect-square";
     
