@@ -13,8 +13,6 @@ export default function ResultClient() {
   const code = searchParams.get("code") || "ONVB";
   const nickname = searchParams.get("nickname") || "온빛";
   const summary = searchParams.get("summary") || "항상 준비된 밝은 개그러!";
-  const description =
-    searchParams.get("description") || "체계적으로 준비하고, 상황에 맞는 센스 있는 개그를 구사합니다.";
   const examples = searchParams.get("examples")?.split(",") || ["유재석", "무한도전", "런닝맨"];
 
   // 결과 데이터에서 추가 정보 가져오기
@@ -39,7 +37,6 @@ export default function ResultClient() {
     code,
     nickname,
     summary,
-    description,
     examples
   };
 
@@ -73,17 +70,6 @@ export default function ResultClient() {
           <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 mb-6 border border-blue-100">
             <p className="text-center text-gray-800 leading-relaxed font-medium text-lg">
               {summary}
-            </p>
-          </div>
-
-          {/* 상세 설명 */}
-          <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-gray-100">
-            <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
-              <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
-              상세 분석
-            </h3>
-            <p className="text-gray-700 leading-relaxed text-sm">
-              {description}
             </p>
           </div>
 

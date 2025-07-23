@@ -2,7 +2,6 @@ export interface ShareData {
   code: string;
   nickname: string;
   summary: string;
-  description: string;
   examples: string[];
 }
 
@@ -42,7 +41,7 @@ const getShareText = (platform: string, data: ShareData) => {
   
   switch (platform) {
     case 'instagram':
-      return `🎭 나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n${data.description}\n\n예시: ${data.examples.join(', ')}\n\n${hashtags}\n\n🔗 링크는 프로필 참조`;
+      return `🎭 나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n예시: ${data.examples.join(', ')}\n\n${hashtags}\n\n🔗 링크는 프로필 참조`;
     
     case 'twitter':
       return `🎭 나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n${hashtags}`;
@@ -51,10 +50,10 @@ const getShareText = (platform: string, data: ShareData) => {
       return `🎭 나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n${hashtags}\n\n💡 사이트는 bio 참고!`;
     
     case 'kakao':
-      return `🎭 나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n${data.description}\n\n예시: ${data.examples.join(', ')}`;
+      return `🎭 나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n예시: ${data.examples.join(', ')}`;
     
     default:
-      return `나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n${data.description}\n\n예시: ${data.examples.join(', ')}`;
+      return `나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n예시: ${data.examples.join(', ')}`;
   }
 };
 
@@ -67,7 +66,7 @@ export const shareToKakao = async (data: ShareData) => {
         objectType: 'feed',
         content: {
           title: `🎭 나의 개그유형: ${data.code} - ${data.nickname}`,
-          description: `${data.summary}\n\n${data.description}\n\n예시: ${data.examples.join(', ')}`,
+          description: `${data.summary}\n\n예시: ${data.examples.join(', ')}`,
           imageUrl: `${window.location.origin}/images/result/${data.code}.png`,
           link: {
             mobileWebUrl: window.location.origin + '/quiz',
@@ -90,8 +89,8 @@ export const shareToKakao = async (data: ShareData) => {
           {
             title: '📸 결과 이미지로 공유',
             link: {
-              mobileWebUrl: window.location.origin + '/result?code=' + data.code + '&nickname=' + encodeURIComponent(data.nickname) + '&summary=' + encodeURIComponent(data.summary) + '&description=' + encodeURIComponent(data.description) + '&examples=' + encodeURIComponent(data.examples.join(',')),
-              webUrl: window.location.origin + '/result?code=' + data.code + '&nickname=' + encodeURIComponent(data.nickname) + '&summary=' + encodeURIComponent(data.summary) + '&description=' + encodeURIComponent(data.description) + '&examples=' + encodeURIComponent(data.examples.join(',')),
+              mobileWebUrl: window.location.origin + '/result?code=' + data.code + '&nickname=' + encodeURIComponent(data.nickname) + '&summary=' + encodeURIComponent(data.summary) + '&examples=' + encodeURIComponent(data.examples.join(',')),
+              webUrl: window.location.origin + '/result?code=' + data.code + '&nickname=' + encodeURIComponent(data.nickname) + '&summary=' + encodeURIComponent(data.summary) + '&examples=' + encodeURIComponent(data.examples.join(',')),
             },
           },
         ],
@@ -124,7 +123,7 @@ export const shareToInstagram = async (data: ShareData) => {
     if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
       await navigator.share({
         title: `🎭 나의 개그유형: ${data.code} - ${data.nickname}`,
-        text: `${data.summary}\n\n${data.description}\n\n#개그유형테스트 #${data.code} #${data.nickname}`,
+        text: `${data.summary}\n\n#개그유형테스트 #${data.code} #${data.nickname}`,
         files: [file],
         url: window.location.href,
       });
@@ -133,7 +132,7 @@ export const shareToInstagram = async (data: ShareData) => {
       const { downloadImage } = await import('./capture');
       downloadImage(imageDataUrl, '개그유형결과.png');
       alert('📸 인스타그램 공유 준비 완료!\n\n1. 다운로드된 이미지를 인스타그램에 업로드\n2. 캡션에 다음 텍스트 추가:\n\n' + 
-            `${data.summary}\n\n${data.description}\n\n#개그유형테스트 #${data.code} #${data.nickname}\n\n🔗 ${window.location.href}`);
+            `${data.summary}\n\n#개그유형테스트 #${data.code} #${data.nickname}\n\n🔗 ${window.location.href}`);
     }
   } catch (error) {
     console.error('인스타그램 공유 실패:', error);
@@ -215,7 +214,7 @@ export const shareNative = async (data: ShareData) => {
     try {
       await navigator.share({
         title: `🎭 나의 개그유형: ${data.code} - ${data.nickname}`,
-        text: `${data.summary}\n\n${data.description}\n\n#개그유형테스트 #${data.code}`,
+        text: `${data.summary}\n\n#개그유형테스트 #${data.code}`,
         url: window.location.origin + '/quiz',
       });
     } catch (error) {

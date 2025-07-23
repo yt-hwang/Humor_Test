@@ -49,7 +49,7 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
 
   const handleCopyLink = async () => {
     try {
-      const shareText = `🎭 나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n${data.description}\n\n🔗 개그유형 테스트 하러가기: ${window.location.origin}/quiz`;
+      const shareText = `🎭 나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n🔗 개그유형 테스트 하러가기: ${window.location.origin}/quiz`;
       
       if (navigator.clipboard) {
         await navigator.clipboard.writeText(shareText);
@@ -92,7 +92,7 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
       if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
         await navigator.share({
           title: `🎭 나의 개그유형: ${data.code} - ${data.nickname}`,
-          text: `${data.summary}\n\n${data.description}\n\n#개그유형테스트 #${data.code} #${data.nickname}`,
+          text: `${data.summary}\n\n#개그유형테스트 #${data.code} #${data.nickname}`,
           files: [file],
           url: window.location.origin + '/quiz',
         });
@@ -100,13 +100,13 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
         // 네이티브 공유가 지원되지 않으면 다운로드
         downloadImage(imageDataUrl, '개그유형결과.png');
         alert('📸 인스타그램 공유 준비 완료!\n\n1. 다운로드된 이미지를 인스타그램 스토리에 업로드\n2. 링크 스티커를 추가하고 다음 링크 입력:\n\n' + 
-              `${window.location.origin}/quiz\n\n3. 캡션에 다음 텍스트 추가:\n\n${data.summary}\n\n${data.description}\n\n#개그유형테스트 #${data.code} #${data.nickname}`);
+              `${window.location.origin}/quiz\n\n3. 캡션에 다음 텍스트 추가:\n\n${data.summary}\n\n#개그유형테스트 #${data.code} #${data.nickname}`);
       }
     } catch (error) {
       console.error('인스타그램 공유 실패:', error);
       
       // fallback: 간단한 텍스트 공유
-      const shareText = `🎭 나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n${data.description}\n\n#개그유형테스트 #${data.code} #${data.nickname}\n\n🔗 ${window.location.origin}/quiz`;
+      const shareText = `🎭 나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n#개그유형테스트 #${data.code} #${data.nickname}\n\n🔗 ${window.location.origin}/quiz`;
       
       if (navigator.clipboard) {
         await navigator.clipboard.writeText(shareText);
