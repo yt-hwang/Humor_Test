@@ -104,23 +104,34 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
       }
     } catch (error) {
       console.error('인스타그램 공유 실패:', error);
-      alert('이미지 생성에 실패했습니다. 다시 시도해주세요.');
+      
+      // fallback: 간단한 텍스트 공유
+      const shareText = `🎭 나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n${data.description}\n\n#개그유형테스트 #${data.code} #${data.nickname}\n\n🔗 ${window.location.origin}/quiz`;
+      
+      if (navigator.clipboard) {
+        await navigator.clipboard.writeText(shareText);
+        alert('📸 인스타그램 공유 준비 완료!\n\n1. 복사된 텍스트를 인스타그램 스토리에 붙여넣기\n2. 링크 스티커를 추가하고 다음 링크 입력:\n\n' + 
+              `${window.location.origin}/quiz\n\n3. 해시태그와 함께 공유하세요!`);
+      } else {
+        alert('📸 인스타그램 공유 준비 완료!\n\n1. 다음 텍스트를 복사해서 인스타그램 스토리에 붙여넣기:\n\n' + 
+              `${shareText}\n\n2. 링크 스티커를 추가하고 다음 링크 입력:\n\n${window.location.origin}/quiz`);
+      }
     }
   };
 
   const getButtonText = (platform: string) => {
     if (isLoading === platform) {
-      return '처리중...';
+      return '⏳';
     }
     
     if (copiedPlatform === platform) {
-      return '완료!';
+      return '✅';
     }
     
     switch (platform) {
-      case 'copy': return '링크복사';
-      case 'kakao': return '카카오톡 공유';
-      case 'instagram': return '인스타그램 공유';
+      case 'copy': return '📋';
+      case 'kakao': return '💬';
+      case 'instagram': return '📸';
       default: return platform;
     }
   };

@@ -67,26 +67,31 @@ export const shareToKakao = async (data: ShareData) => {
         objectType: 'feed',
         content: {
           title: `🎭 나의 개그유형: ${data.code} - ${data.nickname}`,
-          description: `${data.summary}\n\n${data.description}`,
+          description: `${data.summary}\n\n${data.description}\n\n예시: ${data.examples.join(', ')}`,
           imageUrl: `${window.location.origin}/images/result/${data.code}.png`,
           link: {
             mobileWebUrl: window.location.origin + '/quiz',
             webUrl: window.location.origin + '/quiz',
           },
         },
+        social: {
+          likeCount: 286,
+          commentCount: 45,
+          sharedCount: 845
+        },
         buttons: [
           {
             title: '🎯 테스트 하러가기',
             link: {
-              mobileWebUrl: window.location.origin + '/quiz',
-              webUrl: window.location.origin + '/quiz',
+              mobileWebUrl: window.location.origin + '/',
+              webUrl: window.location.origin + '/',
             },
           },
           {
             title: '📸 결과 이미지로 공유',
             link: {
-              mobileWebUrl: window.location.origin + '/quiz',
-              webUrl: window.location.origin + '/quiz',
+              mobileWebUrl: window.location.origin + '/result?code=' + data.code + '&nickname=' + encodeURIComponent(data.nickname) + '&summary=' + encodeURIComponent(data.summary) + '&description=' + encodeURIComponent(data.description) + '&examples=' + encodeURIComponent(data.examples.join(',')),
+              webUrl: window.location.origin + '/result?code=' + data.code + '&nickname=' + encodeURIComponent(data.nickname) + '&summary=' + encodeURIComponent(data.summary) + '&description=' + encodeURIComponent(data.description) + '&examples=' + encodeURIComponent(data.examples.join(',')),
             },
           },
         ],
