@@ -69,8 +69,8 @@ export const shareToKakao = async (data: ShareData) => {
           description: `${data.summary}\n\n예시: ${data.examples.join(', ')}`,
           imageUrl: `${window.location.origin}/images/result/${data.code}.png`,
           link: {
-            mobileWebUrl: window.location.origin + '/quiz',
-            webUrl: window.location.origin + '/quiz',
+            mobileWebUrl: window.location.origin + '/',
+            webUrl: window.location.origin + '/',
           },
         },
         social: {
@@ -215,7 +215,7 @@ export const shareNative = async (data: ShareData) => {
       await navigator.share({
         title: `🎭 나의 개그유형: ${data.code} - ${data.nickname}`,
         text: `${data.summary}\n\n#개그유형테스트 #${data.code}`,
-        url: window.location.origin + '/quiz',
+        url: window.location.origin + '/',
       });
     } catch (error) {
       console.error('네이티브 공유 실패:', error);
@@ -230,7 +230,7 @@ export const shareNative = async (data: ShareData) => {
 
 // 링크 복사 기능 개선
 export const copyLink = async (data: ShareData) => {
-  const text = `🎭 나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n테스트 하러가기: ${window.location.origin}/quiz\n\n#개그유형테스트 #${data.code} #${data.nickname}`;
+  const text = `🎭 나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n테스트 하러가기: ${window.location.origin}/\n\n#개그유형테스트 #${data.code} #${data.nickname}`;
   
   if (navigator.clipboard) {
     try {
