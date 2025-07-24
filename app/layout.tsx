@@ -14,12 +14,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "개그유형 테스트 - 나의 개그 스타일을 알아보자!",
+  title: "개그유형 테스트 - 나의 개그코드를 알아보자!",
   description: "당신만의 개그 유형을 테스트해보세요! 유재석, 김준호, 박명수 등 유명 개그맨들과 비교해보는 재미있는 테스트입니다.",
   keywords: ["개그유형", "개그테스트", "유재석", "김준호", "박명수", "개그맨", "유머테스트"],
   authors: [{ name: "개그유형 테스트" }],
   openGraph: {
-    title: "개그유형 테스트 - 나의 개그 스타일을 알아보자!",
+    title: "개그유형 테스트 - 나의 개그코드를 알아보자!",
     description: "당신만의 개그 유형을 테스트해보세요! 유재석, 김준호, 박명수 등 유명 개그맨들과 비교해보는 재미있는 테스트입니다.",
     type: "website",
     locale: "ko_KR",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "개그유형 테스트 - 나의 개그 스타일을 알아보자!",
+    title: "개그유형 테스트 - 나의 개그코드를 알아보자!",
     description: "당신만의 개그 유형을 테스트해보세요!",
     images: ["/og-image.png"], // 추후 이미지 추가 예정
   },
@@ -56,7 +56,7 @@ export default function RootLayout({
     <html lang="ko">
       <head>
         {/* 카카오톡 공유를 위한 메타태그 */}
-        <meta property="og:title" content="개그유형 테스트 - 나의 개그 스타일을 알아보자!" />
+        <meta property="og:title" content="개그유형 테스트 - 나의 개그코드를 알아보자!" />
         <meta property="og:description" content="당신만의 개그 유형을 테스트해보세요! 유재석, 김준호, 박명수 등 유명 개그맨들과 비교해보는 재미있는 테스트입니다." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://your-domain.com" />
@@ -66,7 +66,7 @@ export default function RootLayout({
         
         {/* 트위터 카드 */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="개그유형 테스트 - 나의 개그 스타일을 알아보자!" />
+        <meta name="twitter:title" content="개그유형 테스트 - 나의 개그코드를 알아보자!" />
         <meta name="twitter:description" content="당신만의 개그 유형을 테스트해보세요!" />
         <meta name="twitter:image" content="/og-image.png" />
         
