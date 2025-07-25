@@ -7,6 +7,7 @@ import ShareButtons from "../../src/components/ShareButtons";
 import { recordVisit } from "../../src/utils/analytics";
 import { gagResults, calculateAxisScores, convertScoresToPercentages } from "../../src/data/results";
 import AxisBarGraph from "../../src/components/AxisBarGraph";
+import DebugSection from "../../src/components/DebugSection";
 
 export default function ResultClient() {
   const searchParams = useSearchParams();
@@ -22,10 +23,11 @@ export default function ResultClient() {
 
   // 답변 데이터가 있으면 축별 점수 계산
   let percentages: Record<string, number> | null = null;
+  let parsedAnswers: (number | null)[] | null = null;
   if (answersParam) {
     try {
-      const answers = answersParam.split(",").map(a => a === "" ? null : parseInt(a));
-      const scores = calculateAxisScores(answers);
+      parsedAnswers = answersParam.split(",").map(a => a === "" ? null : parseInt(a));
+      const scores = calculateAxisScores(parsedAnswers);
       percentages = convertScoresToPercentages(scores);
     } catch (error) {
       console.error("답변 데이터 파싱 오류:", error);
@@ -111,6 +113,11 @@ export default function ResultClient() {
           <div className="mb-6">
             <AxisBarGraph percentages={percentages} />
           </div>
+        )}
+
+        {/* 테스트용 디버깅 섹션 */}
+        {parsedAnswers && (
+          <DebugSection answers={parsedAnswers} />
         )}
 
         {/* 궁합 정보 */}
