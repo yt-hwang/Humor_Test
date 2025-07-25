@@ -47,7 +47,7 @@ export default function AxisBarGraph({ percentages }: AxisBarGraphProps) {
         {axes.map((axis) => {
           const percentage = percentages[axis.key];
           const isLeftSide = percentage <= 50;
-          const displayPercentage = isLeftSide ? percentage : 100 - percentage;
+          const displayPercentage = percentage;
           const dominantLabel = isLeftSide ? axis.leftLabel : axis.rightLabel;
           
           return (
