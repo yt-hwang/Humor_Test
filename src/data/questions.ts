@@ -16,7 +16,7 @@ export const questions: Question[] = [
   { id: 5, text: "즉흥적으로 떠오르는 개그가 더 자연스럽고 재미있다고 생각한다.", axis: "OI", reverse: true },
   { id: 6, text: "고차원적이거나 엉뚱한 개그에 더 끌린다.", axis: "NB", reverse: true },
   { id: 7, text: "표정, 몸짓, 행동 등의 표현으로 웃기는 걸 즐긴다.", axis: "VP", reverse: true },
-  { id: 8, text: "김구라, 이경규, 박명수의 개그가 웃기다.", axis: "BD", reverse: true },
+  { id: 8, text: "김구라, 이경규, 박명수의 개그가 웃기다.", axis: "BD", reverse: false },
   { id: 9, text: "나는 성대모사 장인보다 즉석 N행시 장인이 되고싶다.", axis: "OI", reverse: true },
   { id: 10, text: "상대방의 반응과 맥락을 잘 파악한 개그가 웃기다.", axis: "NB", reverse: false },
   { id: 11, text: "나는 말을 통해 타이밍이나 표현을 세밀하게 조절하는 개그가 재밌다.", axis: "VP", reverse: false },
@@ -27,6 +27,6 @@ export const questions: Question[] = [
   { id: 16, text: "조금은 어두운 주제나 사회 풍자를 개그에 녹여내는 것이 센스있게 느껴진다.", axis: "BD", reverse: true },
   { id: 17, text: "나는 남을 웃기기 위해 사전에 성대모사, 드립, 혹은 웃긴 썰을 준비하는 것을 좋아한다.", axis: "OI", reverse: false },
   { id: 18, text: "내 현실적인 상황을 웃기게 풀어내는 것을 더 좋아한다.", axis: "NB", reverse: false },
-  { id: 19, text: "몸개그가 말장난 보다 재밌다.", axis: "VP", reverse: true },
+  { id: 19, text: "몸개그가 말장난 보다 재밌다.", axis: "VP", reverse: false },
   { id: 20, text: "나는 사회적 이슈나 정치적 주제를 개그 소재로 활용하는 것을 좋아한다.", axis: "BD", reverse: true },
 ]; 
