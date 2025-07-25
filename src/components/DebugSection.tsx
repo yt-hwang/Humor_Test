@@ -39,17 +39,27 @@ export default function DebugSection({ answers }: DebugSectionProps) {
       <div className="mb-6">
         <h4 className="text-sm font-semibold text-gray-700 mb-3">축별 점수 요약</h4>
         <div className="grid grid-cols-2 gap-3">
-          {axisInfo.map((axis) => (
-            <div key={axis.key} className="bg-gray-50 rounded-lg p-3">
-              <div className={`text-sm font-bold ${axis.color}`}>{axis.name}</div>
-              <div className="text-xs text-gray-600">
-                점수: {scores[axis.key as keyof typeof scores].toFixed(2)} / 7
+          {axisInfo.map((axis) => {
+            const score = scores[axis.key as keyof typeof scores];
+            const percentage = percentages[axis.key];
+            const isRightSide = score > 4;
+            const dominantSide = isRightSide ? axis.name.split(" vs ")[1] : axis.name.split(" vs ")[0];
+            
+            return (
+              <div key={axis.key} className="bg-gray-50 rounded-lg p-3">
+                <div className={`text-sm font-bold ${axis.color}`}>{axis.name}</div>
+                <div className="text-xs text-gray-600">
+                  점수: {score.toFixed(2)} / 7
+                </div>
+                <div className="text-xs text-gray-600">
+                  퍼센트: {percentage}%
+                </div>
+                <div className="text-xs font-semibold text-green-600 mt-1">
+                  → {dominantSide} 쪽으로 결정
+                </div>
               </div>
-              <div className="text-xs text-gray-600">
-                퍼센트: {percentages[axis.key]}%
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
