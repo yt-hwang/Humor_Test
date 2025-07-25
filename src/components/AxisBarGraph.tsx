@@ -9,7 +9,7 @@ export default function AxisBarGraph({ percentages }: AxisBarGraphProps) {
     {
       key: "OI",
       leftLabel: "즉흥적",
-      rightLabel: "준비된",
+      rightLabel: "짜여진",
       color: "from-blue-400 to-blue-600",
       borderColor: "border-blue-500"
     },
@@ -23,7 +23,7 @@ export default function AxisBarGraph({ percentages }: AxisBarGraphProps) {
     {
       key: "VP",
       leftLabel: "언어적", 
-      rightLabel: "신체적",
+      rightLabel: "비언어적",
       color: "from-green-400 to-green-600",
       borderColor: "border-green-500"
     },
@@ -56,10 +56,12 @@ export default function AxisBarGraph({ percentages }: AxisBarGraphProps) {
               <div className="flex justify-between items-center">
                 <span className="text-sm font-medium text-gray-700">{axis.leftLabel}</span>
                 <div className="text-center">
-                  <div className="text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                    {displayPercentage}%
+                  <div className="flex items-center justify-center gap-2">
+                    <div className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                      {displayPercentage}%
+                    </div>
+                    <div className="text-base font-semibold text-gray-700">{dominantLabel}</div>
                   </div>
-                  <div className="text-xs text-gray-600">{dominantLabel}</div>
                 </div>
                 <span className="text-sm font-medium text-gray-700">{axis.rightLabel}</span>
               </div>
