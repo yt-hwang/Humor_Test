@@ -229,6 +229,20 @@ export function getGagTypeCode(scores: AxisScores): string {
   return code;
 }
 
+// 축별 점수를 퍼센트로 변환하는 함수
+export function convertScoresToPercentages(scores: AxisScores): Record<string, number> {
+  const percentages: Record<string, number> = {};
+  
+  // 각 축별로 1-7점 척도를 0-100%로 변환
+  // 1점 = 0%, 4점 = 50%, 7점 = 100%
+  percentages.OI = Math.round(((scores.OI - 1) / 6) * 100); // Organized vs Improvised
+  percentages.NB = Math.round(((scores.NB - 1) / 6) * 100); // Natural vs Abstract
+  percentages.VP = Math.round(((scores.VP - 1) / 6) * 100); // Verbal vs Physical
+  percentages.BD = Math.round(((scores.BD - 1) / 6) * 100); // Bright vs Dark
+  
+  return percentages;
+}
+
 // 전체 결과 계산 함수
 export function calculateResult(answers: (number | null)[]): GagResult {
   const scores = calculateAxisScores(answers);

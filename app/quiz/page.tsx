@@ -39,7 +39,8 @@ function ResultContent() {
       code: result.code,
       nickname: result.nickname,
       summary: result.summary,
-      examples: result.examples.join(",")
+      examples: result.examples.join(","),
+      answers: finalAnswers.join(",")
     });
     router.push(`/result?${params.toString()}`);
   };
