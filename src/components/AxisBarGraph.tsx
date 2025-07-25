@@ -46,7 +46,6 @@ export default function AxisBarGraph({ percentages }: AxisBarGraphProps) {
       <div className="space-y-4">
         {axes.map((axis) => {
           const percentage = percentages[axis.key];
-          const isLeftSide = percentage <= 50;
           const displayPercentage = percentage;
           // 퍼센트가 50% 이하면 왼쪽 라벨, 50% 초과면 오른쪽 라벨
           const dominantLabel = percentage <= 50 ? axis.leftLabel : axis.rightLabel;
