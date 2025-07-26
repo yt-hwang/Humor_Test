@@ -77,7 +77,7 @@ export default function AxisBarGraph({ percentages }: AxisBarGraphProps) {
                   {/* 인디케이터 위치 */}
                   <div 
                     className="absolute top-0 h-3 w-6 flex items-center justify-center transform -translate-x-1/2 transition-all duration-500 ease-out"
-                    style={{ left: `${percentage}%` }}
+                    style={{ left: `${isLeftStrong ? percentage : (100 - percentage)}%` }}
                   >
                     {/* 원형 인디케이터 */}
                     <div className={`w-5 h-5 bg-white rounded-full border-2 ${axis.borderColor} shadow-lg flex items-center justify-center`}>
