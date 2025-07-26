@@ -47,10 +47,10 @@ export default function AxisBarGraph({ percentages }: AxisBarGraphProps) {
         {axes.map((axis) => {
           const percentage = percentages[axis.key];
           
-          // 퍼센트 해석: 50% 이하면 왼쪽 특성이 약함, 50% 초과면 왼쪽 특성이 강함
-          const isLeftStrong = percentage > 50;
+          // getGagTypeCode와 일치하도록 해석: 50% 이하면 왼쪽 특성이 강함, 50% 초과면 오른쪽 특성이 강함
+          const isLeftStrong = percentage <= 50;
           const dominantLabel = isLeftStrong ? axis.leftLabel : axis.rightLabel;
-          const dominantPercentage = isLeftStrong ? percentage : (100 - percentage);
+          const dominantPercentage = isLeftStrong ? (100 - percentage) : percentage;
           
           return (
             <div key={axis.key} className="space-y-2">
@@ -77,7 +77,7 @@ export default function AxisBarGraph({ percentages }: AxisBarGraphProps) {
                   {/* 인디케이터 위치 */}
                   <div 
                     className="absolute top-0 h-3 w-6 flex items-center justify-center transform -translate-x-1/2 transition-all duration-500 ease-out"
-                    style={{ left: `${isLeftStrong ? percentage : (100 - percentage)}%` }}
+                    style={{ left: `${isLeftStrong ? (100 - percentage) : percentage}%` }}
                   >
                     {/* 원형 인디케이터 */}
                     <div className={`w-5 h-5 bg-white rounded-full border-2 ${axis.borderColor} shadow-lg flex items-center justify-center`}>
