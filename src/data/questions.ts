@@ -27,6 +27,6 @@ export const questions: Question[] = [
   { id: 16, text: "조금은 어두운 주제나 사회 풍자를 개그에 녹여내는 것이 센스있게 느껴진다.", axis: "BD", reverse: true },
   { id: 17, text: "나는 남을 웃기기 위해 사전에 성대모사, 드립, 혹은 웃긴 썰을 준비하는 것을 좋아한다.", axis: "OI", reverse: false },
   { id: 18, text: "내 현실적인 상황을 웃기게 풀어내는 것을 더 좋아한다.", axis: "NB", reverse: false },
-  { id: 19, text: "몸개그가 말장난 보다 재밌다.", axis: "VP", reverse: false },
+  { id: 19, text: "몸개그가 말장난 보다 재밌다.", axis: "VP", reverse: true },
   { id: 20, text: "나는 사회적 이슈나 정치적 주제를 개그 소재로 활용하는 것을 좋아한다.", axis: "BD", reverse: true },
 ]; 
