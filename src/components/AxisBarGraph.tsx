@@ -47,14 +47,10 @@ export default function AxisBarGraph({ percentages }: AxisBarGraphProps) {
         {axes.map((axis) => {
           const percentage = percentages[axis.key];
           
-          // getGagTypeCode와 완전히 일치하도록 해석
-          // 4점 = 50% 기준으로 판단 (4점 초과면 오른쪽 특성, 4점 이하면 왼쪽 특성)
-          const isRightStrong = percentage >= 50; // 50% 이상 = 4점 이상
-          const dominantLabel = isRightStrong ? axis.rightLabel : axis.leftLabel;
-          const dominantPercentage = isRightStrong ? percentage : (100 - percentage);
-          
-          // 마커 위치: 표시되는 퍼센트와 일치하도록
-          const markerPosition = isRightStrong ? percentage : (100 - percentage);
+          // percentage는 항상 오른쪽 특성 비율로 표시됨
+          const dominantLabel = axis.rightLabel;
+          const dominantPercentage = percentage;
+          const markerPosition = percentage;
           
           return (
             <div key={axis.key} className="space-y-2">
