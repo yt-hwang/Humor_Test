@@ -221,7 +221,7 @@ export function calculateAxisScores(answers: (number | null)[]): AxisScores {
 export function getGagTypeCode(scores: AxisScores): string {
   const code = [
     scores.OI > 4 ? "O" : "I", // Organized vs Improvised
-    scores.NB > 4 ? "B" : "N", // Natural vs Abstract
+    scores.NB > 4 ? "N" : "B", // Natural vs Abstract
     scores.VP > 4 ? "V" : "P", // Verbal vs Physical
     scores.BD > 4 ? "B" : "D"  // Bright vs Dark
   ].join("");
