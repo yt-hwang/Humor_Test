@@ -102,7 +102,7 @@ export default function DebugSection({ answers }: DebugSectionProps) {
                         {calculatedScore}점 ({question.axis})
                       </span>
                       <span className="text-xs text-gray-500">
-                        → {calculatedScore > 4 ? axis?.name.split(" vs ")[1] : axis?.name.split(" vs ")[0]} 쪽에 추가 (getGagTypeCode 기준)
+                        → {question.axis} 축에 {calculatedScore}점 추가됨
                       </span>
                     </div>
                   )}

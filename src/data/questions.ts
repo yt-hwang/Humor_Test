@@ -16,7 +16,7 @@ export const questions: Question[] = [
   { id: 5, text: "즉흥적으로 떠오르는 개그가 더 자연스럽고 재미있다고 생각한다.", axis: "OI", reverse: true },
   { id: 6, text: "고차원적이거나 엉뚱한 개그에 더 끌린다.", axis: "NB", reverse: true },
   { id: 7, text: "표정, 몸짓, 행동 등의 표현으로 웃기는 걸 즐긴다.", axis: "VP", reverse: true },
-  { id: 8, text: "김구라, 이경규, 박명수의 개그가 웃기다.", axis: "BD", reverse: false },
+  { id: 8, text: "김구라, 이경규, 박명수의 개그가 웃기다.", axis: "BD", reverse: true },
   { id: 9, text: "나는 성대모사 장인보다 즉석 N행시 장인이 되고싶다.", axis: "OI", reverse: true },
   { id: 10, text: "상대방의 반응과 맥락을 잘 파악한 개그가 웃기다.", axis: "NB", reverse: false },
   { id: 11, text: "나는 말을 통해 타이밍이나 표현을 세밀하게 조절하는 개그가 재밌다.", axis: "VP", reverse: false },
