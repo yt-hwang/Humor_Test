@@ -89,23 +89,7 @@ export default function ResultClient() {
             </p>
           </div>
 
-          {/* 예시 */}
-          <div className="mb-6">
-            <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
-              <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-              이런 스타일의 예시
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {examples.map((example, index) => (
-                <span 
-                  key={index} 
-                  className="bg-gradient-to-r from-green-100 to-blue-100 text-gray-700 text-sm px-3 py-2 rounded-full border border-green-200 font-medium"
-                >
-                  {example}
-                </span>
-              ))}
-            </div>
-          </div>
+
         </div>
 
         {/* 축별 분석 바 그래프 */}
