@@ -100,6 +100,9 @@ export default function DebugSection({ answers }: DebugSectionProps) {
                       <span className="font-semibold text-green-600">
                         {calculatedScore}점 ({question.axis})
                       </span>
+                      <span className="text-xs text-gray-500">
+                        → {isReverse ? axis?.name.split(" vs ")[1] : axis?.name.split(" vs ")[0]} 쪽에 추가
+                      </span>
                     </div>
                   )}
                 </div>
