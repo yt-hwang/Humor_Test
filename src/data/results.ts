@@ -233,12 +233,13 @@ export function getGagTypeCode(scores: AxisScores): string {
 export function convertScoresToPercentages(scores: AxisScores): Record<string, number> {
   const percentages: Record<string, number> = {};
   
-  // 각 축별로 1-7점 척도를 0-100%로 변환
-  // 1점 = 0%, 4점 = 50%, 7점 = 100%
-  percentages.OI = Math.round(((scores.OI - 1) / 6) * 100); // Organized vs Improvised
-  percentages.NB = Math.round(((scores.NB - 1) / 6) * 100); // Natural vs Abstract
-  percentages.VP = Math.round(((scores.VP - 1) / 6) * 100); // Verbal vs Physical
-  percentages.BD = Math.round(((scores.BD - 1) / 6) * 100); // Bright vs Dark
+  // 각 축별로 1-7점 척도를 퍼센트로 변환
+  // 4점 = 50% (중간), 1점 = 0% (왼쪽 극단), 7점 = 100% (오른쪽 극단)
+  // 왼쪽 특성의 강도를 나타냄 (즉흥적, 직관적, 언어적, 밝은)
+  percentages.OI = Math.round(((scores.OI - 1) / 6) * 100); // 즉흥적 vs 짜여진
+  percentages.NB = Math.round(((scores.NB - 1) / 6) * 100); // 직관적 vs 추상적
+  percentages.VP = Math.round(((scores.VP - 1) / 6) * 100); // 언어적 vs 비언어적
+  percentages.BD = Math.round(((scores.BD - 1) / 6) * 100); // 밝은 vs 어두운
   
   return percentages;
 }

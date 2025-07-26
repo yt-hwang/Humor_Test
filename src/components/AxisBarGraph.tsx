@@ -46,9 +46,11 @@ export default function AxisBarGraph({ percentages }: AxisBarGraphProps) {
       <div className="space-y-4">
         {axes.map((axis) => {
           const percentage = percentages[axis.key];
-          const displayPercentage = percentage;
-          // 퍼센트가 50% 이하면 왼쪽 라벨, 50% 초과면 오른쪽 라벨
-          const dominantLabel = percentage <= 50 ? axis.leftLabel : axis.rightLabel;
+          
+          // 퍼센트 해석: 50% 이하면 왼쪽 특성이 약함, 50% 초과면 왼쪽 특성이 강함
+          const isLeftStrong = percentage > 50;
+          const dominantLabel = isLeftStrong ? axis.leftLabel : axis.rightLabel;
+          const dominantPercentage = isLeftStrong ? percentage : (100 - percentage);
           
           return (
             <div key={axis.key} className="space-y-2">
@@ -58,7 +60,7 @@ export default function AxisBarGraph({ percentages }: AxisBarGraphProps) {
                 <div className="text-center">
                   <div className="flex items-center justify-center gap-2">
                     <div className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                      {displayPercentage}%
+                      {dominantPercentage}%
                     </div>
                     <div className="text-base font-semibold text-gray-700">{dominantLabel}</div>
                   </div>
@@ -92,9 +94,11 @@ export default function AxisBarGraph({ percentages }: AxisBarGraphProps) {
       {/* 설명 */}
       <div className="mt-4 p-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-100">
         <p className="text-xs text-gray-600 text-center leading-relaxed">
-          각 축에서 어느 쪽에 더 가까운지 표시됩니다. 
+          각 축에서 어느 쪽에 더 가까운지 표시됩니다.
           <br />
-          높은 퍼센트일수록 해당 특성이 강하다는 의미예요!
+          <strong>퍼센트는 해당 특성의 강도를 나타냅니다.</strong>
+          <br />
+          예: 77% 즉흥적 = 즉흥적 성향이 강함
         </p>
       </div>
     </div>
