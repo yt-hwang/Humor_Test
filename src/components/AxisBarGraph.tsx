@@ -8,8 +8,8 @@ export default function AxisBarGraph({ percentages }: AxisBarGraphProps) {
   const axes = [
     {
       key: "OI",
-      leftLabel: "즉흥적",
-      rightLabel: "짜여진",
+      leftLabel: "짜여진",
+      rightLabel: "즉흥적",
       color: "from-blue-400 to-blue-600",
       borderColor: "border-blue-500"
     },

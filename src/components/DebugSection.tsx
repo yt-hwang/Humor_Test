@@ -103,6 +103,10 @@ export default function DebugSection({ answers }: DebugSectionProps) {
                       </span>
                       <span className="text-xs text-gray-500">
                         → {question.axis} 축에 {calculatedScore}점 추가됨
+                        <br />
+                        <span className="text-gray-400">
+                          {isReverse ? `(역방향: ${answer}점 → ${calculatedScore}점)` : `(정방향: ${answer}점 그대로)`}
+                        </span>
                       </span>
                     </div>
                   )}

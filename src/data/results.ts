@@ -13,7 +13,7 @@ export interface GagResult {
 
 export interface AxisScores {
   OI: number; // Organized vs Improvised
-  NB: number; // Natural vs Abstract  
+  NB: number; // Intuitive vs Abstract  
   VP: number; // Verbal vs Physical
   BD: number; // Bright vs Dark
 }
