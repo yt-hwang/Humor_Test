@@ -98,7 +98,7 @@ export default function DebugSection({ answers }: DebugSectionProps) {
                     <div className="flex items-center gap-2">
                       <span className="text-gray-600">계산점수:</span>
                       <span className="font-semibold text-green-600">
-                        {calculatedScore}점
+                        {calculatedScore}점 ({question.axis})
                       </span>
                     </div>
                   )}
