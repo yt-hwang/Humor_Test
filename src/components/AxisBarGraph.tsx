@@ -49,7 +49,7 @@ export default function AxisBarGraph({ percentages }: AxisBarGraphProps) {
           
           // getGagTypeCode와 완전히 일치하도록 해석
           // 4점 = 50% 기준으로 판단 (4점 초과면 오른쪽 특성, 4점 이하면 왼쪽 특성)
-          const isRightStrong = percentage > 50; // 50% 초과 = 4점 초과
+          const isRightStrong = percentage >= 50; // 50% 이상 = 4점 이상
           const dominantLabel = isRightStrong ? axis.rightLabel : axis.leftLabel;
           const dominantPercentage = isRightStrong ? percentage : (100 - percentage);
           
