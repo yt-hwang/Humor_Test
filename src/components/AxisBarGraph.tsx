@@ -47,10 +47,13 @@ export default function AxisBarGraph({ percentages }: AxisBarGraphProps) {
         {axes.map((axis) => {
           const percentage = percentages[axis.key];
           
-          // percentage는 항상 오른쪽 특성 비율로 표시됨
-          const dominantLabel = axis.rightLabel;
-          const dominantPercentage = percentage;
-          const markerPosition = percentage;
+          // getGagTypeCode 로직에 맞춰 표시
+          // 4점 기준: 4점 초과 시 오른쪽 특성, 4점 이하 시 왼쪽 특성
+          // percentage는 0-100%로 변환된 값 (1점=0%, 4점=50%, 7점=100%)
+          const isRightDominant = percentage > 50; // 50% = 4점 기준
+          const dominantLabel = isRightDominant ? axis.rightLabel : axis.leftLabel;
+          const dominantPercentage = isRightDominant ? percentage : (100 - percentage);
+          const markerPosition = percentage; // 0-100% 전체 범위에서의 위치
           
           return (
             <div key={axis.key} className="space-y-2">
@@ -98,7 +101,9 @@ export default function AxisBarGraph({ percentages }: AxisBarGraphProps) {
           <br />
           <strong>퍼센트는 해당 특성의 강도를 나타냅니다.</strong>
           <br />
-          예: 77% 즉흥적 = 즉흥적 성향이 강함
+          예: 77% 짜여진 = 짜여진 성향이 강함 (4점 초과)
+          <br />
+          예: 23% 즉흥적 = 즉흥적 성향이 강함 (4점 이하)
         </p>
       </div>
     </div>
