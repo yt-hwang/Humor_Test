@@ -53,6 +53,9 @@ export default function AxisBarGraph({ percentages }: AxisBarGraphProps) {
           const dominantLabel = isRightStrong ? axis.rightLabel : axis.leftLabel;
           const dominantPercentage = isRightStrong ? percentage : (100 - percentage);
           
+          // 마커 위치: 표시되는 퍼센트와 일치하도록
+          const markerPosition = isRightStrong ? percentage : (100 - percentage);
+          
           return (
             <div key={axis.key} className="space-y-2">
               {/* 퍼센트와 라벨 */}
@@ -78,7 +81,7 @@ export default function AxisBarGraph({ percentages }: AxisBarGraphProps) {
                   {/* 인디케이터 위치 */}
                   <div 
                     className="absolute top-0 h-3 w-6 flex items-center justify-center transform -translate-x-1/2 transition-all duration-500 ease-out"
-                    style={{ left: `${isRightStrong ? percentage : (100 - percentage)}%` }}
+                    style={{ left: `${markerPosition}%` }}
                   >
                     {/* 원형 인디케이터 */}
                     <div className={`w-5 h-5 bg-white rounded-full border-2 ${axis.borderColor} shadow-lg flex items-center justify-center`}>
