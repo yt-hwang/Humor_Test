@@ -229,53 +229,6 @@ export function getGagTypeCode(scores: AxisScores): string {
   return code;
 }
 
-// 축별 점수를 퍼센트로 변환하는 함수
-export function convertScoresToPercentages(scores: AxisScores): Record<string, number> {
-  const percentages: Record<string, number> = {};
-  
-  // getGagTypeCode와 완전히 일치하도록 퍼센트 계산
-  // 4점을 기준으로 왼쪽/오른쪽 특성 결정
-  // 각 축별로 결정된 특성의 강도를 퍼센트로 표시
-  
-  // OI: Organized vs Improvised
-  if (scores.OI > 4) {
-    // 오른쪽 특성 (Improvised) 선택, 강도 계산
-    percentages.OI = Math.round(((scores.OI - 4) / 3) * 100); // 4점=0%, 7점=100%
-  } else {
-    // 왼쪽 특성 (Organized) 선택, 강도 계산
-    percentages.OI = Math.round(((4 - scores.OI) / 3) * 100); // 4점=0%, 1점=100%
-  }
-  
-  // NB: Natural vs Abstract
-  if (scores.NB > 4) {
-    // 오른쪽 특성 (Abstract) 선택, 강도 계산
-    percentages.NB = Math.round(((scores.NB - 4) / 3) * 100);
-  } else {
-    // 왼쪽 특성 (Natural) 선택, 강도 계산
-    percentages.NB = Math.round(((4 - scores.NB) / 3) * 100);
-  }
-  
-  // VP: Verbal vs Physical
-  if (scores.VP > 4) {
-    // 오른쪽 특성 (Physical) 선택, 강도 계산
-    percentages.VP = Math.round(((scores.VP - 4) / 3) * 100);
-  } else {
-    // 왼쪽 특성 (Verbal) 선택, 강도 계산
-    percentages.VP = Math.round(((4 - scores.VP) / 3) * 100);
-  }
-  
-  // BD: Bright vs Dark
-  if (scores.BD > 4) {
-    // 오른쪽 특성 (Dark) 선택, 강도 계산
-    percentages.BD = Math.round(((scores.BD - 4) / 3) * 100);
-  } else {
-    // 왼쪽 특성 (Bright) 선택, 강도 계산
-    percentages.BD = Math.round(((4 - scores.BD) / 3) * 100);
-  }
-  
-  return percentages;
-}
-
 // 전체 결과 계산 함수
 export function calculateResult(answers: (number | null)[]): GagResult {
   const scores = calculateAxisScores(answers);

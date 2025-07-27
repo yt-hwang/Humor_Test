@@ -5,9 +5,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 import ShareButtons from "../../src/components/ShareButtons";
 import { recordVisit } from "../../src/utils/analytics";
-import { gagResults, calculateAxisScores, convertScoresToPercentages } from "../../src/data/results";
-import AxisBarGraph from "../../src/components/AxisBarGraph";
-import DebugSection from "../../src/components/DebugSection";
+import { gagResults } from "../../src/data/results";
 
 export default function ResultClient() {
   const searchParams = useSearchParams();
@@ -16,23 +14,9 @@ export default function ResultClient() {
   const nickname = searchParams.get("nickname") || "온빛";
   const summary = searchParams.get("summary") || "항상 준비된 밝은 개그러!";
   const examples = searchParams.get("examples")?.split(",") || ["유재석", "무한도전", "런닝맨"];
-  const answersParam = searchParams.get("answers");
 
   // 결과 데이터에서 추가 정보 가져오기
   const resultData = gagResults[code] || gagResults["ONVB"];
-
-  // 답변 데이터가 있으면 축별 점수 계산
-  let percentages: Record<string, number> | null = null;
-  let parsedAnswers: (number | null)[] | null = null;
-  if (answersParam) {
-    try {
-      parsedAnswers = answersParam.split(",").map(a => a === "" ? null : parseInt(a));
-      const scores = calculateAxisScores(parsedAnswers);
-      percentages = convertScoresToPercentages(scores);
-    } catch (error) {
-      console.error("답변 데이터 파싱 오류:", error);
-    }
-  }
 
   useEffect(() => {
     // 결과 페이지 방문 기록
@@ -88,21 +72,7 @@ export default function ResultClient() {
               {summary}
             </p>
           </div>
-
-
         </div>
-
-        {/* 축별 분석 바 그래프 */}
-        {percentages && (
-          <div className="mb-6">
-            <AxisBarGraph percentages={percentages} />
-          </div>
-        )}
-
-        {/* 테스트용 디버깅 섹션 */}
-        {parsedAnswers && (
-          <DebugSection answers={parsedAnswers} />
-        )}
 
         {/* 궁합 정보 */}
         {resultData.bestMatch && resultData.worstMatch && (
@@ -177,8 +147,6 @@ export default function ResultClient() {
             <ShareButtons data={shareData} />
           </div>
         </div>
-
-
 
         {/* 하단 링크들 */}
         <div className="text-center space-y-3">
