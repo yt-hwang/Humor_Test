@@ -234,13 +234,44 @@ export function convertScoresToPercentages(scores: AxisScores): Record<string, n
   const percentages: Record<string, number> = {};
   
   // getGagTypeCode와 완전히 일치하도록 퍼센트 계산
-  // 4점 = 50% 기준으로 변환 (1점=0%, 4점=50%, 7점=100%)
-  // 퍼센트는 왼쪽 특성의 강도를 나타냄
-  // getGagTypeCode: 4점 초과면 오른쪽 특성, 4점 이하면 왼쪽 특성
-  percentages.OI = Math.round(((scores.OI - 1) / 6) * 100); // 즉흥적 vs 짜여진
-  percentages.NB = Math.round(((scores.NB - 1) / 6) * 100); // 직관적 vs 추상적
-  percentages.VP = Math.round(((scores.VP - 1) / 6) * 100); // 언어적 vs 비언어적
-  percentages.BD = Math.round(((scores.BD - 1) / 6) * 100); // 밝은 vs 어두운
+  // 4점을 기준으로 왼쪽/오른쪽 특성 결정
+  // 각 축별로 결정된 특성의 강도를 퍼센트로 표시
+  
+  // OI: Organized vs Improvised
+  if (scores.OI > 4) {
+    // 오른쪽 특성 (Improvised) 선택, 강도 계산
+    percentages.OI = Math.round(((scores.OI - 4) / 3) * 100); // 4점=0%, 7점=100%
+  } else {
+    // 왼쪽 특성 (Organized) 선택, 강도 계산
+    percentages.OI = Math.round(((4 - scores.OI) / 3) * 100); // 4점=0%, 1점=100%
+  }
+  
+  // NB: Natural vs Abstract
+  if (scores.NB > 4) {
+    // 오른쪽 특성 (Abstract) 선택, 강도 계산
+    percentages.NB = Math.round(((scores.NB - 4) / 3) * 100);
+  } else {
+    // 왼쪽 특성 (Natural) 선택, 강도 계산
+    percentages.NB = Math.round(((4 - scores.NB) / 3) * 100);
+  }
+  
+  // VP: Verbal vs Physical
+  if (scores.VP > 4) {
+    // 오른쪽 특성 (Physical) 선택, 강도 계산
+    percentages.VP = Math.round(((scores.VP - 4) / 3) * 100);
+  } else {
+    // 왼쪽 특성 (Verbal) 선택, 강도 계산
+    percentages.VP = Math.round(((4 - scores.VP) / 3) * 100);
+  }
+  
+  // BD: Bright vs Dark
+  if (scores.BD > 4) {
+    // 오른쪽 특성 (Dark) 선택, 강도 계산
+    percentages.BD = Math.round(((scores.BD - 4) / 3) * 100);
+  } else {
+    // 왼쪽 특성 (Bright) 선택, 강도 계산
+    percentages.BD = Math.round(((4 - scores.BD) / 3) * 100);
+  }
   
   return percentages;
 }

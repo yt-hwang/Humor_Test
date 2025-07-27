@@ -44,7 +44,7 @@ export default function DebugSection({ answers }: DebugSectionProps) {
             const percentage = percentages[axis.key];
             const isRightDominant = score > 4; // 4점 기준
             const dominantSide = isRightDominant ? axis.name.split(" vs ")[1] : axis.name.split(" vs ")[0];
-            const dominantPercentage = isRightDominant ? percentage : (100 - percentage);
+            const dominantPercentage = percentage;
             
             return (
               <div key={axis.key} className="bg-gray-50 rounded-lg p-3">
@@ -123,8 +123,9 @@ export default function DebugSection({ answers }: DebugSectionProps) {
         <div className="text-xs text-gray-600 space-y-1">
           <div>• 정방향: 답변 그대로 사용 (1점=1점, 7점=7점)</div>
           <div>• 역방향: 8-답변으로 변환 (1점=7점, 7점=1점)</div>
-          <div>• 각 축별 평균 계산 후 1-7점을 0-100%로 변환</div>
+          <div>• 각 축별 평균 계산 후 4점 기준으로 특성 결정</div>
           <div>• 4점 초과 시 오른쪽 특성, 4점 이하 시 왼쪽 특성</div>
+          <div>• 퍼센트는 결정된 특성의 강도를 나타냄 (0-100%)</div>
         </div>
       </div>
     </div>
