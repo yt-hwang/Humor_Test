@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { questions } from "../../src/data/questions";
 import { calculateResult } from "../../src/data/results";
 import { recordVisit, recordTestResult } from "../../src/utils/analytics";
+import { encodeAnswers } from "../../src/utils/encodeAnswers";
 
 const likertLabels = [
   "전혀 그렇지 않다",
@@ -39,7 +40,8 @@ function ResultContent() {
       code: result.code,
       nickname: result.nickname,
       summary: result.summary,
-      examples: result.examples.join(",")
+      examples: result.examples.join(","),
+      answers: encodeAnswers(finalAnswers)
     });
     router.push(`/result?${params.toString()}`);
   };

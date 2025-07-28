@@ -5,7 +5,9 @@ import Link from "next/link";
 import { useEffect } from "react";
 import ShareButtons from "../../src/components/ShareButtons";
 import { recordVisit } from "../../src/utils/analytics";
-import { gagResults } from "../../src/data/results";
+import { gagResults, calculateAxisScores } from "../../src/data/results";
+import { decodeAnswers } from "../../src/utils/encodeAnswers";
+import AxisBarChart from "../../src/components/AxisBarChart";
 
 export default function ResultClient() {
   const searchParams = useSearchParams();
@@ -14,6 +16,11 @@ export default function ResultClient() {
   const nickname = searchParams.get("nickname") || "온빛";
   const summary = searchParams.get("summary") || "항상 준비된 밝은 개그러!";
   const examples = searchParams.get("examples")?.split(",") || ["유재석", "무한도전", "런닝맨"];
+  const encodedAnswers = searchParams.get("answers");
+  
+  // 답변 데이터 디코딩 및 축별 점수 계산
+  const answers = encodedAnswers ? decodeAnswers(encodedAnswers) : [];
+  const axisScores = answers.length > 0 ? calculateAxisScores(answers) : null;
   
 
 
@@ -122,6 +129,11 @@ export default function ResultClient() {
               </div>
             </div>
           </div>
+        )}
+
+        {/* 성향 분석 막대그래프 */}
+        {axisScores && (
+          <AxisBarChart scores={axisScores} />
         )}
 
         {/* 공유 섹션 */}
