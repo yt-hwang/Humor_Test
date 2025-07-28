@@ -64,7 +64,6 @@ export default function AxisChart({ scores }: AxisChartProps) {
           const config = axisConfig[axis];
           const percentage = getPercentage(score);
           const percentageText = getPercentageText(axis, score);
-          const isRightDominant = score > 4;
           
           return (
             <div key={axis} className="space-y-3">
