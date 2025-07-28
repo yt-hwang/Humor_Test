@@ -26,7 +26,7 @@ const axisConfigs: Record<keyof AxisScores, AxisConfig> = {
     rightKorean: "즉흥적"
   },
   NB: {
-    leftLabel: "Intuitive",
+    leftLabel: "Natural",
     rightLabel: "Abstract",
     leftKorean: "직관적", 
     rightKorean: "추상적"
@@ -49,12 +49,12 @@ const AxisBarChart: React.FC<AxisBarChartProps> = ({ scores }) => {
   const calculateBarData = (value: number, axis: keyof AxisScores) => {
     const distance = Math.abs(value - 4) / 3; // 0~1
     const percent = 50 + Math.round(distance * 50); // 50~100
-    const side = value >= 4 ? 'right' : 'left';
+    const side = value >= 4 ? 'left' : 'right';
     
     return {
       percent,
       side,
-      label: side === 'right' ? axisConfigs[axis].rightKorean : axisConfigs[axis].leftKorean,
+      label: side === 'left' ? axisConfigs[axis].leftKorean : axisConfigs[axis].rightKorean,
       value
     };
   };
@@ -89,13 +89,13 @@ const AxisBarChart: React.FC<AxisBarChartProps> = ({ scores }) => {
                 {/* 막대 */}
                 <div 
                   className={`absolute top-0 h-full transition-all duration-1500 ease-out ${
-                    barData.side === 'right' 
-                      ? 'bg-gradient-to-r from-blue-500 to-purple-600' 
-                      : 'bg-gradient-to-l from-orange-500 to-red-500'
+                    barData.side === 'left' 
+                      ? 'bg-gradient-to-l from-blue-500 to-purple-600' 
+                      : 'bg-gradient-to-r from-orange-500 to-red-500'
                   }`}
                   style={{
-                    left: barData.side === 'right' ? '50%' : `${50 - barData.percent}%`,
-                    right: barData.side === 'left' ? '50%' : `${50 - barData.percent}%`,
+                    left: barData.side === 'left' ? `${50 - barData.percent}%` : '50%',
+                    right: barData.side === 'right' ? `${50 - barData.percent}%` : '50%',
                   }}
                 />
                 
@@ -103,14 +103,14 @@ const AxisBarChart: React.FC<AxisBarChartProps> = ({ scores }) => {
                  {barData.value !== 4 && (
                    <div 
                      className={`absolute top-1/2 transform -translate-y-1/2 text-xs font-bold text-white z-20 px-2 py-1 rounded-full shadow-lg ${
-                       barData.side === 'right' 
+                       barData.side === 'left' 
                          ? 'bg-blue-600/90' 
                          : 'bg-orange-600/90'
                      }`}
                      style={{
-                       left: barData.side === 'right' 
-                         ? `${50 + (barData.percent - 50)}%` 
-                         : `${50 - (barData.percent - 50)}%`,
+                       left: barData.side === 'left' 
+                         ? `${50 - (barData.percent - 50)}%` 
+                         : `${50 + (barData.percent - 50)}%`,
                        transform: `translate(-50%, -50%) ${barData.side === 'left' ? 'translateX(-100%)' : ''}`
                      }}
                    >

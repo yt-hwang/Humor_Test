@@ -220,10 +220,10 @@ export function calculateAxisScores(answers: (number | null)[]): AxisScores {
 // 축별 점수를 기반으로 개그유형 코드 생성
 export function getGagTypeCode(scores: AxisScores): string {
   const code = [
-    scores.OI > 4 ? "O" : "I", // Organized vs Improvised
-    scores.NB > 4 ? "N" : "B", // Natural vs Abstract
-    scores.VP > 4 ? "V" : "P", // Verbal vs Physical
-    scores.BD > 4 ? "B" : "D"  // Bright vs Dark
+    scores.OI > 4 ? "O" : "I", // Organized vs Improvised (4보다 크면 Organized)
+    scores.NB > 4 ? "N" : "B", // Natural vs Abstract (4보다 크면 Natural)
+    scores.VP > 4 ? "V" : "P", // Verbal vs Physical (4보다 크면 Verbal)
+    scores.BD > 4 ? "B" : "D"  // Bright vs Dark (4보다 크면 Bright)
   ].join("");
   
   return code;

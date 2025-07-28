@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 import ShareButtons from "../../src/components/ShareButtons";
 import { recordVisit } from "../../src/utils/analytics";
-import { gagResults, calculateAxisScores } from "../../src/data/results";
+import { gagResults, calculateAxisScores, getGagTypeCode } from "../../src/data/results";
 import { decodeAnswers } from "../../src/utils/encodeAnswers";
 import AxisBarChart from "../../src/components/AxisBarChart";
 
