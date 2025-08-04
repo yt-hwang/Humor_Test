@@ -16,6 +16,7 @@ interface AxisConfig {
   rightLabel: string;
   leftKorean: string;
   rightKorean: string;
+  color: string;
 }
 
 const axisConfigs: Record<keyof AxisScores, AxisConfig> = {
@@ -23,25 +24,29 @@ const axisConfigs: Record<keyof AxisScores, AxisConfig> = {
     leftLabel: "Organized",
     rightLabel: "Improvised", 
     leftKorean: "짜여진",
-    rightKorean: "즉흥적"
+    rightKorean: "즉흥적",
+    color: "from-blue-400 to-indigo-400" // 컨셉형 색상
   },
   NB: {
     leftLabel: "Natural",
     rightLabel: "Abstract",
     leftKorean: "직관적", 
-    rightKorean: "추상적"
+    rightKorean: "추상적",
+    color: "from-purple-400 to-violet-400" // 예측불가형 색상
   },
   VP: {
     leftLabel: "Verbal",
     rightLabel: "Physical",
     leftKorean: "언어적",
-    rightKorean: "비언어적"
+    rightKorean: "비언어적",
+    color: "from-yellow-400 to-orange-400" // 분위기메이커형 색상
   },
   BD: {
     leftLabel: "Bright",
     rightLabel: "Dark", 
     leftKorean: "밝은",
-    rightKorean: "어두운"
+    rightKorean: "어두운",
+    color: "from-red-400 to-pink-400" // 팩폭형 색상
   }
 };
 
@@ -88,11 +93,7 @@ const AxisBarChart: React.FC<AxisBarChartProps> = ({ scores }) => {
                 
                 {/* 막대 */}
                 <div 
-                  className={`absolute top-0 h-full transition-all duration-1500 ease-out ${
-                    barData.side === 'left' 
-                      ? 'bg-gradient-to-l from-blue-500 to-purple-600' 
-                      : 'bg-gradient-to-r from-orange-500 to-red-500'
-                  }`}
+                  className={`absolute top-0 h-full transition-all duration-1500 ease-out bg-gradient-to-r ${config.color}`}
                   style={{
                     left: barData.side === 'left' ? `${50 - barData.percent}%` : '50%',
                     right: barData.side === 'right' ? `${50 - barData.percent}%` : '50%',
@@ -102,11 +103,7 @@ const AxisBarChart: React.FC<AxisBarChartProps> = ({ scores }) => {
                                  {/* 퍼센트 표시 */}
                  {barData.value !== 4 && (
                    <div 
-                     className={`absolute top-1/2 transform -translate-y-1/2 text-xs font-bold text-white z-20 px-2 py-1 rounded-full shadow-lg ${
-                       barData.side === 'left' 
-                         ? 'bg-blue-600/90' 
-                         : 'bg-orange-600/90'
-                     }`}
+                     className={`absolute top-1/2 transform -translate-y-1/2 text-xs font-bold text-white z-20 px-2 py-1 rounded-full shadow-lg bg-gradient-to-r ${config.color}`}
                      style={{
                        left: barData.side === 'left' 
                          ? `${50 - (barData.percent - 50)}%` 
