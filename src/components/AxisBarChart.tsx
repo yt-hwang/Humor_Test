@@ -80,47 +80,57 @@ const AxisBarChart: React.FC<AxisBarChartProps> = ({ scores }) => {
           
           return (
             <div key={axis} className="space-y-2">
-              {/* 축 레이블 */}
-              <div className="flex justify-between text-xs text-gray-600 font-medium">
-                <span>{config.leftKorean}</span>
-                <span>{config.rightKorean}</span>
+                            {/* 축 레이블 */}
+              <div className="flex justify-between text-sm text-gray-600 font-medium mb-1">
+                <span>{config.leftKorean} ({config.leftLabel})</span>
+                <span>{config.rightKorean} ({config.rightLabel})</span>
               </div>
               
               {/* 막대 그래프 */}
-              <div className="relative h-10 bg-gray-200 rounded-full overflow-hidden shadow-inner">
+              <div className="relative h-3 bg-gray-200 rounded-full shadow-inner mb-4">
                 {/* 중앙 기준선 */}
                 <div className="absolute left-1/2 top-0 w-0.5 h-full bg-gray-400 z-10 transform -translate-x-1/2"></div>
                 
                 {/* 막대 */}
                 <div 
-                  className={`absolute top-0 h-full transition-all duration-1500 ease-out bg-gradient-to-r ${config.color}`}
+                  className={`absolute top-0 h-full transition-all duration-1500 ease-out bg-gradient-to-r ${config.color} rounded-full`}
                   style={{
                     left: barData.side === 'left' ? `${50 - barData.percent}%` : '50%',
                     right: barData.side === 'right' ? `${50 - barData.percent}%` : '50%',
                   }}
                 />
                 
-                                 {/* 퍼센트 표시 */}
-                 {barData.value !== 4 && (
-                   <div 
-                     className={`absolute top-1/2 transform -translate-y-1/2 text-xs font-bold text-white z-20 px-2 py-1 rounded-full shadow-lg bg-gradient-to-r ${config.color}`}
-                     style={{
-                       left: barData.side === 'left' 
-                         ? `${50 - (barData.percent - 50)}%` 
-                         : `${50 + (barData.percent - 50)}%`,
-                       transform: `translate(-50%, -50%) ${barData.side === 'left' ? 'translateX(-100%)' : ''}`
-                     }}
-                   >
-                     {barData.label} {barData.percent}%
-                   </div>
-                 )}
+                {/* 동그라미 슬라이더 */}
+                {barData.value !== 4 && (
+                  <div 
+                    className="absolute top-1/2 transform -translate-y-1/2 z-20 transition-all duration-1500 ease-out"
+                    style={{
+                      left: barData.side === 'left' 
+                        ? `${50 - (barData.percent - 50)}%` 
+                        : `${50 + (barData.percent - 50)}%`,
+                      transform: 'translate(-50%, -50%)'
+                    }}
+                  >
+                    {/* 흰색 외곽 동그라미 */}
+                    <div className="w-6 h-6 bg-white rounded-full border-2 border-gray-300 shadow-lg flex items-center justify-center">
+                      {/* 색상 내부 동그라미 */}
+                      <div className={`w-4 h-4 bg-gradient-to-r ${config.color} rounded-full`}></div>
+                    </div>
+                  </div>
+                )}
+                
+                {/* 중앙 기준점 */}
+                <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-gray-400 rounded-full z-15"></div>
               </div>
               
-              {/* 영어 레이블 */}
-              <div className="flex justify-between text-xs text-gray-500">
-                <span>{config.leftLabel}</span>
-                <span>{config.rightLabel}</span>
-              </div>
+              {/* 퍼센트와 성향 표시 */}
+              {barData.value !== 4 && (
+                <div className="text-center">
+                  <div className={`inline-block px-3 py-1 rounded-full text-sm font-bold text-white bg-gradient-to-r ${config.color} shadow-lg`}>
+                    {barData.label} {barData.percent}%
+                  </div>
+                </div>
+              )}
             </div>
           );
         })}
