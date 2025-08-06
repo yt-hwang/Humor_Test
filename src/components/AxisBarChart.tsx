@@ -87,23 +87,17 @@ const AxisBarChart: React.FC<AxisBarChartProps> = ({ scores }) => {
               </div>
               
               {/* 막대 그래프 */}
-              <div className="relative h-3 bg-gray-200 rounded-full shadow-inner mb-4">
-                {/* 중앙 기준선 */}
-                <div className="absolute left-1/2 top-0 w-0.5 h-full bg-gray-400 z-10 transform -translate-x-1/2"></div>
+              <div className="relative h-4 bg-gray-200 rounded-full shadow-inner mb-6">
+                {/* 전체 배경 막대 */}
+                <div className={`absolute top-0 left-0 w-full h-full bg-gradient-to-r ${config.color} rounded-full opacity-100`}></div>
                 
-                {/* 막대 */}
-                <div 
-                  className={`absolute top-0 h-full transition-all duration-1500 ease-out bg-gradient-to-r ${config.color} rounded-full`}
-                  style={{
-                    left: barData.side === 'left' ? `${50 - barData.percent}%` : '50%',
-                    right: barData.side === 'right' ? `${50 - barData.percent}%` : '50%',
-                  }}
-                />
+                {/* 중앙 기준선 */}
+                <div className="absolute left-1/2 top-0 w-0.5 h-full bg-white z-10 transform -translate-x-1/2 opacity-50"></div>
                 
                 {/* 동그라미 슬라이더 */}
                 {barData.value !== 4 && (
                   <div 
-                    className="absolute top-1/2 transform -translate-y-1/2 z-20 transition-all duration-1500 ease-out"
+                    className="absolute top-1/2 z-20 transition-all duration-1500 ease-out"
                     style={{
                       left: barData.side === 'left' 
                         ? `${50 - (barData.percent - 50)}%` 
@@ -112,22 +106,22 @@ const AxisBarChart: React.FC<AxisBarChartProps> = ({ scores }) => {
                     }}
                   >
                     {/* 흰색 외곽 동그라미 */}
-                    <div className="w-6 h-6 bg-white rounded-full border-2 border-gray-300 shadow-lg flex items-center justify-center">
+                    <div className="w-5 h-5 bg-white rounded-full border-2 border-white shadow-lg flex items-center justify-center">
                       {/* 색상 내부 동그라미 */}
-                      <div className={`w-4 h-4 bg-gradient-to-r ${config.color} rounded-full`}></div>
+                      <div className={`w-3 h-3 bg-gradient-to-r ${config.color} rounded-full`}></div>
                     </div>
                   </div>
                 )}
                 
                 {/* 중앙 기준점 */}
-                <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-gray-400 rounded-full z-15"></div>
+                <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-1 bg-white rounded-full z-15 opacity-80"></div>
               </div>
               
               {/* 퍼센트와 성향 표시 */}
               {barData.value !== 4 && (
-                <div className="text-center">
-                  <div className={`inline-block px-3 py-1 rounded-full text-sm font-bold text-white bg-gradient-to-r ${config.color} shadow-lg`}>
-                    {barData.label} {barData.percent}%
+                <div className="text-center mb-2 -mt-8">
+                  <div className={`inline-block px-3 py-1 rounded-lg text-sm font-bold text-white bg-gradient-to-r ${config.color} shadow-lg`}>
+                    {barData.percent}% {barData.label}
                   </div>
                 </div>
               )}
