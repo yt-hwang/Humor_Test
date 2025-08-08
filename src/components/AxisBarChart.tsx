@@ -91,8 +91,9 @@ const AxisBarChart: React.FC<AxisBarChartProps> = ({ scores }) => {
                 {/* 전체 배경 막대 */}
                 <div className={`absolute top-0 left-0 w-full h-full bg-gradient-to-r ${config.color} rounded-full opacity-100`}></div>
                 
-                {/* 동그라미 슬라이더 */}
-                {barData.value !== 4 && (
+              {/* 동그라미 슬라이더 */}
+              {barData.value !== 4 && (
+                <>
                   <div 
                     className="absolute top-1/2 z-20 transition-all duration-1500 ease-out"
                     style={{
@@ -102,30 +103,27 @@ const AxisBarChart: React.FC<AxisBarChartProps> = ({ scores }) => {
                       transform: 'translate(-50%, -50%)'
                     }}
                   >
-                    {/* 흰색 외곽 동그라미 */}
                     <div className="w-5 h-5 bg-white rounded-full border-2 border-white shadow-lg flex items-center justify-center">
-                      {/* 색상 내부 동그라미 */}
                       <div className={`w-3 h-3 bg-gradient-to-r ${config.color} rounded-full`}></div>
                     </div>
                   </div>
-                )}
-              </div>
-              
-              {/* 퍼센트와 성향 표시 (동그라미 위치와 정렬) */}
-              {barData.value !== 4 && (
-                <div className="relative h-0">
+                  {/* 동그라미 아래 라벨 (막대 컨테이너 기준 위치) */}
                   <div
-                    className={`absolute top-0 transform translate-y-2 -translate-x-1/2 px-2 py-0.5 rounded-md text-xs font-bold text-white bg-gradient-to-r ${config.color} shadow`}
+                    className={`absolute z-10 px-2 py-0.5 rounded-md text-xs font-bold text-white bg-gradient-to-r ${config.color} shadow transition-all duration-1500 ease-out`}
                     style={{
+                      top: 'calc(100% + 4px)',
                       left: barData.side === 'left' 
                         ? `${50 - (barData.percent - 50)}%` 
                         : `${50 + (barData.percent - 50)}%`,
+                      transform: 'translateX(-50%)'
                     }}
                   >
                     {barData.percent}% {barData.label}
                   </div>
-                </div>
+                </>
               )}
+              </div>
+              
             </div>
           );
         })}
