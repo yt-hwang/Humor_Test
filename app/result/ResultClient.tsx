@@ -28,7 +28,10 @@ export default function ResultClient() {
 
 
   // 결과 데이터에서 추가 정보 가져오기
-  const resultData = gagResults[code] || gagResults["ONVB"];
+  // 모든 축이 4점(=그래프 51% 표기)인 경우 INPB로 강제
+  const isNeutralAll = axisScores && axisScores.OI === 4 && axisScores.NB === 4 && axisScores.VP === 4 && axisScores.BD === 4;
+  const effectiveCode = isNeutralAll ? "INPB" : code;
+  const resultData = gagResults[effectiveCode] || gagResults["ONVB"];
 
   useEffect(() => {
     // 결과 페이지 방문 기록
@@ -46,7 +49,7 @@ export default function ResultClient() {
   }, [code, nickname]);
 
   const shareData = {
-    code,
+    code: effectiveCode,
     nickname,
     summary,
     examples

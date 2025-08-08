@@ -66,6 +66,9 @@ const AxisBarChart: React.FC<AxisBarChartProps> = ({ scores }) => {
 
   const axes: (keyof AxisScores)[] = ['OI', 'NB', 'VP', 'BD'];
 
+  const isNeutralAll =
+    scores.OI === 4 && scores.NB === 4 && scores.VP === 4 && scores.BD === 4;
+
   return (
     <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/30">
       <h3 className="text-lg font-semibold text-gray-800 mb-6 flex items-center justify-center gap-2">
@@ -76,10 +79,15 @@ const AxisBarChart: React.FC<AxisBarChartProps> = ({ scores }) => {
       <div className="space-y-6">
         {axes.map((axis) => {
           const barData = calculateBarData(scores[axis], axis);
+          const neutralLabelForAxis =
+            axis === 'OI' || axis === 'VP' ? axisConfigs[axis].rightKorean : axisConfigs[axis].leftKorean;
+          const displayLabel = (barData.value === 4 && isNeutralAll)
+            ? neutralLabelForAxis
+            : barData.label;
           const positionLeft = barData.value === 4
             ? '50%'
             : (barData.side === 'left' ? `${50 - (barData.percent - 50)}%` : `${50 + (barData.percent - 50)}%`);
-          const labelText = barData.value === 4 ? '51%' : `${barData.percent}% ${barData.label}`;
+          const labelText = barData.value === 4 ? `51% ${displayLabel}` : `${barData.percent}% ${displayLabel}`;
           const config = axisConfigs[axis];
           
           return (
