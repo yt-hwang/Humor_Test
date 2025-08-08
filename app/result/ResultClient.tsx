@@ -176,9 +176,6 @@ function Tabs({ axisScores, resultData }: { axisScores: AxisScores | null; resul
         </button>
       </div>
 
-      {/* 성향 분석 막대그래프는 탭 위공통 표시 */}
-      {axisScores && <AxisBarChart scores={axisScores} />}
-
       {active === 'strengths' && axisScores && (
         <StrengthsWeaknesses scores={axisScores} />
       )}

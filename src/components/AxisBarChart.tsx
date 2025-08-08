@@ -111,10 +111,17 @@ const AxisBarChart: React.FC<AxisBarChartProps> = ({ scores }) => {
                 )}
               </div>
               
-              {/* 퍼센트와 성향 표시 */}
+              {/* 퍼센트와 성향 표시 (동그라미 위치와 정렬) */}
               {barData.value !== 4 && (
-                <div className="text-center mb-2 -mt-8">
-                  <div className={`inline-block px-3 py-1 rounded-lg text-sm font-bold text-white bg-gradient-to-r ${config.color} shadow-lg`}>
+                <div className="relative h-0">
+                  <div
+                    className={`absolute top-0 transform translate-y-2 -translate-x-1/2 px-2 py-0.5 rounded-md text-xs font-bold text-white bg-gradient-to-r ${config.color} shadow`}
+                    style={{
+                      left: barData.side === 'left' 
+                        ? `${50 - (barData.percent - 50)}%` 
+                        : `${50 + (barData.percent - 50)}%`,
+                    }}
+                  >
                     {barData.percent}% {barData.label}
                   </div>
                 </div>
