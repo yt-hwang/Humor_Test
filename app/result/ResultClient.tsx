@@ -8,6 +8,8 @@ import { recordVisit } from "../../src/utils/analytics";
 import { gagResults, calculateAxisScores } from "../../src/data/results";
 import { decodeAnswers } from "../../src/utils/encodeAnswers";
 import AxisBarChart from "../../src/components/AxisBarChart";
+import StrengthsWeaknesses from "../../src/components/StrengthsWeaknesses";
+import React from "react";
 
 export default function ResultClient() {
   const searchParams = useSearchParams();
@@ -83,56 +85,11 @@ export default function ResultClient() {
           </div>
         </div>
 
-        {/* 성향 분석 막대그래프 */}
-        {axisScores && (
-          <AxisBarChart scores={axisScores} />
-        )}
-
-        {/* 궁합 정보 */}
-        {resultData.bestMatch && resultData.worstMatch && (
-          <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/30">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center justify-center gap-2">
-              <span>💕</span>
-              개그 궁합 분석
-            </h3>
-            
-            {/* 최상의 짝궁 */}
-            <div className="mb-4">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-green-500 text-lg">✅</span>
-                <span className="text-sm font-semibold text-gray-700">최상의 짝궁</span>
-              </div>
-              <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 border border-green-200">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-lg font-bold text-green-600">
-                    {gagResults[resultData.bestMatch]?.code} - {gagResults[resultData.bestMatch]?.nickname}
-                  </span>
-                </div>
-                <p className="text-xs text-gray-600 leading-relaxed">
-                  {resultData.bestMatchReason}
-                </p>
-              </div>
-            </div>
-
-            {/* 최악의 짝궁 */}
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-red-500 text-lg">❌</span>
-                <span className="text-sm font-semibold text-gray-700">최악의 짝궁</span>
-              </div>
-              <div className="bg-gradient-to-r from-red-50 to-pink-50 rounded-xl p-4 border border-red-200">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-lg font-bold text-red-600">
-                    {gagResults[resultData.worstMatch]?.code} - {gagResults[resultData.worstMatch]?.nickname}
-                  </span>
-                </div>
-                <p className="text-xs text-gray-600 leading-relaxed">
-                  {resultData.worstMatchReason}
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
+        {/* 탭: 강점/약점 | 개그 궁합 */}
+        <Tabs
+          axisScores={axisScores}
+          resultData={resultData}
+        />
 
         {/* 공유 섹션 */}
         <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/30">
@@ -187,5 +144,84 @@ export default function ResultClient() {
         </div>
       </div>
     </main>
+  );
+}
+
+function Tabs({ axisScores, resultData }: { axisScores: any; resultData: any }) {
+  const [active, setActive] = React.useState<'strengths' | 'compat'>('strengths');
+
+  return (
+    <div>
+      <div className="flex justify-center gap-2 mb-4">
+        <button
+          className={`px-4 py-2 rounded-full text-sm font-semibold border transition ${
+            active === 'strengths'
+              ? 'bg-blue-600 text-white border-blue-600'
+              : 'bg-white/80 text-gray-700 border-gray-200 hover:bg-gray-50'
+          }`}
+          onClick={() => setActive('strengths')}
+        >
+          강점/약점
+        </button>
+        <button
+          className={`px-4 py-2 rounded-full text-sm font-semibold border transition ${
+            active === 'compat'
+              ? 'bg-purple-600 text-white border-purple-600'
+              : 'bg-white/80 text-gray-700 border-gray-200 hover:bg-gray-50'
+          }`}
+          onClick={() => setActive('compat')}
+        >
+          개그 궁합
+        </button>
+      </div>
+
+      {/* 성향 분석 막대그래프는 탭 위공통 표시 */}
+      {axisScores && <AxisBarChart scores={axisScores} />}
+
+      {active === 'strengths' && axisScores && (
+        <StrengthsWeaknesses scores={axisScores} />
+      )}
+
+      {active === 'compat' && resultData.bestMatch && resultData.worstMatch && (
+        <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/30">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center justify-center gap-2">
+            <span>💕</span>
+            개그 궁합 분석
+          </h3>
+          <div className="mb-4">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-green-500 text-lg">✅</span>
+              <span className="text-sm font-semibold text-gray-700">최상의 짝궁</span>
+            </div>
+            <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 border border-green-200">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-lg font-bold text-green-600">
+                  {gagResults[resultData.bestMatch]?.code} - {gagResults[resultData.bestMatch]?.nickname}
+                </span>
+              </div>
+              <p className="text-xs text-gray-600 leading-relaxed">
+                {resultData.bestMatchReason}
+              </p>
+            </div>
+          </div>
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-red-500 text-lg">❌</span>
+              <span className="text-sm font-semibold text-gray-700">최악의 짝궁</span>
+            </div>
+            <div className="bg-gradient-to-r from-red-50 to-pink-50 rounded-xl p-4 border border-red-200">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-lg font-bold text-red-600">
+                  {gagResults[resultData.worstMatch]?.code} - {gagResults[resultData.worstMatch]?.nickname}
+                </span>
+              </div>
+              <p className="text-xs text-gray-600 leading-relaxed">
+                {resultData.worstMatchReason}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }

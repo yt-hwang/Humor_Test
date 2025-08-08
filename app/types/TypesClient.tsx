@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { gagResults } from "../../src/data/results";
 import { recordVisit } from "../../src/utils/analytics";
+import TypeDetailModal from "../../src/components/TypeDetailModal";
 
 // 유형별 카테고리 정보
 const categories = [
@@ -37,6 +38,8 @@ export default function TypesClient() {
   useEffect(() => {
     recordVisit('/types');
   }, []);
+
+  const [openCode, setOpenCode] = useState<string | null>(null);
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 relative overflow-hidden p-4">
@@ -73,11 +76,7 @@ export default function TypesClient() {
                   if (!typeData) return null;
 
                   return (
-                    <Link 
-                      key={typeCode} 
-                      href={`/result?code=${typeCode}&nickname=${encodeURIComponent(typeData.nickname)}&summary=${encodeURIComponent(typeData.summary)}&examples=${encodeURIComponent(typeData.examples.join(','))}`}
-                      className="group"
-                    >
+                    <div key={typeCode} className="group cursor-pointer" onClick={() => setOpenCode(typeCode)}>
                       <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 border border-white/30 hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
                         {/* 유형 코드 */}
                         <div className="text-center mb-3">
@@ -114,11 +113,11 @@ export default function TypesClient() {
                         {/* 클릭 안내 */}
                         <div className="mt-3 text-center">
                           <span className="text-xs text-blue-500 font-medium group-hover:underline">
-                            자세히 보기 →
+                            빠른 미리보기 →
                           </span>
                         </div>
                       </div>
-                    </Link>
+                    </div>
                   );
                 })}
               </div>
@@ -139,6 +138,9 @@ export default function TypesClient() {
           </Link>
         </div>
       </div>
+
+      {/* 모달 */}
+      <TypeDetailModal open={!!openCode} onClose={() => setOpenCode(null)} typeCode={openCode || ''} />
     </main>
   );
 } 
