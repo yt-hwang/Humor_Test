@@ -70,7 +70,7 @@ const AxisBarChart: React.FC<AxisBarChartProps> = ({ scores }) => {
     <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/30">
       <h3 className="text-lg font-semibold text-gray-800 mb-6 flex items-center justify-center gap-2">
         <span>📊</span>
-        성향 분석
+        개그코드 분석
       </h3>
       
       <div className="space-y-6">

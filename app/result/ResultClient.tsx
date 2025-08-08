@@ -86,11 +86,11 @@ export default function ResultClient() {
           </div>
         </div>
 
-        {/* 탭: 강점/약점 | 개그 궁합 */}
-        <Tabs
-          axisScores={axisScores}
-          resultData={resultData}
-        />
+        {/* 개그코드 분석(막대그래프) */}
+        {axisScores && <AxisBarChart scores={axisScores} />}
+
+        {/* 탭: 강점/약점 | 개그 궁합 (막대 아래) */}
+        <Tabs axisScores={axisScores} resultData={resultData} />
 
         {/* 공유 섹션 */}
         <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/30">
