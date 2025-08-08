@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import ShareButtons from "../../src/components/ShareButtons";
 import { recordVisit } from "../../src/utils/analytics";
 import { gagResults, calculateAxisScores } from "../../src/data/results";
+import type { AxisScores, GagResult } from "../../src/data/results";
 import { decodeAnswers } from "../../src/utils/encodeAnswers";
 import AxisBarChart from "../../src/components/AxisBarChart";
 import StrengthsWeaknesses from "../../src/components/StrengthsWeaknesses";
@@ -147,7 +148,7 @@ export default function ResultClient() {
   );
 }
 
-function Tabs({ axisScores, resultData }: { axisScores: any; resultData: any }) {
+function Tabs({ axisScores, resultData }: { axisScores: AxisScores | null; resultData: GagResult }) {
   const [active, setActive] = React.useState<'strengths' | 'compat'>('strengths');
 
   return (

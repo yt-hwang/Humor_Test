@@ -25,15 +25,14 @@ export default function TypeDetailModal({
   onClose: () => void;
   typeCode: string;
 }) {
-  if (!open) return null;
-  const data = gagResults[typeCode];
-  if (!data) return null;
-
-  const scores = codeToScores(typeCode);
+  const data = open ? gagResults[typeCode] : null;
+  const scores = open ? codeToScores(typeCode) : { OI: 4, NB: 4, VP: 4, BD: 4 };
   const [tab, setTab] = React.useState<'strengths' | 'compat'>('strengths');
 
+  if (!open || !data) return null;
+
   return (
-    <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-black/40">
+    <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-black/40" role="dialog" aria-modal="true">
       <div className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden">
         {/* 헤더 */}
         <div className="p-4 border-b flex items-center justify-between">
