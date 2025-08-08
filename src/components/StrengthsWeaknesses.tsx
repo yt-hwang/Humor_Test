@@ -21,6 +21,29 @@ function getLean(value: number): "A" | "B" | "N" {
 function buildSuggestions(scores: AxisScores): Suggestions {
   const result: Suggestions = { strengths: [], weaknesses: [] };
 
+  // 모두 4점(중립)인 경우 → INPB 성향으로 고정 안내
+  const isNeutralAll = scores.OI === 4 && scores.NB === 4 && scores.VP === 4 && scores.BD === 4;
+  if (isNeutralAll) {
+    return {
+      strengths: [
+        "공감 리액션으로 분위기를 잘 살려요",
+        "표정·제스처로 웃음을 크게 만들어줘요",
+        "즉흥 상황에도 자연스럽게 대응해요",
+        "팀플에서 남의 개그를 잘 받아서 더 재미있게 만들어요",
+        "진정성 있는 반응으로 신뢰를 얻어요",
+        "어떤 스타일과도 케미가 좋아요",
+      ],
+      weaknesses: [
+        "길게 설계하는 플롯·구조는 다소 약해요",
+        "분석·메시지 중심의 무거운 톤은 힘들 수 있어요",
+        "즉흥이 과해지면 산만해 보일 수 있어요",
+        "비언어에 치우치면 설명이 부족하게 느껴질 때가 있어요",
+        "분위기·피드백에 쉽게 흔들릴 수 있어요",
+        "혼자 주도하는 콘텐츠에선 소재 발굴이 고민될 수 있어요",
+      ],
+    };
+  }
+
   // OI: A=Organized(>4), B=Improvised(<4)
   const oiLean = getLean(scores.OI);
   if (oiLean === "A") {
