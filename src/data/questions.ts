@@ -9,7 +9,7 @@ export interface Question {
 
 export const questions: Question[] = [
   // 섞인 순서로 재배열 (각 축별로 골고루 분산)
-  { id: 1, text: "나는 개그콘서트, 웃찾사, 코미디 빅리그가 무한도전, 1박2일, 신서유기, 지구오락실보다 재밌다.", axis: "OI", reverse: false },
+  { id: 1, text: "나는 개그콘서트, 웃찾사, 코미디 빅리그가\n무한도전, 1박2일, 신서유기, 지구오락실보다 재밌다.", axis: "OI", reverse: false },
   { id: 2, text: "병맛보다 상황에 맞는 센스가 중요하다고 생각한다.", axis: "NB", reverse: false },
   { id: 3, text: "호통개그나 다크한 분위기의 개그가 밝고 유쾌한 개그보다 웃기다.", axis: "BD", reverse: true },
   { id: 4, text: "말장난이나 언어유희를 좋아한다.", axis: "VP", reverse: false },
@@ -17,7 +17,7 @@ export const questions: Question[] = [
   { id: 6, text: "고차원적이거나 엉뚱한 개그에 더 끌린다.", axis: "NB", reverse: true },
   { id: 7, text: "표정, 몸짓, 행동 등의 표현으로 웃기는 것을 좋아한다.", axis: "VP", reverse: true },
   { id: 8, text: "김구라, 이경규, 박명수의 개그가 웃기다.", axis: "BD", reverse: true },
-  { id: 9, text: "성대모사 능력보다 즉석 N행시 능력이 갖고싶다.", axis: "OI", reverse: true },
+  { id: 9, text: "성대모사 능력보다 즉석 N행시가 더 재밌다.", axis: "OI", reverse: true },
   { id: 10, text: "상대방의 반응과 맥락을 잘 파악한 개그가 웃기다.", axis: "NB", reverse: false },
   { id: 11, text: "나는 말을 통해 타이밍이나 표현을 세밀하게 조절하는 개그가 재밌다.", axis: "VP", reverse: false },
   { id: 12, text: "내가 좋아하는 개그는 모두가 편하게 웃을 수 있는 내용이 많다.", axis: "BD", reverse: false },

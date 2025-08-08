@@ -74,7 +74,7 @@ export default function ResultClient() {
       
       <div className="relative z-10 w-full max-w-lg">
         {/* 메인 결과 카드 */}
-        <div id="result-container" className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/20 p-8 mb-6 transform hover:scale-105 transition-all duration-300">
+        <div id="result-container" className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/20 p-8 mb-6">
           {/* 결과 헤더 */}
           <div className="text-center mb-6">
             <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
@@ -122,7 +122,7 @@ export default function ResultClient() {
               href="/quiz"
               className="group bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-xl px-6 py-3 text-sm font-medium transition-all duration-300 transform hover:scale-105 shadow-lg"
             >
-              <span className="flex items-center justify-center gap-2">
+              <span className="flex items-center justify-center gap-2 w-full text-center">
                 테스트 다시하기
                 <svg className="w-4 h-4 group-hover:rotate-180 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -166,26 +166,26 @@ function Tabs({ axisScores, resultData }: { axisScores: AxisScores | null; resul
 
   return (
     <div>
-      <div className="flex justify-center gap-2 mb-4">
+      <div className="flex justify-center gap-3 mb-4">
         <button
-          className={`px-4 py-2 rounded-full text-sm font-semibold border transition ${
+          className={`px-5 py-2.5 rounded-full text-sm font-semibold border shadow-sm transition ${
             active === 'strengths'
-              ? 'bg-blue-600 text-white border-blue-600'
-              : 'bg-white/80 text-gray-700 border-gray-200 hover:bg-gray-50'
+              ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white border-transparent ring-2 ring-blue-200'
+              : 'bg-white/90 text-gray-700 border-gray-300 hover:bg-gray-50'
           }`}
           onClick={() => setActive('strengths')}
         >
-          강점/약점
+          🔎 강점/약점 보기
         </button>
         <button
-          className={`px-4 py-2 rounded-full text-sm font-semibold border transition ${
+          className={`px-5 py-2.5 rounded-full text-sm font-semibold border shadow-sm transition ${
             active === 'compat'
-              ? 'bg-purple-600 text-white border-purple-600'
-              : 'bg-white/80 text-gray-700 border-gray-200 hover:bg-gray-50'
+              ? 'bg-gradient-to-r from-pink-500 to-orange-500 text-white border-transparent ring-2 ring-pink-200'
+              : 'bg-white/90 text-gray-700 border-gray-300 hover:bg-gray-50'
           }`}
           onClick={() => setActive('compat')}
         >
-          개그 궁합
+          💞 개그 궁합 보기
         </button>
       </div>
 

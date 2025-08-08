@@ -43,7 +43,7 @@ function ResultContent() {
       examples: result.examples.join(","),
       answers: encodeAnswers(finalAnswers)
     });
-    router.push(`/result?${params.toString()}`);
+    router.push(`/loading?${params.toString()}`);
   };
 
   const handleSelect = (value: number) => {
@@ -66,6 +66,19 @@ function ResultContent() {
     if (current > 0) setCurrent(current - 1);
   };
 
+  const handleNextIfAnswered = () => {
+    if (answers[current] !== null) {
+      if (current < questions.length - 1) {
+        setCurrent(current + 1);
+      } else {
+        // 마지막 문항이고 모두 답변했으면 결과로
+        if (answers.every(a => a !== null)) {
+          goToResult(answers);
+        }
+      }
+    }
+  };
+
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-yellow-100 to-pink-100">
       <div className="w-full max-w-md p-4 sm:p-6 bg-white rounded-2xl shadow-lg flex flex-col items-center mx-4">
@@ -73,7 +86,7 @@ function ResultContent() {
           <span>Q{current + 1} / {questions.length}</span>
           <span>{Math.round(((current + 1) / questions.length) * 100)}%</span>
         </div>
-        <h2 className="text-sm sm:text-base md:text-lg font-bold mb-6 text-center min-h-[32px] sm:min-h-[40px] md:min-h-[48px] text-gray-900 leading-tight px-2 break-keep text-pretty">{questions[current].text}</h2>
+         <h2 className="text-sm sm:text-base md:text-lg font-bold mb-6 text-center min-h-[32px] sm:min-h-[40px] md:min-h-[48px] text-gray-900 leading-tight px-2 whitespace-pre-line break-keep text-pretty">{questions[current].text}</h2>
         <div className="flex flex-col gap-2 w-full mb-6">
           <div className="flex justify-between text-xs text-gray-500 px-1">
             <span>{likertLabels[0]}</span>
@@ -99,12 +112,15 @@ function ResultContent() {
             onClick={handlePrev}
             disabled={current === 0}
           >이전</button>
-          {/* 다음 버튼은 제거 또는 비활성화 처리 (자동 이동이므로) */}
-          <button
-            className="bg-blue-200 text-white rounded px-4 py-2 opacity-0 cursor-default"
-            disabled
-            style={{ pointerEvents: "none" }}
-          >다음</button>
+          {/* 이미 답변한 문항일 때만 다음 버튼 노출 */}
+          {answers[current] !== null ? (
+            <button
+              className="bg-blue-500 hover:bg-blue-600 text-white rounded px-4 py-2 text-sm sm:text-base"
+              onClick={handleNextIfAnswered}
+            >다음</button>
+          ) : (
+            <span className="px-4 py-2 text-transparent">placeholder</span>
+          )}
         </div>
       </div>
     </main>

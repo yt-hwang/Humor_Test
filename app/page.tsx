@@ -23,11 +23,11 @@ export default function Home() {
           {/* 로고/아이콘 */}
           <div className="flex justify-center mb-6">
             <div className="relative">
-              <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
-                <span className="text-4xl">🎤</span>
+              <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg select-none">
+                <span className="text-4xl select-none" draggable={false}>🎤</span>
               </div>
-              <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-pink-500 to-red-500 rounded-full flex items-center justify-center">
-                <span className="text-xs text-white">✨</span>
+              <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-pink-500 to-red-500 rounded-full flex items-center justify-center select-none">
+                <span className="text-xs text-white select-none" draggable={false}>✨</span>
               </div>
             </div>
           </div>
