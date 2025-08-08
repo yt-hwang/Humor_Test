@@ -91,9 +91,6 @@ const AxisBarChart: React.FC<AxisBarChartProps> = ({ scores }) => {
                 {/* 전체 배경 막대 */}
                 <div className={`absolute top-0 left-0 w-full h-full bg-gradient-to-r ${config.color} rounded-full opacity-100`}></div>
                 
-                {/* 중앙 기준선 */}
-                <div className="absolute left-1/2 top-0 w-0.5 h-full bg-white z-10 transform -translate-x-1/2 opacity-50"></div>
-                
                 {/* 동그라미 슬라이더 */}
                 {barData.value !== 4 && (
                   <div 
@@ -112,9 +109,6 @@ const AxisBarChart: React.FC<AxisBarChartProps> = ({ scores }) => {
                     </div>
                   </div>
                 )}
-                
-                {/* 중앙 기준점 */}
-                <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-1 bg-white rounded-full z-15 opacity-80"></div>
               </div>
               
               {/* 퍼센트와 성향 표시 */}
