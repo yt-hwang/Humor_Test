@@ -9,7 +9,7 @@ import { gagResults, calculateAxisScores } from "../../src/data/results";
 import type { AxisScores, GagResult } from "../../src/data/results";
 import { decodeAnswers } from "../../src/utils/encodeAnswers";
 import AxisBarChart from "../../src/components/AxisBarChart";
-import StrengthsWeaknesses from "../../src/components/StrengthsWeaknesses";
+.import StrengthsWeaknesses from "../../src/components/StrengthsWeaknesses";
 import React from "react";
 
 export default function ResultClient() {

@@ -16,6 +16,18 @@ function codeToScores(code: string): AxisScores {
   };
 }
 
+function getCategoryGradient(code: string): string {
+  const mood = new Set(["ONVB", "ONPB", "INVB", "INPB"]); // 💛 분위기메이커형
+  const pack = new Set(["ONVD", "ONPD", "INVD", "INPD"]); // ❤️ 팩폭형
+  const concept = new Set(["OBVB", "OBVD", "OBPB", "OBPD"]); // 💙 컨셉형
+  const unpredict = new Set(["IBVB", "IBVD", "IBPB", "IBPD"]); // 💜 예측불가형
+  if (mood.has(code)) return "from-yellow-400 to-orange-400";
+  if (pack.has(code)) return "from-red-400 to-pink-400";
+  if (concept.has(code)) return "from-blue-400 to-indigo-400";
+  if (unpredict.has(code)) return "from-purple-400 to-violet-400";
+  return "from-slate-400 to-gray-500";
+}
+
 export default function TypeDetailModal({
   open,
   onClose,
@@ -31,14 +43,16 @@ export default function TypeDetailModal({
 
   if (!open || !data) return null;
 
+  const gradient = getCategoryGradient(typeCode);
+
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-black/40" role="dialog" aria-modal="true">
       <div className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden">
         {/* 헤더 */}
         <div className="p-4 border-b flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="px-3 py-1 rounded-lg bg-blue-600 text-white font-mono text-sm">{typeCode}</div>
-            <div className="font-semibold">{data.nickname}</div>
+            <div className={`px-3 py-1 rounded-lg bg-gradient-to-r ${gradient} text-white font-mono text-sm shadow`}>{typeCode}</div>
+            <div className="font-bold text-gray-900 text-base">{data.nickname}</div>
           </div>
           <button onClick={onClose} className="p-2 rounded hover:bg-gray-100">✕</button>
         </div>
@@ -47,11 +61,11 @@ export default function TypeDetailModal({
           {/* 탭 버튼 */}
           <div className="flex gap-2 mb-3">
             <button
-              className={`px-4 py-2 rounded-full text-sm font-semibold border ${tab==='strengths'?'bg-blue-600 text-white border-blue-600':'bg-white text-gray-700 border-gray-300'}`}
+              className={`px-4 py-2 rounded-full text-sm font-semibold border ${tab==='strengths'?`bg-gradient-to-r ${gradient} text-white border-transparent`:'bg-white text-gray-700 border-gray-300'}`}
               onClick={()=>setTab('strengths')}
             >강점/약점</button>
             <button
-              className={`px-4 py-2 rounded-full text-sm font-semibold border ${tab==='compat'?'bg-purple-600 text-white border-purple-600':'bg-white text-gray-700 border-gray-300'}`}
+              className={`px-4 py-2 rounded-full text-sm font-semibold border ${tab==='compat'?`bg-gradient-to-r ${gradient} text-white border-transparent`:'bg-white text-gray-700 border-gray-300'}`}
               onClick={()=>setTab('compat')}
             >개그 궁합</button>
           </div>

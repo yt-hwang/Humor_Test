@@ -25,21 +25,21 @@ function buildSuggestions(scores: AxisScores): Suggestions {
   const oiLean = getLean(scores.OI);
   if (oiLean === "A") {
     result.strengths.push(
-      "구조 설계가 탄탄해 흐름을 주도합니다",
-      "콜백·태그 등 구성 장치를 안정적으로 운용합니다"
+      "미리 준비를 잘해요. 흐름이 안정적이에요",
+      "되풀이 포인트(콜백) 같은 장치를 깔끔하게 써요"
     );
     result.weaknesses.push(
-      "돌발 상황에서 유연성이 떨어질 수 있습니다",
-      "과한 준비로 타이밍을 놓칠 위험이 있습니다"
+      "예상 밖 상황에 조금 굳을 수 있어요",
+      "준비에 신경 쓰다 타이밍을 놓칠 때가 있어요"
     );
   } else if (oiLean === "B") {
     result.strengths.push(
-      "순간 센스와 받아치기가 뛰어납니다",
-      "예상 밖 전환으로 장면을 살립니다"
+      "순간 센스가 좋아요. 받아치기가 빨라요",
+      "돌발 전환으로 분위기를 살려요"
     );
     result.weaknesses.push(
-      "장기 구조나 복선 회수에 약할 수 있습니다",
-      "마감 직전 부담·즉흥 과다로 품질 편차가 생길 수 있습니다"
+      "길게 쌓는 이야기엔 힘이 빠질 수 있어요",
+      "막판에 몰아서 하다 퀄리티가 들쑥날쑥할 수 있어요"
     );
   }
 
@@ -47,21 +47,21 @@ function buildSuggestions(scores: AxisScores): Suggestions {
   const nbLean = getLean(scores.NB);
   if (nbLean === "A") {
     result.strengths.push(
-      "상황 맥락과 공감 포인트를 잘 포착합니다",
-      "현실적 디테일로 몰입을 만듭니다"
+      "상황을 빨리 읽고 공감 포인트를 잘 잡아요",
+      "현실적인 디테일로 몰입을 만들어요"
     );
     result.weaknesses.push(
-      "아이디어의 참신도가 낮아 보일 수 있습니다",
-      "메타/추상 장치 활용이 제한될 수 있습니다"
+      "아이디어가 평범해 보일 때가 있어요",
+      "추상/메타 장치는 덜 쓰는 편이에요"
     );
   } else if (nbLean === "B") {
     result.strengths.push(
-      "독특한 콘셉트·비유·역설을 잘 씁니다",
-      "메타 유머로 새로움을 만듭니다"
+      "독특한 발상과 비유가 많아요",
+      "메타 유머로 새로움을 잘 만들어요"
     );
     result.weaknesses.push(
-      "난해하게 느껴질 수 있습니다",
-      "상황 맥락과 동떨어져 보일 위험이 있습니다"
+      "조금 어렵게 느껴질 수 있어요. 설명 한 줄이 도움이 돼요",
+      "상황과 동떨어져 보일 때가 있어요"
     );
   }
 
@@ -69,21 +69,21 @@ function buildSuggestions(scores: AxisScores): Suggestions {
   const vpLean = getLean(scores.VP);
   if (vpLean === "A") {
     result.strengths.push(
-      "워딩·타이밍 등 언어적 정밀도가 높습니다",
-      "짧은 한 줄로 공기를 전환합니다"
+      "워딩·타이밍이 정확해요",
+      "짧은 한마디로 분위기를 바꿔요"
     );
     result.weaknesses.push(
-      "표정·몸짓 등 신체 표현 활용이 적을 수 있습니다",
-      "설명 과다로 템포가 떨어질 수 있습니다"
+      "표정·몸짓 같은 신체 표현을 덜 쓰는 편이에요",
+      "말이 길어지면 템포가 떨어질 수 있어요"
     );
   } else if (vpLean === "B") {
     result.strengths.push(
-      "표정·몸짓·동선으로 장면을 장악합니다",
-      "말 없이도 의미를 전달합니다"
+      "표정·몸짓·동선으로 장면을 살려요",
+      "말 없이도 전달력이 좋아요"
     );
     result.weaknesses.push(
-      "언어적 정밀 타격이 약할 수 있습니다",
-      "설명이 부족해 오해가 생길 수 있습니다"
+      "말맛으로 치는 한방이 약할 수 있어요",
+      "설명이 부족하면 오해가 생길 수 있어요"
     );
   }
 
@@ -91,21 +91,21 @@ function buildSuggestions(scores: AxisScores): Suggestions {
   const bdLean = getLean(scores.BD);
   if (bdLean === "A") {
     result.strengths.push(
-      "밝은 톤으로 분위기를 띄우고 연결합니다",
-      "편하게 웃을 수 있는 장면을 만듭니다"
+      "밝은 톤으로 분위기를 금방 띄워요",
+      "누구나 편하게 웃을 수 있어요"
     );
     result.weaknesses.push(
-      "무게감·여운이 부족해 보일 수 있습니다",
-      "진지한 메시지와는 거리감이 생길 수 있습니다"
+      "여운이 적어 가볍게 느껴질 수 있어요",
+      "진지한 메시지와는 거리가 있어요"
     );
   } else if (bdLean === "B") {
     result.strengths.push(
-      "블랙유머·풍자로 강한 인상을 남깁니다",
-      "여운과 통찰을 만들어냅니다"
+      "블랙유머·풍자로 임팩트가 커요",
+      "웃음 뒤에 생각거리를 남겨요"
     );
     result.weaknesses.push(
-      "분위기가 무겁게 느껴질 수 있습니다",
-      "반발·피로감을 유발할 위험이 있습니다"
+      "톤이 묵직해 부담스럽게 느껴질 수 있어요",
+      "피로감을 줄 수 있으니 강약 조절이 필요해요"
     );
   }
 
