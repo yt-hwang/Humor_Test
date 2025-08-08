@@ -28,7 +28,7 @@ const axisConfigs: Record<keyof AxisScores, AxisConfig> = {
     color: "from-blue-400 to-indigo-400" // 컨셉형 색상
   },
   NB: {
-    leftLabel: "Natural",
+    leftLabel: "Intuitive",
     rightLabel: "Abstract",
     leftKorean: "직관적", 
     rightKorean: "추상적",

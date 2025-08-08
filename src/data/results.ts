@@ -242,7 +242,7 @@ export function getGagTypeCode(scores: AxisScores): string {
 
   const code = [
     scores.OI > 4 ? "O" : "I", // Organized vs Improvised (4보다 크면 Organized)
-    scores.NB > 4 ? "N" : "B", // Natural vs Abstract (4보다 크면 Natural)
+    scores.NB > 4 ? "N" : "B", // Intuitive vs Abstract (4보다 크면 Intuitive)
     scores.VP > 4 ? "V" : "P", // Verbal vs Physical (4보다 크면 Verbal)
     scores.BD > 4 ? "B" : "D"  // Bright vs Dark (4보다 크면 Bright)
   ].join("");
