@@ -83,7 +83,10 @@ export default function ResultClient() {
           </div>
         </div>
 
-
+        {/* 성향 분석 막대그래프 */}
+        {axisScores && (
+          <AxisBarChart scores={axisScores} />
+        )}
 
         {/* 궁합 정보 */}
         {resultData.bestMatch && resultData.worstMatch && (
@@ -129,11 +132,6 @@ export default function ResultClient() {
               </div>
             </div>
           </div>
-        )}
-
-        {/* 성향 분석 막대그래프 */}
-        {axisScores && (
-          <AxisBarChart scores={axisScores} />
         )}
 
         {/* 공유 섹션 */}

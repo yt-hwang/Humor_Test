@@ -10,7 +10,7 @@ export interface Question {
 export const questions: Question[] = [
   // 섞인 순서로 재배열 (각 축별로 골고루 분산)
   { id: 1, text: "나는 개그콘서트, 웃찾사, 코미디 빅리그가 무한도전, 1박2일, 신서유기, 지구오락실보다 재밌다.", axis: "OI", reverse: false },
-  { id: 2, text: "병맛보다 상황에 맞는 센스가 가장 중요하다고 생각한다.", axis: "NB", reverse: false },
+  { id: 2, text: "병맛보다 상황에 맞는 센스가 중요하다고 생각한다.", axis: "NB", reverse: false },
   { id: 3, text: "호통개그나 다크한 분위기의 개그가 밝고 유쾌한 개그보다 웃기다.", axis: "BD", reverse: true },
   { id: 4, text: "말장난이나 언어유희를 좋아한다.", axis: "VP", reverse: false },
   { id: 5, text: "즉흥적으로 떠오르는 개그가 더 자연스럽고 재미있다고 생각한다.", axis: "OI", reverse: true },
