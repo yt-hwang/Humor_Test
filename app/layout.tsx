@@ -75,6 +75,13 @@ export default function RootLayout({
           async
           src="https://developers.kakao.com/sdk/js/kakao.js"
         />
+
+        {/* Google AdSense */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2072767383270245"
+          crossOrigin="anonymous"
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
