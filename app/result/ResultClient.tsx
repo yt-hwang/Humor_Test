@@ -55,6 +55,16 @@ export default function ResultClient() {
     examples
   };
 
+  // 코드만 있을 때도 그래프/강점 노출을 위해 코드→대략 점수 변환
+  const codeToScores = (c: string): AxisScores => ({
+    OI: c[0] === 'O' ? 5 : 3,
+    NB: c[1] === 'N' ? 5 : 3,
+    VP: c[2] === 'V' ? 5 : 3,
+    BD: c[3] === 'B' ? 5 : 3,
+  });
+
+  const displayScores: AxisScores | null = axisScores ?? codeToScores(effectiveCode);
+
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 relative overflow-hidden p-4">
       {/* 배경 장식 요소들 */}
@@ -90,10 +100,10 @@ export default function ResultClient() {
         </div>
 
         {/* 개그코드 분석(막대그래프) */}
-        {axisScores && <AxisBarChart scores={axisScores} />}
+        {displayScores && <AxisBarChart scores={displayScores} />}
 
         {/* 탭: 강점/약점 | 개그 궁합 (막대 아래) */}
-        <Tabs axisScores={axisScores} resultData={resultData} />
+        {displayScores && <Tabs axisScores={displayScores} resultData={resultData} />}
 
         {/* 공유 섹션 */}
         <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/30">
