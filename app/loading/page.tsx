@@ -22,7 +22,7 @@ export default function LoadingPage() {
           <div className="w-10 h-10 rounded-full border-4 border-purple-300 border-t-transparent animate-spin"></div>
         </div>
         <h2 className="text-xl font-bold text-gray-800 mb-1">결과 조합 중...</h2>
-        <p className="text-sm text-gray-600">당신의 개그코드를 맛있게 요리하고 있어요 🍳</p>
+        <p className="text-sm text-gray-600">개그코드 결과를 준비하고 있어요 ⏳</p>
       </div>
     </main>
   );
