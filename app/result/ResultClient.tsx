@@ -188,7 +188,11 @@ function Tabs({ axisScores, resultData }: { axisScores: AxisScores | null; resul
       </div>
 
       {active === 'strengths' && axisScores && (
-        <StrengthsWeaknesses scores={axisScores} />
+        <StrengthsWeaknesses
+          scores={axisScores}
+          customStrengths={resultData.strengths}
+          customWeaknesses={resultData.weaknesses}
+        />
       )}
 
       {active === 'compat' && resultData.bestMatch && resultData.worstMatch && (

@@ -31,7 +31,7 @@ function buildSuggestions(scores: AxisScores): Suggestions {
         "즉흥 상황에도 자연스럽게 대응해요",
         "팀플에서 남의 개그를 잘 받아서 더 재미있게 만들어요",
         "진정성 있는 반응으로 신뢰를 얻어요",
-        "어떤 스타일과도 케미가 좋아요",
+        "어떤 스타일과도 궁합이 좋아요",
       ],
       weaknesses: [
         "길게 설계하는 플롯·구조는 다소 약해요",
@@ -49,7 +49,7 @@ function buildSuggestions(scores: AxisScores): Suggestions {
   if (oiLean === "A") {
     result.strengths.push(
       "미리 준비를 잘해요. 흐름이 안정적이에요",
-      "되풀이 포인트(콜백) 같은 장치를 깔끔하게 써요"
+      "되풀이 포인트 같은 장치를 깔끔하게 써요"
     );
     result.weaknesses.push(
       "예상 밖 상황에 조금 굳을 수 있어요",
@@ -75,12 +75,12 @@ function buildSuggestions(scores: AxisScores): Suggestions {
     );
     result.weaknesses.push(
       "아이디어가 평범해 보일 때가 있어요",
-      "추상/메타 장치는 덜 쓰는 편이에요"
+      "추상적인 아이디어나 비유는 덜 쓰는 편이에요"
     );
   } else if (nbLean === "B") {
     result.strengths.push(
       "독특한 발상과 비유가 많아요",
-      "메타 유머로 새로움을 잘 만들어요"
+      "엉뚱한 연결이나 비틀어진 비교로 새로움을 잘 만들어요"
     );
     result.weaknesses.push(
       "조금 어렵게 느껴질 수 있어요. 설명 한 줄이 도움이 돼요",
@@ -92,12 +92,12 @@ function buildSuggestions(scores: AxisScores): Suggestions {
   const vpLean = getLean(scores.VP);
   if (vpLean === "A") {
     result.strengths.push(
-      "워딩·타이밍이 정확해요",
+      "말투와 타이밍이 정확해요",
       "짧은 한마디로 분위기를 바꿔요"
     );
     result.weaknesses.push(
       "표정·몸짓 같은 신체 표현을 덜 쓰는 편이에요",
-      "말이 길어지면 템포가 떨어질 수 있어요"
+      "말이 길어지면 리듬이 느려질 수 있어요"
     );
   } else if (vpLean === "B") {
     result.strengths.push(
@@ -123,7 +123,7 @@ function buildSuggestions(scores: AxisScores): Suggestions {
     );
   } else if (bdLean === "B") {
     result.strengths.push(
-      "블랙유머·풍자로 임팩트가 커요",
+      "블랙유머·풍자로 한 방의 힘이 커요",
       "웃음 뒤에 생각거리를 남겨요"
     );
     result.weaknesses.push(
@@ -139,8 +139,18 @@ function buildSuggestions(scores: AxisScores): Suggestions {
   };
 }
 
-export default function StrengthsWeaknesses({ scores }: { scores: AxisScores }) {
-  const { strengths, weaknesses } = buildSuggestions(scores);
+export default function StrengthsWeaknesses({
+  scores,
+  customStrengths,
+  customWeaknesses,
+}: {
+  scores: AxisScores;
+  customStrengths?: string[];
+  customWeaknesses?: string[];
+}) {
+  const built = buildSuggestions(scores);
+  const strengths = (customStrengths && customStrengths.length > 0) ? customStrengths : built.strengths;
+  const weaknesses = (customWeaknesses && customWeaknesses.length > 0) ? customWeaknesses : built.weaknesses;
 
   return (
     <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/30">
