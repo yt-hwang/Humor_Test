@@ -1,19 +1,19 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function LoadingPage() {
   const router = useRouter();
-  const params = useSearchParams();
 
   useEffect(() => {
     // 800ms 후 결과 페이지로 이동 (살짝 기대감 주는 연출)
     const t = setTimeout(() => {
-      router.replace(`/result?${params.toString()}`);
+      const search = typeof window !== 'undefined' ? window.location.search : '';
+      router.replace(`/result${search}`);
     }, 2000);
     return () => clearTimeout(t);
-  }, [router, params]);
+  }, [router]);
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100">
