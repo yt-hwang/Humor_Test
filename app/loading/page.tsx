@@ -11,7 +11,7 @@ export default function LoadingPage() {
     // 800ms 후 결과 페이지로 이동 (살짝 기대감 주는 연출)
     const t = setTimeout(() => {
       router.replace(`/result?${params.toString()}`);
-    }, 800);
+    }, 2000);
     return () => clearTimeout(t);
   }, [router, params]);
 

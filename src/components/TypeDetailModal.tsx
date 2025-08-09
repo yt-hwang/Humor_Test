@@ -3,7 +3,6 @@
 import React from "react";
 import { gagResults } from "../data/results";
 import StrengthsWeaknesses, { AxisScores } from "./StrengthsWeaknesses";
-import AxisBarChart from "./AxisBarChart";
 
 function codeToScores(code: string): AxisScores {
   // 간단히 성향만 반영(>4 or <4)하기 위해 5/3으로 매핑
@@ -70,8 +69,7 @@ export default function TypeDetailModal({
             >개그 궁합</button>
           </div>
 
-          {/* 공통: 축 막대 */}
-          <AxisBarChart scores={scores} />
+          {/* 설명만 제공: 막대그래프 제외 */}
 
           {tab==='strengths' && (
             <StrengthsWeaknesses scores={scores} />
