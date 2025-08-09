@@ -57,6 +57,13 @@ export default function TypeDetailModal({
         </div>
 
         <div className="p-4">
+          {/* 요약 (결과 페이지와 동일한 느낌) */}
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-5 mb-4 border border-blue-100">
+            <p className="text-center text-gray-800 leading-relaxed font-medium text-base">
+              {data.summary}
+            </p>
+          </div>
+
           {/* 탭 버튼 */}
           <div className="flex gap-2 mb-3">
             <button
@@ -106,10 +113,6 @@ export default function TypeDetailModal({
         </div>
 
         <div className="p-4 border-t flex justify-end gap-2">
-          <a
-            href={`/result?code=${typeCode}&nickname=${encodeURIComponent(data.nickname)}&summary=${encodeURIComponent(data.summary)}&examples=${encodeURIComponent(data.examples.join(','))}`}
-            className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold"
-          >결과 페이지 열기</a>
           <button onClick={onClose} className="px-4 py-2 rounded-lg bg-gray-100 text-gray-700 text-sm font-semibold">닫기</button>
         </div>
       </div>
