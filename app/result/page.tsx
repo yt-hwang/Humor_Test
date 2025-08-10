@@ -2,12 +2,11 @@ import { Suspense } from "react";
 import { Metadata } from "next";
 import ResultClient from "./ResultClient";
 
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
+type Props = {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
 
-export async function generateMetadata(
-  { searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }
-): Promise<Metadata> {
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const params = await searchParams;
   const code = (params.code as string) || "ONVB";
   const nickname = (params.nickname as string) || "온빛";

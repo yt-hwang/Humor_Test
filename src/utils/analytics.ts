@@ -1,4 +1,4 @@
-import { supabase, VisitRecord, TestResult } from '../lib/supabase'
+import type { VisitRecord, TestResult } from '../lib/supabase'
 
 // 세션 ID 생성 함수
 export function generateSessionId(): string {
@@ -8,11 +8,10 @@ export function generateSessionId(): string {
 // 사용자 방문 기록
 export async function recordVisit(page: string): Promise<void> {
   try {
-    // Supabase가 제대로 초기화되지 않았으면 스킵
-    if (!supabase) {
-      console.warn('Supabase client not initialized, skipping visit record')
-      return
-    }
+    // 서버/빌드 환경에서는 실행하지 않음
+    if (typeof window === 'undefined') return
+
+    const { supabase } = await import('../lib/supabase')
 
     const sessionId = getSessionId()
     const userAgent = navigator.userAgent
@@ -42,30 +41,24 @@ export async function recordTestResult(
   resultType: string,
   resultTitle: string,
   resultDescription: string,
-  options?: { userName?: string | null; mbti?: string | null }
+  extra?: { userName?: string; mbti?: string }
 ): Promise<void> {
   try {
-    // Supabase가 제대로 초기화되지 않았으면 스킵
-    if (!supabase) {
-      console.warn('Supabase client not initialized, skipping test result record')
-      return
-    }
+    // 서버/빌드 환경에서는 실행하지 않음
+    if (typeof window === 'undefined') return
+
+    const { supabase } = await import('../lib/supabase')
 
     const sessionId = getSessionId()
     const timestamp = new Date().toISOString()
 
-    // 선택 입력: 사용자 이름/MBTI (우선순위: options -> localStorage)
-    let userName: string | null = options?.userName ?? null
-    let userMbti: string | null = options?.mbti ?? null
-
-    // 빈 문자열은 미입력으로 간주하여 null 처리
-    if (userName !== null && userName.trim() === '') userName = null
-    if (userMbti !== null && userMbti.trim() === '') userMbti = null
-
-    if ((userName == null || userMbti == null) && typeof window !== 'undefined') {
+  // 선택 입력: 사용자 이름/MBTI (메인에서 저장해 둔 값 사용)
+  let storedUserName: string | null = null
+  let storedUserMbti: string | null = null
+    if (typeof window !== 'undefined') {
       try {
-        if (userName == null) userName = localStorage.getItem('humor_test_user_name')
-        if (userMbti == null) userMbti = localStorage.getItem('humor_test_user_mbti')
+        storedUserName = localStorage.getItem('humor_test_user_name')
+        storedUserMbti = localStorage.getItem('humor_test_user_mbti')
       } catch {
         // localStorage 접근 안될 때는 무시
       }
@@ -77,8 +70,8 @@ export async function recordTestResult(
       result_description: resultDescription,
       session_id: sessionId,
       timestamp,
-      user_name: userName,
-      user_mbti: userMbti,
+    user_name: (extra?.userName ?? storedUserName) || null,
+    user_mbti: (extra?.mbti ?? storedUserMbti) || null,
     }
 
     const { error } = await supabase
@@ -106,11 +99,10 @@ function getSessionId(): string {
 // 통계 데이터 가져오기 (관리자용)
 export async function getAnalytics() {
   try {
-    // Supabase가 제대로 초기화되지 않았으면 null 반환
-    if (!supabase) {
-      console.warn('Supabase client not initialized, returning null analytics')
-      return null
-    }
+    // 서버/빌드 환경에서는 실행하지 않음 (클라이언트에서만 조회)
+    if (typeof window === 'undefined') return null
+
+    const { supabase } = await import('../lib/supabase')
 
     // 총 방문자 수
     const { count: totalVisits, error: visitsError } = await supabase
