@@ -1,4 +1,5 @@
 import type { VisitRecord, TestResult } from '../lib/supabase'
+import type { SupabaseClient } from '@supabase/supabase-js'
 
 // 세션 ID 생성 함수
 export function generateSessionId(): string {
@@ -16,6 +17,7 @@ export async function recordVisit(page: string): Promise<void> {
       console.warn('Supabase not configured; skipping visit record')
       return
     }
+    const client: SupabaseClient = supabase as SupabaseClient
 
     const sessionId = getSessionId()
     const userAgent = navigator.userAgent
@@ -28,7 +30,7 @@ export async function recordVisit(page: string): Promise<void> {
       session_id: sessionId,
     }
 
-    const { error } = await supabase
+    const { error } = await client
       .from('visits')
       .insert([visitRecord])
 
@@ -56,6 +58,7 @@ export async function recordTestResult(
       console.warn('Supabase not configured; skipping test result record')
       return
     }
+    const client: SupabaseClient = supabase as SupabaseClient
 
     const sessionId = getSessionId()
     const timestamp = new Date().toISOString()
@@ -82,7 +85,7 @@ export async function recordTestResult(
     user_mbti: (extra?.mbti ?? storedUserMbti) || null,
     }
 
-    const { error } = await supabase
+    const { error } = await client
       .from('test_results')
       .insert([testResult])
 
@@ -110,17 +113,22 @@ export async function getAnalytics() {
     // 서버/빌드 환경에서는 실행하지 않음 (클라이언트에서만 조회)
     if (typeof window === 'undefined') return null
 
-    const { supabase } = await import('../lib/supabase')
+    const { supabase, isSupabaseConfigured } = await import('../lib/supabase')
+    if (!isSupabaseConfigured || !supabase) {
+      console.warn('Supabase not configured; returning null analytics')
+      return null
+    }
+    const client: SupabaseClient = supabase as SupabaseClient
 
     // 총 방문자 수
-    const { count: totalVisits, error: visitsError } = await supabase
+    const { count: totalVisits, error: visitsError } = await client
       .from('visits')
       .select('*', { count: 'exact', head: true })
 
     if (visitsError) throw visitsError
 
     // 고유 방문자 수 (세션 기준)
-    const { data: uniqueVisitors, error: uniqueError } = await supabase
+    const { data: uniqueVisitors, error: uniqueError } = await client
       .from('visits')
       .select('session_id')
       .not('session_id', 'is', null)
@@ -130,14 +138,14 @@ export async function getAnalytics() {
     const uniqueVisitorCount = new Set(uniqueVisitors.map(v => v.session_id)).size
 
     // 테스트 완료 수
-    const { count: totalTests, error: testsError } = await supabase
+    const { count: totalTests, error: testsError } = await client
       .from('test_results')
       .select('*', { count: 'exact', head: true })
 
     if (testsError) throw testsError
 
     // 결과별 통계
-    const { data: resultStats, error: statsError } = await supabase
+    const { data: resultStats, error: statsError } = await client
       .from('test_results')
       .select('result_type')
 
