@@ -8,9 +8,28 @@ export function generateSessionId(): string {
 
 // 사용자 방문 기록
 export async function recordVisit(page: string): Promise<void> {
+  const env = (typeof globalThis !== 'undefined' ? ((globalThis as any).process?.env as any) : undefined)
+  const DEBUG = env?.NEXT_PUBLIC_DEBUG_ANALYTICS === '1'
+  const USE_SERVER = env?.NEXT_PUBLIC_USE_SERVER_ANALYTICS === '1'
+  DEBUG && console.log('[recordVisit] start', { page, ts: new Date().toISOString() })
   try {
     // 서버/빌드 환경에서는 실행하지 않음
     if (typeof window === 'undefined') return
+
+    // 서버 경유 모드: API 호출
+    if (USE_SERVER) {
+      const sessionId = getSessionId()
+      const userAgent = navigator.userAgent
+      const res = await fetch('/api/analytics/visit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ page, sessionId, userAgent }),
+      })
+      const json = await res.json().catch(() => ({}))
+      DEBUG && console.log('[recordVisit] via API ->', res.status, json)
+      if (!res.ok) throw new Error((json as any)?.error || `API ${res.status}`)
+      return
+    }
 
     const { supabase, isSupabaseConfigured } = await import('../lib/supabase')
     if (!isSupabaseConfigured || !supabase) {
@@ -30,13 +49,18 @@ export async function recordVisit(page: string): Promise<void> {
       session_id: sessionId,
     }
 
-    const { error } = await client
+    DEBUG && console.log('[recordVisit] inserting to visits', visitRecord)
+    const { data, error } = await client
       .from('visits')
       .insert([visitRecord])
+      .select()
+      .single()
 
     if (error) {
       console.error('Error recording visit:', error)
+      return
     }
+    DEBUG && console.log('[recordVisit] ok', { id: (data as any)?.id })
   } catch (error) {
     console.error('Failed to record visit:', error)
   }
@@ -49,16 +73,13 @@ export async function recordTestResult(
   resultDescription: string,
   extra?: { userName?: string; mbti?: string }
 ): Promise<void> {
+  const env = (typeof globalThis !== 'undefined' ? ((globalThis as any).process?.env as any) : undefined)
+  const DEBUG = env?.NEXT_PUBLIC_DEBUG_ANALYTICS === '1'
+  const USE_SERVER = env?.NEXT_PUBLIC_USE_SERVER_ANALYTICS === '1'
+  DEBUG && console.log('[recordTestResult] start', { resultType, hasTitle: !!resultTitle, hasDesc: !!resultDescription, extra })
   try {
     // 서버/빌드 환경에서는 실행하지 않음
     if (typeof window === 'undefined') return
-
-    const { supabase, isSupabaseConfigured } = await import('../lib/supabase')
-    if (!isSupabaseConfigured || !supabase) {
-      console.warn('Supabase not configured; skipping test result record')
-      return
-    }
-    const client: SupabaseClient = supabase as SupabaseClient
 
     const sessionId = getSessionId()
     const timestamp = new Date().toISOString()
@@ -85,13 +106,38 @@ export async function recordTestResult(
     user_mbti: (extra?.mbti ?? storedUserMbti) || null,
     }
 
-    const { error } = await client
+    // 서버 경유 모드: API 호출
+    if (USE_SERVER) {
+      const res = await fetch('/api/analytics/result', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(testResult),
+      })
+      const json = await res.json().catch(() => ({}))
+      DEBUG && console.log('[recordTestResult] via API ->', res.status, json)
+      if (!res.ok) throw new Error((json as any)?.error || `API ${res.status}`)
+      return
+    }
+
+    const { supabase, isSupabaseConfigured } = await import('../lib/supabase')
+    if (!isSupabaseConfigured || !supabase) {
+      console.warn('Supabase not configured; skipping test result record')
+      return
+    }
+    const client: SupabaseClient = supabase as SupabaseClient
+
+    DEBUG && console.log('[recordTestResult] inserting to test_results', testResult)
+    const { data, error } = await client
       .from('test_results')
       .insert([testResult])
+      .select()
+      .single()
 
     if (error) {
       console.error('Error recording test result:', error)
+      return
     }
+    DEBUG && console.log('[recordTestResult] ok', { id: (data as any)?.id })
   } catch (error) {
     console.error('Failed to record test result:', error)
   }
@@ -135,7 +181,7 @@ export async function getAnalytics() {
 
     if (uniqueError) throw uniqueError
 
-    const uniqueVisitorCount = new Set(uniqueVisitors.map(v => v.session_id)).size
+    const uniqueVisitorCount = new Set((uniqueVisitors as Array<{ session_id: string }>).map((v: { session_id: string }) => v.session_id)).size
 
     // 테스트 완료 수
     const { count: totalTests, error: testsError } = await client
@@ -151,8 +197,8 @@ export async function getAnalytics() {
 
     if (statsError) throw statsError
 
-    const resultCounts = resultStats.reduce((acc, result) => {
-      acc[result.result_type] = (acc[result.result_type] || 0) + 1
+    const resultCounts = (resultStats as Array<{ result_type: string }>).reduce((acc: Record<string, number>, r: { result_type: string }) => {
+      acc[r.result_type] = (acc[r.result_type] || 0) + 1
       return acc
     }, {} as Record<string, number>)
 
