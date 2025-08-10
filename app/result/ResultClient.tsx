@@ -126,7 +126,7 @@ export default function ResultClient() {
           
           <div className="flex gap-3 justify-center mb-4">
             <Link
-              href="/quiz"
+              href="/"
               className="group bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-xl px-6 py-3 text-sm font-medium transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center gap-2"
             >
               테스트 다시하기

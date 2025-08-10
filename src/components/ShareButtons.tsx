@@ -44,7 +44,7 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
 
   const handleCopyLink = async () => {
     try {
-      const shareText = `🎭 나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n🔗 개그유형 테스트 하러가기: ${window.location.origin}/quiz`;
+      const shareText = `🎭 나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n🔗 개그유형 테스트 하러가기: ${window.location.origin}/`;
       
       if (navigator.clipboard) {
         await navigator.clipboard.writeText(shareText);
