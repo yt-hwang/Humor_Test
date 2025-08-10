@@ -7,11 +7,11 @@ export default function LoadingPage() {
   const router = useRouter();
 
   useEffect(() => {
-    // 800ms 후 결과 페이지로 이동 (살짝 기대감 주는 연출)
+    // 1.5초 후 결과 페이지로 이동 (살짝 기대감 주는 연출)
     const t = setTimeout(() => {
       const search = typeof window !== 'undefined' ? window.location.search : '';
       router.replace(`/result${search}`);
-    }, 2000);
+    }, 1500);
     return () => clearTimeout(t);
   }, [router]);
 
