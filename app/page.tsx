@@ -4,10 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { recordVisit } from "../src/utils/analytics";
 
-// 정적 프리렌더 시 URL 관련 에러를 피하기 위해 런타임 렌더링으로 강제
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
-
 // MBTI 옵션을 알파벳 순으로 정렬하여 제공
 const MBTI_TYPES = [
   'INTJ','INTP','ENTJ','ENTP',
@@ -21,8 +17,8 @@ export default function Home() {
   const [userName, setUserName] = useState('');
   const [userMbti, setUserMbti] = useState('');
   useEffect(() => {
-    // 페이지 방문 기록 및 기존 값 복원 (문제 원인 파악 위해 임시 비활성화 가능)
-    try { recordVisit('/') } catch {}
+    // 페이지 방문 기록 및 기존 값 복원
+    recordVisit('/')
     if (typeof window !== 'undefined') {
       try {
         const savedName = localStorage.getItem('humor_test_user_name') || ''

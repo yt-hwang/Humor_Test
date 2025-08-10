@@ -3,10 +3,6 @@
 import { useEffect, useState } from 'react'
 import { getAnalytics } from '../../src/utils/analytics'
 
-// 이 페이지는 빌드 시 프리렌더하지 않고, 요청 시 렌더링되도록 강제합니다.
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
-
 interface AnalyticsData {
   totalVisits: number
   uniqueVisitors: number
