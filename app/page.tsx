@@ -4,6 +4,10 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { recordVisit } from "../src/utils/analytics";
 
+// 정적 프리렌더 시 URL 관련 에러를 피하기 위해 런타임 렌더링으로 강제
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 // MBTI 옵션을 알파벳 순으로 정렬하여 제공
 const MBTI_TYPES = [
   'INTJ','INTP','ENTJ','ENTP',
