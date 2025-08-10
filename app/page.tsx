@@ -19,12 +19,13 @@ export default function Home() {
   useEffect(() => {
     // 페이지 방문 기록 및 기존 값 복원
     recordVisit('/')
+    // 항상 빈값으로 시작하도록 로컬 저장소 초기화
     if (typeof window !== 'undefined') {
       try {
-        const savedName = localStorage.getItem('humor_test_user_name') || ''
-        const savedMbti = localStorage.getItem('humor_test_user_mbti') || ''
-        setUserName(savedName)
-        setUserMbti(savedMbti)
+        localStorage.removeItem('humor_test_user_name')
+        localStorage.removeItem('humor_test_user_mbti')
+        setUserName('')
+        setUserMbti('')
       } catch {}
     }
   }, [])
@@ -37,11 +38,7 @@ export default function Home() {
       } catch {}
     }
     // 이름/MBTI를 퀴즈 URL 파라미터로 전달하여 결과 페이지까지 전달되도록 함
-    const params = new URLSearchParams()
-    if (userName.trim()) params.set('user', userName.trim())
-    if (userMbti.trim()) params.set('mbti', userMbti.toUpperCase())
-    const query = params.toString()
-    router.push(query ? `/quiz?${query}` : '/quiz')
+    router.push('/quiz')
   }
 
   return (
