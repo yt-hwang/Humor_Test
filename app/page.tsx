@@ -17,17 +17,11 @@ export default function Home() {
   const [userName, setUserName] = useState('');
   const [userMbti, setUserMbti] = useState('');
   useEffect(() => {
-    // 페이지 방문 기록 및 기존 값 복원
+    // 페이지 방문 기록
     recordVisit('/')
-    // 항상 빈값으로 시작하도록 로컬 저장소 초기화
-    if (typeof window !== 'undefined') {
-      try {
-        localStorage.removeItem('humor_test_user_name')
-        localStorage.removeItem('humor_test_user_mbti')
-        setUserName('')
-        setUserMbti('')
-      } catch {}
-    }
+    // 항상 빈값으로 시작
+    setUserName('')
+    setUserMbti('')
   }, [])
 
   const handleStart = () => {
@@ -37,8 +31,11 @@ export default function Home() {
         if (userMbti) localStorage.setItem('humor_test_user_mbti', userMbti.toUpperCase())
       } catch {}
     }
-    // 이름/MBTI를 퀴즈 URL 파라미터로 전달하여 결과 페이지까지 전달되도록 함
-    router.push('/quiz')
+    const params = new URLSearchParams()
+    if (userName.trim()) params.set('user', userName.trim())
+    if (userMbti.trim()) params.set('mbti', userMbti.toUpperCase())
+    const query = params.toString()
+    router.push(query ? `/quiz?${query}` : '/quiz')
   }
 
   return (
