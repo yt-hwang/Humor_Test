@@ -23,6 +23,7 @@ function ResultContent() {
   const mbti = searchParams.get('mbti') || '';
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState<(number | null)[]>(Array(questions.length).fill(null));
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   useEffect(() => {
     // 퀴즈 페이지 방문 기록
@@ -30,6 +31,8 @@ function ResultContent() {
   }, [])
 
   const goToResult = async (finalAnswers: (number | null)[]) => {
+    if (isSubmitting) return
+    setIsSubmitting(true)
     const result = calculateResult(finalAnswers);
     
     // 테스트 결과 기록 (이름/MBTI 포함)
@@ -61,7 +64,9 @@ function ResultContent() {
     } else {
       // 마지막 질문이면 바로 제출
       if (updated.every(ans => ans !== null)) {
-        goToResult(updated);
+        if (!isSubmitting) {
+          void goToResult(updated);
+        }
       } else {
         alert("모든 질문에 답해주세요!");
       }
@@ -79,7 +84,9 @@ function ResultContent() {
       } else {
         // 마지막 문항이고 모두 답변했으면 결과로
         if (answers.every(a => a !== null)) {
-          goToResult(answers);
+          if (!isSubmitting) {
+            void goToResult(answers);
+          }
         }
       }
     }
@@ -123,6 +130,7 @@ function ResultContent() {
             <button
               className="bg-blue-500 hover:bg-blue-600 text-white rounded px-4 py-2 text-sm sm:text-base"
               onClick={handleNextIfAnswered}
+              disabled={isSubmitting}
             >다음</button>
           ) : (
             <span className="px-4 py-2 text-transparent">placeholder</span>
