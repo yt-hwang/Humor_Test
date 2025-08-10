@@ -41,7 +41,8 @@ export async function recordVisit(page: string): Promise<void> {
 export async function recordTestResult(
   resultType: string,
   resultTitle: string,
-  resultDescription: string
+  resultDescription: string,
+  options?: { userName?: string | null; mbti?: string | null }
 ): Promise<void> {
   try {
     // Supabase가 제대로 초기화되지 않았으면 스킵
@@ -53,13 +54,18 @@ export async function recordTestResult(
     const sessionId = getSessionId()
     const timestamp = new Date().toISOString()
 
-    // 선택 입력: 사용자 이름/MBTI (메인에서 저장해 둔 값 사용)
-    let userName: string | null = null
-    let userMbti: string | null = null
-    if (typeof window !== 'undefined') {
+    // 선택 입력: 사용자 이름/MBTI (우선순위: options -> localStorage)
+    let userName: string | null = options?.userName ?? null
+    let userMbti: string | null = options?.mbti ?? null
+
+    // 빈 문자열은 미입력으로 간주하여 null 처리
+    if (userName !== null && userName.trim() === '') userName = null
+    if (userMbti !== null && userMbti.trim() === '') userMbti = null
+
+    if ((userName == null || userMbti == null) && typeof window !== 'undefined') {
       try {
-        userName = localStorage.getItem('humor_test_user_name')
-        userMbti = localStorage.getItem('humor_test_user_mbti')
+        if (userName == null) userName = localStorage.getItem('humor_test_user_name')
+        if (userMbti == null) userMbti = localStorage.getItem('humor_test_user_mbti')
       } catch {
         // localStorage 접근 안될 때는 무시
       }
