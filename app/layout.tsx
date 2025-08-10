@@ -3,6 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import KakaoSDK from "../src/components/KakaoSDK";
 
+// 전역적으로 정적 프리렌더를 비활성화하여 빌드 시 URL 관련 오류를 방지
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 // 절대 URL이 필요한 메타데이터용 기본 URL
 function ensureAbsoluteUrl(input?: string | null): string | null {
   if (!input) return null
