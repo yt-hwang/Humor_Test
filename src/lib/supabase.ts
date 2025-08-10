@@ -1,11 +1,8 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 
-type GlobalEnvShape = { process?: { env?: Record<string, string> } }
-const env: Record<string, string> | undefined = (typeof globalThis !== 'undefined'
-  ? ((globalThis as unknown as GlobalEnvShape).process?.env as Record<string, string> | undefined)
-  : undefined)
-const supabaseUrl = env?.NEXT_PUBLIC_SUPABASE_URL as string | undefined
-const supabaseKey = env?.NEXT_PUBLIC_SUPABASE_ANON_KEY as string | undefined
+// IMPORTANT: Use process.env for NEXT_PUBLIC_* so Next.js can inline at build time
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
 export const isSupabaseConfigured: boolean = Boolean(supabaseUrl && supabaseKey)
 
@@ -19,7 +16,7 @@ if (typeof window !== 'undefined' && !isSupabaseConfigured) {
 }
 
 // Debug logging (optional)
-const DEBUG_ANALYTICS = env?.NEXT_PUBLIC_DEBUG_ANALYTICS === '1'
+const DEBUG_ANALYTICS = process.env.NEXT_PUBLIC_DEBUG_ANALYTICS === '1'
 if (DEBUG_ANALYTICS && typeof window !== 'undefined') {
   const maskedKey = (supabaseKey || '').slice(0, 6) + '...'
   console.log('[supabase:init]', {

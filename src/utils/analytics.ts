@@ -8,10 +8,8 @@ export function generateSessionId(): string {
 
 // 사용자 방문 기록
 export async function recordVisit(page: string): Promise<void> {
-  type GlobalEnvShape = { process?: { env?: Record<string, string> } }
-  const env = (typeof globalThis !== 'undefined' ? ((globalThis as unknown as GlobalEnvShape).process?.env as Record<string, string> | undefined) : undefined)
-  const DEBUG = env?.NEXT_PUBLIC_DEBUG_ANALYTICS === '1'
-  const USE_SERVER = env?.NEXT_PUBLIC_USE_SERVER_ANALYTICS === '1'
+  const DEBUG = process.env.NEXT_PUBLIC_DEBUG_ANALYTICS === '1'
+  const USE_SERVER = process.env.NEXT_PUBLIC_USE_SERVER_ANALYTICS === '1'
   if (DEBUG) console.log('[recordVisit] start', { page, ts: new Date().toISOString() })
   try {
     // 서버/빌드 환경에서는 실행하지 않음
@@ -74,10 +72,8 @@ export async function recordTestResult(
   resultDescription: string,
   extra?: { userName?: string; mbti?: string }
 ): Promise<void> {
-  type GlobalEnvShape2 = { process?: { env?: Record<string, string> } }
-  const env = (typeof globalThis !== 'undefined' ? ((globalThis as unknown as GlobalEnvShape2).process?.env as Record<string, string> | undefined) : undefined)
-  const DEBUG = env?.NEXT_PUBLIC_DEBUG_ANALYTICS === '1'
-  const USE_SERVER = env?.NEXT_PUBLIC_USE_SERVER_ANALYTICS === '1'
+  const DEBUG = process.env.NEXT_PUBLIC_DEBUG_ANALYTICS === '1'
+  const USE_SERVER = process.env.NEXT_PUBLIC_USE_SERVER_ANALYTICS === '1'
   if (DEBUG) console.log('[recordTestResult] start', { resultType, hasTitle: !!resultTitle, hasDesc: !!resultDescription, extra })
   try {
     // 서버/빌드 환경에서는 실행하지 않음
