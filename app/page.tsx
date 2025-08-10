@@ -36,7 +36,12 @@ export default function Home() {
         if (userMbti) localStorage.setItem('humor_test_user_mbti', userMbti.toUpperCase())
       } catch {}
     }
-    router.push('/quiz')
+    // 이름/MBTI를 퀴즈 URL 파라미터로 전달하여 결과 페이지까지 전달되도록 함
+    const params = new URLSearchParams()
+    if (userName.trim()) params.set('user', userName.trim())
+    if (userMbti.trim()) params.set('mbti', userMbti.toUpperCase())
+    const query = params.toString()
+    router.push(query ? `/quiz?${query}` : '/quiz')
   }
 
   return (

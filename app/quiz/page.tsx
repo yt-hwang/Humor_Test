@@ -29,11 +29,11 @@ function ResultContent() {
     recordVisit('/quiz')
   }, [])
 
-  const goToResult = (finalAnswers: (number | null)[]) => {
+  const goToResult = async (finalAnswers: (number | null)[]) => {
     const result = calculateResult(finalAnswers);
     
     // 테스트 결과 기록 (이름/MBTI 포함)
-    recordTestResult(
+    await recordTestResult(
       result.code,
       result.nickname,
       result.summary,
