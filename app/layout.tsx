@@ -96,18 +96,7 @@ export default function RootLayout({
         <meta name="twitter:description" content="당신만의 개그 유형을 테스트해보세요!" />
         <meta name="twitter:image" content="/og-image.png" />
         
-        {/* 카카오톡 SDK */}
-        <script
-          async
-          src="https://developers.kakao.com/sdk/js/kakao.js"
-        />
-
-        {/* Google AdSense */}
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2072767383270245"
-          crossOrigin="anonymous"
-        />
+        {/* 외부 스크립트는 문제 원인 파악을 위해 일시 비활성화 */}
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

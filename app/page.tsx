@@ -21,8 +21,8 @@ export default function Home() {
   const [userName, setUserName] = useState('');
   const [userMbti, setUserMbti] = useState('');
   useEffect(() => {
-    // 페이지 방문 기록 및 기존 값 복원
-    recordVisit('/')
+    // 페이지 방문 기록 및 기존 값 복원 (문제 원인 파악 위해 임시 비활성화 가능)
+    try { recordVisit('/') } catch {}
     if (typeof window !== 'undefined') {
       try {
         const savedName = localStorage.getItem('humor_test_user_name') || ''
