@@ -8,7 +8,8 @@ export function generateSessionId(): string {
 
 // 사용자 방문 기록
 export async function recordVisit(page: string): Promise<void> {
-  const env = (typeof globalThis !== 'undefined' ? ((globalThis as any).process?.env as any) : undefined)
+  type GlobalEnvShape = { process?: { env?: Record<string, string> } }
+  const env = (typeof globalThis !== 'undefined' ? ((globalThis as unknown as GlobalEnvShape).process?.env as Record<string, string> | undefined) : undefined)
   const DEBUG = env?.NEXT_PUBLIC_DEBUG_ANALYTICS === '1'
   const USE_SERVER = env?.NEXT_PUBLIC_USE_SERVER_ANALYTICS === '1'
   if (DEBUG) console.log('[recordVisit] start', { page, ts: new Date().toISOString() })
@@ -25,9 +26,9 @@ export async function recordVisit(page: string): Promise<void> {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ page, sessionId, userAgent }),
       })
-      const json = await res.json().catch(() => ({}))
+      const json: unknown = await res.json().catch(() => ({} as unknown))
       if (DEBUG) console.log('[recordVisit] via API ->', res.status, json)
-      if (!res.ok) throw new Error((json as any)?.error || `API ${res.status}`)
+      if (!res.ok) throw new Error((json as { error?: string } | null | undefined)?.error || `API ${res.status}`)
       return
     }
 
@@ -60,7 +61,7 @@ export async function recordVisit(page: string): Promise<void> {
       console.error('Error recording visit:', error)
       return
     }
-    if (DEBUG) console.log('[recordVisit] ok', { id: (data as any)?.id })
+    if (DEBUG) console.log('[recordVisit] ok', { id: (data as { id?: string } | null | undefined)?.id })
   } catch (error) {
     console.error('Failed to record visit:', error)
   }
@@ -73,7 +74,8 @@ export async function recordTestResult(
   resultDescription: string,
   extra?: { userName?: string; mbti?: string }
 ): Promise<void> {
-  const env = (typeof globalThis !== 'undefined' ? ((globalThis as any).process?.env as any) : undefined)
+  type GlobalEnvShape2 = { process?: { env?: Record<string, string> } }
+  const env = (typeof globalThis !== 'undefined' ? ((globalThis as unknown as GlobalEnvShape2).process?.env as Record<string, string> | undefined) : undefined)
   const DEBUG = env?.NEXT_PUBLIC_DEBUG_ANALYTICS === '1'
   const USE_SERVER = env?.NEXT_PUBLIC_USE_SERVER_ANALYTICS === '1'
   if (DEBUG) console.log('[recordTestResult] start', { resultType, hasTitle: !!resultTitle, hasDesc: !!resultDescription, extra })
@@ -113,9 +115,9 @@ export async function recordTestResult(
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(testResult),
       })
-      const json = await res.json().catch(() => ({}))
+      const json: unknown = await res.json().catch(() => ({} as unknown))
       if (DEBUG) console.log('[recordTestResult] via API ->', res.status, json)
-      if (!res.ok) throw new Error((json as any)?.error || `API ${res.status}`)
+      if (!res.ok) throw new Error((json as { error?: string } | null | undefined)?.error || `API ${res.status}`)
       return
     }
 
@@ -137,7 +139,7 @@ export async function recordTestResult(
       console.error('Error recording test result:', error)
       return
     }
-    if (DEBUG) console.log('[recordTestResult] ok', { id: (data as any)?.id })
+    if (DEBUG) console.log('[recordTestResult] ok', { id: (data as { id?: string } | null | undefined)?.id })
   } catch (error) {
     console.error('Failed to record test result:', error)
   }

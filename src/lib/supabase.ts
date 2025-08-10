@@ -1,6 +1,9 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 
-const env: Record<string, string> | undefined = (typeof globalThis !== 'undefined' ? ((globalThis as any).process?.env as Record<string, string>) : undefined)
+type GlobalEnvShape = { process?: { env?: Record<string, string> } }
+const env: Record<string, string> | undefined = (typeof globalThis !== 'undefined'
+  ? ((globalThis as unknown as GlobalEnvShape).process?.env as Record<string, string> | undefined)
+  : undefined)
 const supabaseUrl = env?.NEXT_PUBLIC_SUPABASE_URL as string | undefined
 const supabaseKey = env?.NEXT_PUBLIC_SUPABASE_ANON_KEY as string | undefined
 
@@ -19,7 +22,6 @@ if (typeof window !== 'undefined' && !isSupabaseConfigured) {
 const DEBUG_ANALYTICS = env?.NEXT_PUBLIC_DEBUG_ANALYTICS === '1'
 if (DEBUG_ANALYTICS && typeof window !== 'undefined') {
   const maskedKey = (supabaseKey || '').slice(0, 6) + '...'
-  // eslint-disable-next-line no-console
   console.log('[supabase:init]', {
     urlPresent: Boolean(supabaseUrl),
     anonKeyLength: (supabaseKey || '').length,
