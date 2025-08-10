@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, Suspense, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { questions } from "../../src/data/questions";
 import { calculateResult } from "../../src/data/results";
 import { recordVisit, recordTestResult } from "../../src/utils/analytics";
@@ -18,6 +18,9 @@ const likertLabels = [
 
 function ResultContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const userName = searchParams.get('user') || '';
+  const mbti = searchParams.get('mbti') || '';
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState<(number | null)[]>(Array(questions.length).fill(null));
 
@@ -29,11 +32,12 @@ function ResultContent() {
   const goToResult = (finalAnswers: (number | null)[]) => {
     const result = calculateResult(finalAnswers);
     
-    // 테스트 결과 기록
+    // 테스트 결과 기록 (이름/MBTI 포함)
     recordTestResult(
       result.code,
       result.nickname,
-      result.summary
+      result.summary,
+      { userName, mbti }
     )
     
     const params = new URLSearchParams({
@@ -43,6 +47,8 @@ function ResultContent() {
       examples: result.examples.join(","),
       answers: encodeAnswers(finalAnswers)
     });
+    if (userName) params.set('user', userName);
+    if (mbti) params.set('mbti', mbti);
     router.push(`/loading?${params.toString()}`);
   };
 

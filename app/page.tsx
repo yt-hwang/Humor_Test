@@ -1,10 +1,21 @@
 'use client'
 
-import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { recordVisit } from "../src/utils/analytics";
 
+// MBTI 옵션을 알파벳 순으로 정렬하여 제공
+const MBTI_TYPES = [
+  'INTJ','INTP','ENTJ','ENTP',
+  'INFJ','INFP','ENFJ','ENFP',
+  'ISTJ','ISFJ','ESTJ','ESFJ',
+  'ISTP','ISFP','ESTP','ESFP'
+].sort();
+
 export default function Home() {
+  const router = useRouter();
+  const [userName, setUserName] = useState("");
+  const [mbti, setMbti] = useState("");
   useEffect(() => {
     // 페이지 방문 기록
     recordVisit('/')
@@ -43,19 +54,53 @@ export default function Home() {
             <span className="font-medium text-gray-700">16가지 유형으로 나누는 재미있는 개그 분석!</span>
           </p>
           
+          {/* 사용자 입력: 이름/별명 + MBTI */}
+          <div className="space-y-4 mb-6">
+            <div className="flex flex-col gap-2">
+              <label className="text-sm font-medium text-gray-700">이름 또는 별명</label>
+              <input
+                type="text"
+                placeholder="예: 홍길동, 별명 등"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                className="w-full rounded-xl border border-gray-300 px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label className="text-sm font-medium text-gray-700">MBTI (선택)</label>
+              <select
+                value={mbti}
+                onChange={(e) => setMbti(e.target.value)}
+                className="w-full rounded-xl border border-gray-300 px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white"
+              >
+                <option value="">선택 안함</option>
+                {MBTI_TYPES.map((t) => (
+                  <option key={t} value={t}>{t}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
           {/* 시작 버튼 */}
           <div className="flex justify-center">
-            <Link href="/quiz">
-              <button className="group relative bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-2xl px-10 py-4 text-lg font-semibold shadow-lg transform hover:scale-105 transition-all duration-300 overflow-hidden">
-                <span className="relative z-10 flex items-center gap-2">
-                  시작하기
-                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-              </button>
-            </Link>
+            <button
+              disabled={!userName.trim()}
+              onClick={() => {
+                const params = new URLSearchParams();
+                params.set('user', userName.trim());
+                if (mbti) params.set('mbti', mbti);
+                router.push(`/quiz?${params.toString()}`);
+              }}
+              className="group relative bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 disabled:opacity-50 text-white rounded-2xl px-10 py-4 text-lg font-semibold shadow-lg transform hover:scale-105 transition-all duration-300 overflow-hidden"
+            >
+              <span className="relative z-10 flex items-center gap-2">
+                시작하기
+                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+            </button>
           </div>
         </div>
         

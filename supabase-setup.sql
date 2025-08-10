@@ -18,6 +18,8 @@ CREATE TABLE IF NOT EXISTS test_results (
   result_type TEXT,
   result_title TEXT,
   result_description TEXT,
+  user_name TEXT,
+  mbti TEXT,
   session_id TEXT,
   timestamp TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
