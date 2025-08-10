@@ -11,7 +11,11 @@ export async function recordVisit(page: string): Promise<void> {
     // 서버/빌드 환경에서는 실행하지 않음
     if (typeof window === 'undefined') return
 
-    const { supabase } = await import('../lib/supabase')
+    const { supabase, isSupabaseConfigured } = await import('../lib/supabase')
+    if (!isSupabaseConfigured || !supabase) {
+      console.warn('Supabase not configured; skipping visit record')
+      return
+    }
 
     const sessionId = getSessionId()
     const userAgent = navigator.userAgent
@@ -47,7 +51,11 @@ export async function recordTestResult(
     // 서버/빌드 환경에서는 실행하지 않음
     if (typeof window === 'undefined') return
 
-    const { supabase } = await import('../lib/supabase')
+    const { supabase, isSupabaseConfigured } = await import('../lib/supabase')
+    if (!isSupabaseConfigured || !supabase) {
+      console.warn('Supabase not configured; skipping test result record')
+      return
+    }
 
     const sessionId = getSessionId()
     const timestamp = new Date().toISOString()
