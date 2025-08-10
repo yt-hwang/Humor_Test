@@ -30,8 +30,6 @@ export interface TestResult {
   result_type: string
   result_title: string
   result_description: string
-  user_name?: string
-  mbti?: string
   session_id: string
   timestamp: string
   // 선택 입력: 유저 이름/MBTI (있으면 저장)

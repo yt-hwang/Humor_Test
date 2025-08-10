@@ -54,13 +54,13 @@ export async function recordTestResult(
     const sessionId = getSessionId()
     const timestamp = new Date().toISOString()
 
-    // 선택 입력: 사용자 이름/MBTI (메인에서 저장해 둔 값 사용)
-    let userName: string | null = null
-    let userMbti: string | null = null
+  // 선택 입력: 사용자 이름/MBTI (메인에서 저장해 둔 값 사용)
+  let storedUserName: string | null = null
+  let storedUserMbti: string | null = null
     if (typeof window !== 'undefined') {
       try {
-        userName = localStorage.getItem('humor_test_user_name')
-        userMbti = localStorage.getItem('humor_test_user_mbti')
+        storedUserName = localStorage.getItem('humor_test_user_name')
+        storedUserMbti = localStorage.getItem('humor_test_user_mbti')
       } catch {
         // localStorage 접근 안될 때는 무시
       }
@@ -70,12 +70,10 @@ export async function recordTestResult(
       result_type: resultType,
       result_title: resultTitle,
       result_description: resultDescription,
-      user_name: extra?.userName,
-      mbti: extra?.mbti,
       session_id: sessionId,
       timestamp,
-      user_name: userName,
-      user_mbti: userMbti,
+    user_name: (extra?.userName ?? storedUserName) || null,
+    user_mbti: (extra?.mbti ?? storedUserMbti) || null,
     }
 
     const { error } = await supabase
