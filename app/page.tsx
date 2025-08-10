@@ -1,15 +1,21 @@
 'use client'
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { recordVisit } from "../src/utils/analytics";
+
+// MBTI 옵션을 알파벳 순으로 정렬하여 제공
+const MBTI_TYPES = [
+  'INTJ','INTP','ENTJ','ENTP',
+  'INFJ','INFP','ENFJ','ENFP',
+  'ISTJ','ISFJ','ESTJ','ESFJ',
+  'ISTP','ISFP','ESTP','ESFP'
+].sort();
 
 export default function Home() {
   const router = useRouter();
   const [userName, setUserName] = useState('');
   const [userMbti, setUserMbti] = useState('');
-
   useEffect(() => {
     // 페이지 방문 기록 및 기존 값 복원
     recordVisit('/')
@@ -66,32 +72,33 @@ export default function Home() {
             <span className="font-medium text-gray-700">16가지 유형으로 나누는 재미있는 개그 분석!</span>
           </p>
 
-          {/* 이름/MBTI 입력 */}
-          <div className="mb-6 grid grid-cols-1 gap-3">
-            <input
-              type="text"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-              placeholder="이름 (선택)"
-              className="w-full rounded-xl border border-gray-200 bg-white/80 px-4 py-3 text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-300"
-            />
-            <select
-              value={userMbti}
-              onChange={(e) => setUserMbti(e.target.value)}
-              className="w-full rounded-xl border border-gray-200 bg-white/80 px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-300"
-            >
-              <option value="">MBTI 선택 (선택)</option>
-              {[
-                'INTJ','INTP','ENTJ','ENTP',
-                'INFJ','INFP','ENFJ','ENFP',
-                'ISTJ','ISFJ','ESTJ','ESFJ',
-                'ISTP','ISFP','ESTP','ESFP'
-              ].map((t) => (
-                <option key={t} value={t}>{t}</option>
-              ))}
-            </select>
+          {/* 사용자 입력: 이름/별명 + MBTI */}
+          <div className="space-y-4 mb-6">
+            <div className="flex flex-col gap-2">
+              <label className="text-sm font-medium text-gray-700">이름 또는 별명</label>
+              <input
+                type="text"
+                placeholder="예: 홍길동, 별명 등"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                className="w-full rounded-xl border border-gray-300 px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label className="text-sm font-medium text-gray-700">MBTI (선택)</label>
+              <select
+                value={userMbti}
+                onChange={(e) => setUserMbti(e.target.value)}
+                className="w-full rounded-xl border border-gray-300 px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white"
+              >
+                <option value="">선택 안함</option>
+                {MBTI_TYPES.map((t) => (
+                  <option key={t} value={t}>{t}</option>
+                ))}
+              </select>
+            </div>
           </div>
-          
+
           {/* 시작 버튼 */}
           <div className="flex justify-center">
             <button onClick={handleStart} className="group relative bg-gradient-to-r from-blue-600 to-purple-700 hover:from-blue-700 hover:to-purple-800 text-white rounded-2xl px-10 py-4 text-lg font-semibold shadow-2xl ring-2 ring-purple-300/40 transform hover:scale-110 transition-all duration-300 overflow-hidden">

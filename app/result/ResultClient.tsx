@@ -17,9 +17,12 @@ export default function ResultClient() {
 
   const code = searchParams.get("code") || "ONVB";
   const nickname = searchParams.get("nickname") || "온빛";
+  const user = searchParams.get("user") || "";
   const summary = searchParams.get("summary") || "항상 준비된 밝은 개그러!";
   const examples = searchParams.get("examples")?.split(",") || ["유재석", "무한도전", "런닝맨"];
   const encodedAnswers = searchParams.get("answers");
+  const displayUser = user.trim();
+  const headlineSize = displayUser.length > 14 ? 'text-2xl sm:text-3xl md:text-4xl' : 'text-3xl sm:text-4xl md:text-5xl';
   
   // 답변 데이터 디코딩 및 축별 점수 계산
   const answers = encodedAnswers ? decodeAnswers(encodedAnswers) : [];
@@ -76,18 +79,22 @@ export default function ResultClient() {
         {/* 메인 결과 카드 */}
         <div id="result-container" className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/20 p-8 mb-6">
           {/* 결과 헤더 */}
-          <div className="text-center mb-6">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
-              <span>🎭</span>
-              <span>개그유형 결과</span>
-            </div>
-            
+          <div className="text-center mb-8">
+            <h2
+              className={`${headlineSize} font-extrabold tracking-tight bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 bg-clip-text text-transparent text-center leading-tight break-keep text-pretty mb-3 max-w-[90%] mx-auto drop-shadow-sm`}
+            >
+              {displayUser ? `${displayUser}의 개그코드` : '개그코드'}
+            </h2>
+            <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent mb-5" />
+
             {/* 코드와 닉네임 */}
             <div className="mb-4">
-              <div className="text-3xl font-mono font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
-                {code}
+              <div className="flex items-center justify-center mb-2">
+                <span className="inline-flex items-center justify-center px-5 py-1.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-mono text-lg font-bold shadow-sm ring-1 ring-white/40">
+                  {code}
+                </span>
               </div>
-              <div className="text-xl font-semibold text-gray-800">{nickname}</div>
+              <div className="text-2xl font-semibold text-gray-800">{nickname}</div>
             </div>
           </div>
 
