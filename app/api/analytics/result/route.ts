@@ -3,7 +3,7 @@ export const runtime = 'nodejs'
 import { NextRequest } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
-const env = (globalThis as any).process?.env as any
+const env = (globalThis as any).process?.env as Record<string, string>
 const supabaseUrl = env?.SUPABASE_URL as string
 const serviceKey = env?.SUPABASE_SERVICE_ROLE_KEY as string
 

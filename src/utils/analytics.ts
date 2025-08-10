@@ -11,7 +11,7 @@ export async function recordVisit(page: string): Promise<void> {
   const env = (typeof globalThis !== 'undefined' ? ((globalThis as any).process?.env as any) : undefined)
   const DEBUG = env?.NEXT_PUBLIC_DEBUG_ANALYTICS === '1'
   const USE_SERVER = env?.NEXT_PUBLIC_USE_SERVER_ANALYTICS === '1'
-  DEBUG && console.log('[recordVisit] start', { page, ts: new Date().toISOString() })
+  if (DEBUG) console.log('[recordVisit] start', { page, ts: new Date().toISOString() })
   try {
     // 서버/빌드 환경에서는 실행하지 않음
     if (typeof window === 'undefined') return
@@ -26,7 +26,7 @@ export async function recordVisit(page: string): Promise<void> {
         body: JSON.stringify({ page, sessionId, userAgent }),
       })
       const json = await res.json().catch(() => ({}))
-      DEBUG && console.log('[recordVisit] via API ->', res.status, json)
+      if (DEBUG) console.log('[recordVisit] via API ->', res.status, json)
       if (!res.ok) throw new Error((json as any)?.error || `API ${res.status}`)
       return
     }
@@ -49,7 +49,7 @@ export async function recordVisit(page: string): Promise<void> {
       session_id: sessionId,
     }
 
-    DEBUG && console.log('[recordVisit] inserting to visits', visitRecord)
+    if (DEBUG) console.log('[recordVisit] inserting to visits', visitRecord)
     const { data, error } = await client
       .from('visits')
       .insert([visitRecord])
@@ -60,7 +60,7 @@ export async function recordVisit(page: string): Promise<void> {
       console.error('Error recording visit:', error)
       return
     }
-    DEBUG && console.log('[recordVisit] ok', { id: (data as any)?.id })
+    if (DEBUG) console.log('[recordVisit] ok', { id: (data as any)?.id })
   } catch (error) {
     console.error('Failed to record visit:', error)
   }
@@ -76,7 +76,7 @@ export async function recordTestResult(
   const env = (typeof globalThis !== 'undefined' ? ((globalThis as any).process?.env as any) : undefined)
   const DEBUG = env?.NEXT_PUBLIC_DEBUG_ANALYTICS === '1'
   const USE_SERVER = env?.NEXT_PUBLIC_USE_SERVER_ANALYTICS === '1'
-  DEBUG && console.log('[recordTestResult] start', { resultType, hasTitle: !!resultTitle, hasDesc: !!resultDescription, extra })
+  if (DEBUG) console.log('[recordTestResult] start', { resultType, hasTitle: !!resultTitle, hasDesc: !!resultDescription, extra })
   try {
     // 서버/빌드 환경에서는 실행하지 않음
     if (typeof window === 'undefined') return
@@ -114,7 +114,7 @@ export async function recordTestResult(
         body: JSON.stringify(testResult),
       })
       const json = await res.json().catch(() => ({}))
-      DEBUG && console.log('[recordTestResult] via API ->', res.status, json)
+      if (DEBUG) console.log('[recordTestResult] via API ->', res.status, json)
       if (!res.ok) throw new Error((json as any)?.error || `API ${res.status}`)
       return
     }
@@ -126,7 +126,7 @@ export async function recordTestResult(
     }
     const client: SupabaseClient = supabase as SupabaseClient
 
-    DEBUG && console.log('[recordTestResult] inserting to test_results', testResult)
+    if (DEBUG) console.log('[recordTestResult] inserting to test_results', testResult)
     const { data, error } = await client
       .from('test_results')
       .insert([testResult])
@@ -137,7 +137,7 @@ export async function recordTestResult(
       console.error('Error recording test result:', error)
       return
     }
-    DEBUG && console.log('[recordTestResult] ok', { id: (data as any)?.id })
+    if (DEBUG) console.log('[recordTestResult] ok', { id: (data as any)?.id })
   } catch (error) {
     console.error('Failed to record test result:', error)
   }
