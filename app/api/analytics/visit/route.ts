@@ -1,4 +1,4 @@
-export const runtime = 'node'
+export const runtime = 'nodejs'
 
 import { NextRequest } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
