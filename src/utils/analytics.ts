@@ -41,8 +41,7 @@ export async function recordVisit(page: string): Promise<void> {
 export async function recordTestResult(
   resultType: string,
   resultTitle: string,
-  resultDescription: string,
-  extra?: { userName?: string; mbti?: string }
+  resultDescription: string
 ): Promise<void> {
   try {
     // Supabase가 제대로 초기화되지 않았으면 스킵
@@ -70,8 +69,6 @@ export async function recordTestResult(
       result_type: resultType,
       result_title: resultTitle,
       result_description: resultDescription,
-      user_name: extra?.userName,
-      mbti: extra?.mbti,
       session_id: sessionId,
       timestamp,
       user_name: userName,
