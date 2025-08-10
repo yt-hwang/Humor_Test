@@ -89,8 +89,8 @@ export const shareToKakao = async (data: ShareData) => {
           {
             title: '📸 결과 이미지로 공유',
             link: {
-              mobileWebUrl: window.location.origin + '/result?code=' + data.code + '&nickname=' + encodeURIComponent(data.nickname) + '&summary=' + encodeURIComponent(data.summary) + '&examples=' + encodeURIComponent(data.examples.join(',')),
-              webUrl: window.location.origin + '/result?code=' + data.code + '&nickname=' + encodeURIComponent(data.nickname) + '&summary=' + encodeURIComponent(data.summary) + '&examples=' + encodeURIComponent(data.examples.join(',')),
+              mobileWebUrl: window.location.origin + '/',
+              webUrl: window.location.origin + '/',
             },
           },
         ],
