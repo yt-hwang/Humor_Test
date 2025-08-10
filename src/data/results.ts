@@ -232,7 +232,7 @@ export const gagResults: Record<string, GagResult> = {
       "설명이 부족하면 오해가 생길 수 있어요",
       "반전이 예상되면 힘이 빠질 수 있어요",
     ]
-  },배배
+  },
 
   // 💙 컨셉형
   OBVB: {
