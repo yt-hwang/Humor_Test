@@ -1,81 +1,85 @@
 "use client";
 
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { recordVisit } from "../../src/utils/analytics";
 
 const AXIS = [
   {
-    key: "OI",
+    key: "",
     titleKo: "개그의 준비",
     titleEn: "Preparedness",
     gradient: "from-blue-400 to-indigo-400",
     left: { code: "O", ko: "Organized (짜여진)", desc: [
-      "대본, 연출, 타이밍까지 계획된 개그",
-      "반복적으로 같은 웃음을 유도할 수 있음",
-      "콩트, 드라마형 개그 등",
-      "질적인 개그에 더 중점을 두는 경향"
+      "웃음을 위해 상황·대사·타이밍을 미리 설계해 두는 스타일입니다.",
+      "콜백과 복선, 반복 장치 같은 ‘구조적 기술’로 매번 비슷한 질감의 웃음을 재현합니다.",
+      "콩트·드라마형 개그처럼 장면을 쌓아 올리는 포맷에 강하며, 팀플에서도 역할 분담이 분명합니다.",
+      "완성도·디테일·리듬을 중시해 ‘준비의 힘’으로 안정적인 웃음을 만듭니다."
     ]},
     right: { code: "I", ko: "Improvised (즉흥적)", desc: [
-      "현장 센스·상황 대처로 웃음을 유발",
-      "리액션·돌발 상황에 강함",
-      "무한도전/리얼 버라이어티/상황극/패러디",
-      "양으로 승부를 보는 경향"
+      "현장에서 포착한 순간 감정과 센스로 웃음을 터트리는 스타일입니다.",
+      "예상치 못한 반응·받아치기·타이밍으로 ‘지금 여기’의 공기를 뒤집습니다.",
+      "리액션·상황극·패러디 같은 유연한 변주에 강하며, 돌발 변수조차 소재가 됩니다.",
+      "양과 변주로 흐름을 이끌며, 준비보다 생동감과 반응성을 가치로 둡니다."
     ]},
-    whatItJudges: "개그가 얼마나 사전에 준비되었는지, 대본 중심인지 또는 즉석에서 이루어지는지"
+    whatItJudges: "개그가 사전 설계 중심인지, 현장 즉흥 중심인지의 차이"
   },
   {
-    key: "NB",
+    key: "",
     titleKo: "개그의 주제/상황성",
     titleEn: "Contextuality",
     gradient: "from-purple-400 to-violet-400",
     left: { code: "N", ko: "Intuitive (직관적)", desc: [
-      "현실에서 쉽게 겪을 수 있는 상황 중심",
-      "공감되는 맥락 위에서 웃김",
-      "딱 보는 순간 웃기고 명확함"
+      "많은 사람이 바로 공감할 수 있는 현실적 맥락 위에서 웃음을 만듭니다.",
+      "상황·인물·관계의 디테일이 명확해, 보자마자 ‘아 저거!’ 하고 터지는 즉시성의 매력이 있습니다.",
+      "현실 관찰과 생활 밀착형 포인트가 강점이며, 설명 없이도 이해되는 명료함이 돋보입니다."
     ]},
     right: { code: "B", ko: "Abstract (추상적/엉뚱)", desc: [
-      "맥락 파괴·비논리적 전환 등 병맛",
-      "현실감 없는 전개로 비약적",
-      "곱씹어야 웃기는 ‘고차원’ 성향"
+      "맥락을 비틀거나 파괴해 낯선 연결로 웃음을 만듭니다.",
+      "비논리적 전환·병맛·아이러니를 활용해, 곱씹을수록 더 재미있는 ‘지연형 웃음’을 제공합니다.",
+      "직관성은 낮을 수 있지만 세계관적 상상력과 은유·비유에서 오는 고유의 쾌감이 있습니다."
     ]},
-    whatItJudges: "개그가 상황에 맞는지, 아니면 상황과 상관없이 비논리적/비약적인지"
+    whatItJudges: "개그가 현실 맥락에 기대는지, 맥락을 깨고 추상으로 도약하는지"
   },
   {
-    key: "VP",
+    key: "",
     titleKo: "개그의 전달 방식",
     titleEn: "Delivery Mode",
     gradient: "from-yellow-400 to-orange-400",
     left: { code: "V", ko: "Verbal (언어적)", desc: [
-      "말장난·언어유희·논리적 비약으로 웃김",
-      "대사·카피·한 줄 직설의 힘"
+      "단어 선택·말맛·리듬·한 줄 직설 같은 언어의 기술로 웃음을 설계합니다.",
+      "비유·역설·논리적 비약·콜백 같은 장치를 통해 ‘말로 장면을 바꾸는 힘’을 보여줍니다.",
+      "짧은 멘트 하나로 공기를 전환할 수 있는 임팩트가 특징입니다."
     ]},
     right: { code: "P", ko: "Physical/Expressive (비언어적)", desc: [
-      "표정·몸짓·소리·의상·효과음 등",
-      "말 없이도 전달되는 퍼포먼스 중심"
+      "표정·몸짓·동선·소리·의상·효과음 등 비언어 요소로 웃음을 만듭니다.",
+      "대사가 없어도 메시지가 전달되며, 이미지와 퍼포먼스의 직관성이 강점입니다.",
+      "숏폼·무언극·상황 퍼포먼스에 특히 적합합니다."
     ]},
-    whatItJudges: "웃음을 유발하는 주요 수단이 언어 중심인지, 비언어적 표현 중심인지"
+    whatItJudges: "주된 전달 수단이 말(언어)인지, 표정과 몸(비언어)인지"
   },
   {
-    key: "BD",
+    key: "",
     titleKo: "개그의 분위기",
     titleEn: "Mood",
     gradient: "from-red-400 to-pink-400",
     left: { code: "B", ko: "Bright (밝음)", desc: [
-      "긍정·겸손·친화·감성 중심",
-      "남을 해치지 않는 유쾌함, 자학 개그",
-      "누구나 편하게 웃는 분위기"
+      "상대를 해치지 않는 유쾌함과 따뜻한 정서를 중심에 둡니다.",
+      "자신을 낮추는 자학, 귀여운 과장, 감성적 포인트로 모두가 편안히 웃을 수 있게 합니다.",
+      "밝은 에너지로 공간의 긴장을 풀고 분위기를 띄우는 데 강합니다."
     ]},
     right: { code: "D", ko: "Dark (어두움)", desc: [
-      "부정·비판·풍자·블랙코미디",
-      "조롱/사회 비판 등 묵직한 톤",
-      "웃음 뒤 생각거리를 남김"
+      "풍자·아이러니·조롱·블랙유머처럼 현실을 날카롭게 비트는 정서를 선호합니다.",
+      "웃음 뒤에 생각거리를 남기며, 불편함과 재미의 경계를 오갑니다.",
+      "강도가 높아질수록 피로감이 생길 수 있어, 강약 조절과 맥락이 중요합니다."
     ]},
-    whatItJudges: "개그의 정서적 분위기가 밝고 친화적인지, 풍자적이고 비판적인지"
+    whatItJudges: "정서적 톤이 밝고 친화적인지, 혹은 풍자적이고 비판적인지"
   }
 ];
 
 export default function GuidePage() {
+  const router = useRouter();
   useEffect(() => {
     recordVisit("/guide");
   }, []);
@@ -92,48 +96,10 @@ export default function GuidePage() {
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-full text-lg font-medium mb-4">
             <span>ℹ️</span>
-            <span>축(axes) 설명</span>
+            <span>개그 코드 설명</span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">OI · NB · VP · BD는 무엇을 의미하나요?</h1>
-          <p className="text-gray-600">각 알파벳은 축의 어느 쪽 성향이 강한지 나타내며, 색감도 사이트 전반에서 일관되게 사용됩니다.</p>
-        </div>
-
-        {/* 색상 가이드 */}
-        <div className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/20 p-6 mb-8">
-          <div className="text-center mb-4">
-            <h2 className="text-xl font-bold text-gray-800">색상 가이드</h2>
-            <p className="text-gray-600 text-sm">축 전반에 걸쳐 동일한 의미로 사용됩니다.</p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className="flex items-center gap-3 p-3 rounded-xl bg-white/60 border border-white/40">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-400 to-indigo-400" />
-              <div>
-                <div className="text-sm font-semibold text-gray-800">💙 컨셉형</div>
-                <div className="text-xs text-gray-500">세계관·설정·구조 중심의 색</div>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 p-3 rounded-xl bg-white/60 border border-white/40">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-purple-400 to-violet-400" />
-              <div>
-                <div className="text-sm font-semibold text-gray-800">💜 예측불가형</div>
-                <div className="text-xs text-gray-500">즉흥·혼돈·비약의 색</div>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 p-3 rounded-xl bg-white/60 border border-white/40">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-yellow-400 to-orange-400" />
-              <div>
-                <div className="text-sm font-semibold text-gray-800">💛 분위기메이커형</div>
-                <div className="text-xs text-gray-500">표정·몸짓·현장 에너지의 색</div>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 p-3 rounded-xl bg-white/60 border border-white/40">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-red-400 to-pink-400" />
-              <div>
-                <div className="text-sm font-semibold text-gray-800">❤️ 팩폭형</div>
-                <div className="text-xs text-gray-500">풍자·비판·블랙유머의 색</div>
-              </div>
-            </div>
-          </div>
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">개그 코드 설명</h1>
+          <p className="text-gray-600">아래의 네 가지 기준으로 본인의 유머 코드를 이해해보세요.</p>
         </div>
 
         {/* 축 설명 카드 */}
@@ -145,7 +111,6 @@ export default function GuidePage() {
                   <h2 className="text-xl font-bold text-gray-800">{axis.titleKo} <span className="text-gray-400">/ {axis.titleEn}</span></h2>
                   <p className="text-sm text-gray-600 mt-1">{axis.whatItJudges}</p>
                 </div>
-                <div className={`px-3 py-1 rounded-lg bg-gradient-to-r ${axis.gradient} text-white font-mono text-sm shadow`}>{axis.key}</div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -180,12 +145,15 @@ export default function GuidePage() {
 
         {/* 하단 액션 */}
         <div className="text-center mt-10 flex items-center justify-center gap-3">
-          <Link href="/" className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-800 transition-colors bg-white/70 backdrop-blur-sm rounded-xl px-5 py-3 border border-white/30">
+          <button
+            onClick={() => router.back()}
+            className="inline-flex items-center gap-2 text-sm text-white bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl px-5 py-3 shadow hover:opacity-95"
+          >
+            결과 페이지로 돌아가기
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-            메인으로
-          </Link>
-          <Link href="/types" className="inline-flex items-center gap-2 text-sm text-white bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl px-5 py-3 shadow">
-            유형 전체보기
+          </button>
+          <Link href="/types" className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-800 transition-colors bg-white/70 backdrop-blur-sm rounded-xl px-5 py-3 border border-white/30">
+            전체 유형 보기
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
           </Link>
         </div>
