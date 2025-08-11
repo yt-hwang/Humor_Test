@@ -126,7 +126,7 @@ export default function TypesClient() {
         </div>
 
         {/* 하단 액션 */}
-        <div className="text-center mt-8">
+        <div className="text-center mt-8 flex items-center justify-center gap-3 flex-wrap">
           <Link 
             href="/" 
             className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-700 transition-colors bg-white/60 backdrop-blur-sm rounded-xl px-6 py-3 border border-white/30"

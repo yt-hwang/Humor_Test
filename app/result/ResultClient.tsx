@@ -140,7 +140,16 @@ export default function ResultClient() {
 
         {/* 하단 링크들 */}
         <div className="text-center space-y-3">
-          <div className="flex justify-center gap-3">
+          <div className="flex justify-center gap-3 flex-wrap">
+            <Link 
+              href="/guide" 
+              className="inline-flex items-center gap-2 text-sm text-white bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl px-4 py-2 shadow hover:opacity-95"
+            >
+              축 설명 보기
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </Link>
             <Link 
               href="/types" 
               className="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700 transition-colors bg-white/60 backdrop-blur-sm rounded-xl px-4 py-2 border border-white/30"
