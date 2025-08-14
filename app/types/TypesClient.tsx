@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { gagResults } from "../../src/data/results";
 import { recordVisit } from "../../src/utils/analytics";
@@ -35,6 +36,7 @@ const categories = [
 ];
 
 export default function TypesClient() {
+  const router = useRouter();
   useEffect(() => {
     recordVisit('/types');
   }, []);
@@ -127,6 +129,15 @@ export default function TypesClient() {
 
         {/* 하단 액션 */}
         <div className="text-center mt-8 flex items-center justify-center gap-3 flex-wrap">
+          <button
+            onClick={() => router.back()}
+            className="inline-flex items-center gap-2 text-sm text-white bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl px-6 py-3 shadow hover:opacity-95"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            결과로 돌아가기
+          </button>
           <Link 
             href="/" 
             className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-700 transition-colors bg-white/60 backdrop-blur-sm rounded-xl px-6 py-3 border border-white/30"
