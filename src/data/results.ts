@@ -481,4 +481,37 @@ export function calculateResult(answers: (number | null)[]): GagResult {
   const scores = calculateAxisScores(answers);
   const code = getGagTypeCode(scores);
   return gagResults[code] || gagResults["ONVB"]; // 기본값
-} 
+}
+
+// 두 코드간 궁합 (같은 축 개수: 0~4)
+export function calculateCompatibility(codeA: string, codeB: string): number {
+  let matches = 0;
+  for (let i = 0; i < 4; i++) {
+    if (codeA[i] === codeB[i]) matches++;
+  }
+  return matches;
+}
+
+export function getCompatibilityLabel(score: number) {
+  switch (score) {
+    case 4: return { label: "동류형", emoji: "🪞", desc: "웃음 포인트가 똑같아서 항상 통함" };
+    case 3: return { label: "찰떡궁합", emoji: "🎯", desc: "대부분 맞고 가끔 새로운 자극" };
+    case 2: return { label: "무난한 케미", emoji: "🤝", desc: "절반은 통하고 절반은 다름" };
+    case 1: return { label: "케미폭발형", emoji: "⚡", desc: "다른 스타일이라 서로에게 신선함" };
+    case 0: return { label: "정반대형", emoji: "🔄", desc: "완전히 다른 개그 세계관" };
+    default: return { label: "알 수 없음", emoji: "❓", desc: "" };
+  }
+}
+
+// 궁합 좋은 TOP N 타입
+export function getTopCompatibleTypes(myCode: string, top: number = 3) {
+  return Object.entries(gagResults)
+    .filter(([code]) => code !== myCode)
+    .map(([code, result]) => ({
+      code,
+      result,
+      score: calculateCompatibility(myCode, code)
+    }))
+    .sort((a, b) => b.score - a.score || a.code.localeCompare(b.code))
+    .slice(0, top);
+}

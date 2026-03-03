@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { Metadata } from "next";
 import ResultClient from "./ResultClient";
+import { gagResults } from "../../src/data/results";
 
 type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -9,8 +10,8 @@ type Props = {
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const params = await searchParams;
   const code = (params.code as string) || "ONVB";
-  const nickname = (params.nickname as string) || "온빛";
-  const summary = (params.summary as string) || "항상 준비된 밝은 개그러!";
+  const result = gagResults[code] || gagResults["ONVB"];
+  const { nickname, summary } = result;
 
   return {
     title: `개그유형 테스트 결과 - ${code} ${nickname}`,

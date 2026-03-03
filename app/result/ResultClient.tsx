@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 import ShareButtons from "../../src/components/ShareButtons";
 import { recordVisit } from "../../src/utils/analytics";
-import { gagResults, calculateAxisScores } from "../../src/data/results";
+import { gagResults, calculateAxisScores, getTopCompatibleTypes, getCompatibilityLabel } from "../../src/data/results";
 import type { AxisScores, GagResult } from "../../src/data/results";
 import { decodeAnswers } from "../../src/utils/encodeAnswers";
 import AxisBarChart from "../../src/components/AxisBarChart";
@@ -16,25 +16,21 @@ export default function ResultClient() {
   const searchParams = useSearchParams();
 
   const code = searchParams.get("code") || "ONVB";
-  const nickname = searchParams.get("nickname") || "온빛";
   const user = searchParams.get("user") || "";
-  const summary = searchParams.get("summary") || "항상 준비된 밝은 개그러!";
-  const examples = searchParams.get("examples")?.split(",") || ["유재석", "무한도전", "런닝맨"];
   const encodedAnswers = searchParams.get("answers");
   const displayUser = user.trim();
   const headlineSize = displayUser.length > 14 ? 'text-2xl sm:text-3xl md:text-4xl' : 'text-3xl sm:text-4xl md:text-5xl';
-  
+
   // 답변 데이터 디코딩 및 축별 점수 계산
   const answers = encodedAnswers ? decodeAnswers(encodedAnswers) : [];
   const axisScores = answers.length > 0 ? calculateAxisScores(answers) : null;
-  
-
 
   // 결과 데이터에서 추가 정보 가져오기
   // 모든 축이 4점(=그래프 51% 표기)인 경우 INPB로 강제
   const isNeutralAll = axisScores && axisScores.OI === 4 && axisScores.NB === 4 && axisScores.VP === 4 && axisScores.BD === 4;
   const effectiveCode = isNeutralAll ? "INPB" : code;
   const resultData = gagResults[effectiveCode] || gagResults["ONVB"];
+  const { nickname, summary, examples } = resultData;
 
   useEffect(() => {
     // 결과 페이지 방문 기록
@@ -91,8 +87,22 @@ export default function ResultClient() {
             <div className="mb-4">
               <div className="flex items-center justify-center mb-2">
                 <span className="inline-flex items-center justify-center px-5 py-1.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-mono text-lg font-bold shadow-sm ring-1 ring-white/40">
-                  {code}
+                  {effectiveCode}
                 </span>
+              </div>
+              {/* 코드 각 글자 의미 */}
+              <div className="flex justify-center gap-5 mb-3">
+                {[
+                  effectiveCode[0] === 'O' ? '준비형' : '즉흥형',
+                  effectiveCode[1] === 'N' ? '직관형' : '병맛형',
+                  effectiveCode[2] === 'V' ? '말개그' : '몸개그',
+                  effectiveCode[3] === 'B' ? '밝음' : '다크',
+                ].map((label, i) => (
+                  <div key={i} className="flex flex-col items-center gap-0.5">
+                    <span className="font-mono font-bold text-indigo-500 text-base">{effectiveCode[i]}</span>
+                    <span className="text-[10px] text-gray-400 leading-none">{label}</span>
+                  </div>
+                ))}
               </div>
               <div className="text-2xl font-semibold text-gray-800">{nickname}</div>
             </div>
@@ -100,7 +110,7 @@ export default function ResultClient() {
 
           {/* 요약 */}
           <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 mb-6 border border-blue-100">
-            <p className="text-center text-gray-800 leading-relaxed font-medium text-lg break-keep hyphens-auto">
+            <p className="text-center text-gray-800 leading-relaxed font-medium text-lg break-keep hyphens-auto whitespace-pre-line">
               {summary}
             </p>
           </div>
@@ -177,6 +187,9 @@ export default function ResultClient() {
 
 function Tabs({ axisScores, resultData }: { axisScores: AxisScores | null; resultData: GagResult }) {
   const [active, setActive] = React.useState<'strengths' | 'compat'>('strengths');
+  const [openAccordion, setOpenAccordion] = React.useState<number | null>(null);
+
+  const top3 = getTopCompatibleTypes(resultData.code);
 
   return (
     <div>
@@ -211,42 +224,92 @@ function Tabs({ axisScores, resultData }: { axisScores: AxisScores | null; resul
         />
       )}
 
-      {active === 'compat' && resultData.bestMatch && resultData.worstMatch && (
+      {active === 'compat' && (
         <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/30">
           <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center justify-center gap-2">
             <span>💕</span>
             개그 궁합 분석
           </h3>
-          <div className="mb-4">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-green-500 text-lg">✅</span>
-              <span className="text-sm font-semibold text-gray-700">최상의 짝궁</span>
-            </div>
-            <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 border border-green-200">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-lg font-bold text-green-600">
-                  {gagResults[resultData.bestMatch]?.code} - {gagResults[resultData.bestMatch]?.nickname}
-                </span>
+
+          {/* 핵심 짝궁 (기존) */}
+          {resultData.bestMatch && resultData.worstMatch && (
+            <>
+              <div className="mb-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-green-500 text-lg">✅</span>
+                  <span className="text-sm font-semibold text-gray-700">최상의 짝궁</span>
+                </div>
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 border border-green-200">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-lg font-bold text-green-600">
+                      {gagResults[resultData.bestMatch]?.code} - {gagResults[resultData.bestMatch]?.nickname}
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-600 leading-relaxed">
+                    {resultData.bestMatchReason}
+                  </p>
+                </div>
               </div>
-              <p className="text-xs text-gray-600 leading-relaxed">
-                {resultData.bestMatchReason}
-              </p>
-            </div>
-          </div>
+              <div className="mb-5">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-red-500 text-lg">❌</span>
+                  <span className="text-sm font-semibold text-gray-700">최악의 짝궁</span>
+                </div>
+                <div className="bg-gradient-to-r from-red-50 to-pink-50 rounded-xl p-4 border border-red-200">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-lg font-bold text-red-600">
+                      {gagResults[resultData.worstMatch]?.code} - {gagResults[resultData.worstMatch]?.nickname}
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-600 leading-relaxed">
+                    {resultData.worstMatchReason}
+                  </p>
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* TOP 3 유형별 궁합 (계산 기반) */}
           <div>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-red-500 text-lg">❌</span>
-              <span className="text-sm font-semibold text-gray-700">최악의 짝궁</span>
-            </div>
-            <div className="bg-gradient-to-r from-red-50 to-pink-50 rounded-xl p-4 border border-red-200">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-lg font-bold text-red-600">
-                  {gagResults[resultData.worstMatch]?.code} - {gagResults[resultData.worstMatch]?.nickname}
-                </span>
-              </div>
-              <p className="text-xs text-gray-600 leading-relaxed">
-                {resultData.worstMatchReason}
-              </p>
+            <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-1">
+              <span>🎯</span>
+              나와 잘 맞는 개그 유형 TOP 3
+            </h4>
+            <div className="flex flex-col gap-2">
+              {top3.map(({ code, result, score }, i) => {
+                const compat = getCompatibilityLabel(score);
+                const isOpen = openAccordion === i;
+                return (
+                  <div key={code} className="border border-gray-200 rounded-xl overflow-hidden">
+                    <button
+                      className="w-full flex items-center justify-between px-4 py-3 bg-white/80 hover:bg-gray-50 transition text-left"
+                      onClick={() => setOpenAccordion(isOpen ? null : i)}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="text-xl">{compat.emoji}</span>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="font-mono font-bold text-indigo-600 text-sm">{code}</span>
+                            <span className="text-sm font-semibold text-gray-800">{result.nickname}</span>
+                          </div>
+                          <div className="text-xs text-gray-500">{compat.label} · {compat.desc}</div>
+                        </div>
+                      </div>
+                      <svg
+                        className={`w-4 h-4 text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                    {isOpen && (
+                      <div className="px-4 py-3 bg-gradient-to-r from-indigo-50 to-purple-50 border-t border-gray-100">
+                        <p className="text-xs text-gray-700 leading-relaxed">{result.summary}</p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

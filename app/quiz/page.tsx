@@ -45,13 +45,9 @@ function ResultContent() {
     
     const params = new URLSearchParams({
       code: result.code,
-      nickname: result.nickname,
-      summary: result.summary,
-      examples: result.examples.join(","),
       answers: encodeAnswers(finalAnswers)
     });
     if (userName) params.set('user', userName);
-    if (mbti) params.set('mbti', mbti);
     router.push(`/loading?${params.toString()}`);
   };
 
