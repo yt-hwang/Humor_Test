@@ -1,22 +1,16 @@
 import type { Metadata, Viewport } from "next";
-import { Black_Han_Sans, Noto_Sans_KR } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import KakaoSDK from "../src/components/KakaoSDK";
 
-const blackHanSans = Black_Han_Sans({
-  variable: "--font-display",
-  weight: "400",
+const geistSans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
-  display: "swap",
-  preload: false,
 });
 
-const notoSansKr = Noto_Sans_KR({
-  variable: "--font-body",
-  weight: ["400", "500", "700", "900"],
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
-  display: "swap",
-  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -76,7 +70,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${blackHanSans.variable} ${notoSansKr.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <KakaoSDK />
         {children}
