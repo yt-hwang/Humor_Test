@@ -7,7 +7,6 @@ export default function LoadingPage() {
   const router = useRouter();
 
   useEffect(() => {
-    // 1.5초 후 결과 페이지로 이동 (살짝 기대감 주는 연출)
     const t = setTimeout(() => {
       const search = typeof window !== 'undefined' ? window.location.search : '';
       router.replace(`/result${search}`);
@@ -16,16 +15,30 @@ export default function LoadingPage() {
   }, [router]);
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100">
-      <div className="bg-white/80 backdrop-blur-md rounded-3xl shadow-2xl border border-white/30 px-8 py-10 text-center">
-        <div className="flex items-center justify-center mb-4">
-          <div className="w-10 h-10 rounded-full border-4 border-purple-300 border-t-transparent animate-spin"></div>
+    <main className="spotlight-bg flex items-center justify-center">
+      <div className="s-card px-12 py-12 text-center fu" style={{ minWidth: '240px' }}>
+        {/* Spinning ring */}
+        <div className="flex justify-center mb-6">
+          <div
+            className="w-12 h-12 rounded-full border-2"
+            style={{
+              borderColor: 'var(--border-y)',
+              borderTopColor: 'var(--yellow)',
+              animation: 'spin 0.85s linear infinite',
+            }}
+          />
         </div>
-        <h2 className="text-xl font-bold text-gray-800 mb-1">결과 조합 중...</h2>
-        <p className="text-sm text-gray-600">개그코드 결과를 준비하고 있어요 ⏳</p>
+
+        <p
+          className="font-display mb-2"
+          style={{ color: 'var(--yellow)', fontSize: '1.25rem', letterSpacing: '0.05em' }}
+        >
+          개그코드 분석 중
+        </p>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.8125rem' }}>
+          잠시만 기다려주세요
+        </p>
       </div>
     </main>
   );
 }
-
-
