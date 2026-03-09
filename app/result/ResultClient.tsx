@@ -7,14 +7,19 @@ import ShareButtons from "../../src/components/ShareButtons";
 import SaveImageButton from "../../src/components/SaveImageButton";
 import { recordVisit } from "../../src/utils/analytics";
 import { gagResults, calculateAxisScores, getTopCompatibleTypes, getCompatibilityLabel } from "../../src/data/results";
+import { gagResultsEn } from "../../src/data/results.en";
 import type { AxisScores, GagResult } from "../../src/data/results";
 import { decodeAnswers } from "../../src/utils/encodeAnswers";
 import AxisBarChart from "../../src/components/AxisBarChart";
 import StrengthsWeaknesses from "../../src/components/StrengthsWeaknesses";
+import { useLang } from "../../src/context/LangContext";
+import { t } from "../../src/data/ui";
 import React from "react";
 
 export default function ResultClient() {
   const searchParams = useSearchParams();
+  const { lang } = useLang();
+  const results = lang === "en" ? gagResultsEn : gagResults;
 
   const code = searchParams.get("code") || "ONVB";
   const user = searchParams.get("user") || "";
@@ -22,15 +27,12 @@ export default function ResultClient() {
   const displayUser = user.trim();
   const headlineSize = displayUser.length > 14 ? 'text-2xl sm:text-3xl md:text-4xl' : 'text-3xl sm:text-4xl md:text-5xl';
 
-  // 답변 데이터 디코딩 및 축별 점수 계산
   const answers = encodedAnswers ? decodeAnswers(encodedAnswers) : [];
   const axisScores = answers.length > 0 ? calculateAxisScores(answers) : null;
 
-  // 결과 데이터에서 추가 정보 가져오기
-  // 모든 축이 4점(=그래프 51% 표기)인 경우 INPB로 강제
   const isNeutralAll = axisScores && axisScores.OI === 4 && axisScores.NB === 4 && axisScores.VP === 4 && axisScores.BD === 4;
   const effectiveCode = isNeutralAll ? "INPB" : code;
-  const resultData = gagResults[effectiveCode] || gagResults["ONVB"];
+  const resultData = results[effectiveCode] || results["ONVB"];
   const { nickname, summary, examples } = resultData;
 
   useEffect(() => {
@@ -84,7 +86,7 @@ export default function ResultClient() {
             <h2
               className={`${headlineSize} font-extrabold tracking-tight bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 bg-clip-text text-transparent text-center leading-tight break-keep text-pretty mb-3 max-w-[90%] mx-auto drop-shadow-sm`}
             >
-              {displayUser ? `${displayUser}의 개그코드` : '개그코드'}
+              {displayUser ? (lang === 'en' ? `${displayUser}${t('gagCodeOf', lang)}` : `${displayUser}${t('gagCodeOf', lang)}`) : t('gagCode', lang)}
             </h2>
             <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent mb-5" />
 
@@ -98,10 +100,10 @@ export default function ResultClient() {
               {/* 코드 각 글자 의미 */}
               <div className="flex justify-center gap-5 mb-3">
                 {[
-                  effectiveCode[0] === 'O' ? '준비형' : '즉흥형',
-                  effectiveCode[1] === 'N' ? '직관형' : '병맛형',
-                  effectiveCode[2] === 'V' ? '말개그' : '몸개그',
-                  effectiveCode[3] === 'B' ? '밝음' : '다크',
+                  effectiveCode[0] === 'O' ? t('organized', lang) : t('improvised', lang),
+                  effectiveCode[1] === 'N' ? t('intuitive', lang) : t('abstract', lang),
+                  effectiveCode[2] === 'V' ? t('verbal', lang) : t('physical', lang),
+                  effectiveCode[3] === 'B' ? t('bright', lang) : t('dark', lang),
                 ].map((label, i) => (
                   <div key={i} className="flex flex-col items-center gap-0.5">
                     <span className="font-mono font-bold text-indigo-500 text-base">{effectiveCode[i]}</span>
@@ -122,7 +124,7 @@ export default function ResultClient() {
         </div>
 
         {/* 개그코드 분석(막대그래프) */}
-        {displayScores && <AxisBarChart scores={displayScores} />}
+        {displayScores && <AxisBarChart scores={displayScores} lang={lang} />}
         </div>
         {/* 이미지 캡처 영역 끝 */}
 
@@ -132,7 +134,7 @@ export default function ResultClient() {
         {/* 공유 섹션 */}
         <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-5 mb-5 border border-white/30">
           <p className="text-center text-sm font-medium text-gray-700 mb-3">
-            결과를 공유해보세요!
+            {t('shareTitle', lang)}
           </p>
 
           {/* 이미지 저장 + 공유 버튼들 (한 줄) */}
@@ -150,7 +152,7 @@ export default function ResultClient() {
               <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
-              테스트 다시하기
+              {t('retake', lang)}
             </Link>
             <Link
               href="/guide"
@@ -159,7 +161,7 @@ export default function ResultClient() {
               <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              개그 코드 설명
+              {t('guideLink', lang)}
             </Link>
             <Link
               href="/types"
@@ -168,7 +170,7 @@ export default function ResultClient() {
               <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
               </svg>
-              전체 유형 보기
+              {t('typesLink', lang)}
             </Link>
             <Link
               href="/"
@@ -177,7 +179,7 @@ export default function ResultClient() {
               <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1" />
               </svg>
-              메인으로 돌아가기
+              {t('homeLink', lang)}
             </Link>
           </div>
         </div>
@@ -189,8 +191,18 @@ export default function ResultClient() {
 function Tabs({ axisScores, resultData }: { axisScores: AxisScores | null; resultData: GagResult }) {
   const [active, setActive] = React.useState<'strengths' | 'compat'>('strengths');
   const [openAccordion, setOpenAccordion] = React.useState<number | null>(null);
+  const { lang } = useLang();
+  const results = lang === "en" ? gagResultsEn : gagResults;
 
   const top3 = getTopCompatibleTypes(resultData.code);
+
+  const compatLabelMap: Record<number, { labelKey: keyof typeof import("../../src/data/ui").default; descKey: keyof typeof import("../../src/data/ui").default }> = {
+    4: { labelKey: "compatSame", descKey: "compatSameDesc" },
+    3: { labelKey: "compatGreat", descKey: "compatGreatDesc" },
+    2: { labelKey: "compatOk", descKey: "compatOkDesc" },
+    1: { labelKey: "compatFresh", descKey: "compatFreshDesc" },
+    0: { labelKey: "compatOpposite", descKey: "compatOppositeDesc" },
+  };
 
   return (
     <div>
@@ -203,7 +215,7 @@ function Tabs({ axisScores, resultData }: { axisScores: AxisScores | null; resul
           }`}
           onClick={() => setActive('strengths')}
         >
-          🔎 강점/약점
+          🔎 {t('strengthsTab', lang)}
         </button>
         <button
           className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold border shadow-sm transition ${
@@ -213,7 +225,7 @@ function Tabs({ axisScores, resultData }: { axisScores: AxisScores | null; resul
           }`}
           onClick={() => setActive('compat')}
         >
-          💞 개그 궁합
+          💞 {t('compatTab', lang)}
         </button>
       </div>
 
@@ -222,6 +234,7 @@ function Tabs({ axisScores, resultData }: { axisScores: AxisScores | null; resul
           scores={axisScores}
           customStrengths={resultData.strengths}
           customWeaknesses={resultData.weaknesses}
+          lang={lang}
         />
       )}
 
@@ -229,21 +242,21 @@ function Tabs({ axisScores, resultData }: { axisScores: AxisScores | null; resul
         <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/30">
           <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center justify-center gap-2">
             <span>💕</span>
-            개그 궁합 분석
+            {t('compatTitle', lang)}
           </h3>
 
-          {/* 핵심 짝궁 (기존) */}
+          {/* Best/Worst match */}
           {resultData.bestMatch && resultData.worstMatch && (
             <>
               <div className="mb-4">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-green-500 text-lg">✅</span>
-                  <span className="text-sm font-semibold text-gray-700">최상의 짝궁</span>
+                  <span className="text-sm font-semibold text-gray-700">{t('bestMatch', lang)}</span>
                 </div>
                 <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 border border-green-200">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-lg font-bold text-green-600">
-                      {gagResults[resultData.bestMatch]?.code} - {gagResults[resultData.bestMatch]?.nickname}
+                      {results[resultData.bestMatch]?.code} - {results[resultData.bestMatch]?.nickname}
                     </span>
                   </div>
                   <p className="text-xs text-gray-600 leading-relaxed">
@@ -254,12 +267,12 @@ function Tabs({ axisScores, resultData }: { axisScores: AxisScores | null; resul
               <div className="mb-5">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-red-500 text-lg">❌</span>
-                  <span className="text-sm font-semibold text-gray-700">최악의 짝궁</span>
+                  <span className="text-sm font-semibold text-gray-700">{t('worstMatch', lang)}</span>
                 </div>
                 <div className="bg-gradient-to-r from-red-50 to-pink-50 rounded-xl p-4 border border-red-200">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-lg font-bold text-red-600">
-                      {gagResults[resultData.worstMatch]?.code} - {gagResults[resultData.worstMatch]?.nickname}
+                      {results[resultData.worstMatch]?.code} - {results[resultData.worstMatch]?.nickname}
                     </span>
                   </div>
                   <p className="text-xs text-gray-600 leading-relaxed">
@@ -270,15 +283,19 @@ function Tabs({ axisScores, resultData }: { axisScores: AxisScores | null; resul
             </>
           )}
 
-          {/* TOP 3 유형별 궁합 (계산 기반) */}
+          {/* TOP 3 */}
           <div>
             <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-1">
               <span>🎯</span>
-              나와 잘 맞는 개그 유형 TOP 3
+              {t('top3Title', lang)}
             </h4>
             <div className="flex flex-col gap-2">
-              {top3.map(({ code, result, score }, i) => {
+              {top3.map(({ code, score }, i) => {
                 const compat = getCompatibilityLabel(score);
+                const langResult = results[code];
+                const mapping = compatLabelMap[score];
+                const labelText = mapping ? t(mapping.labelKey, lang) : compat.label;
+                const descText = mapping ? t(mapping.descKey, lang) : compat.desc;
                 const isOpen = openAccordion === i;
                 return (
                   <div key={code} className="border border-gray-200 rounded-xl overflow-hidden">
@@ -291,9 +308,9 @@ function Tabs({ axisScores, resultData }: { axisScores: AxisScores | null; resul
                         <div>
                           <div className="flex items-center gap-2">
                             <span className="font-mono font-bold text-indigo-600 text-sm">{code}</span>
-                            <span className="text-sm font-semibold text-gray-800">{result.nickname}</span>
+                            <span className="text-sm font-semibold text-gray-800">{langResult?.nickname}</span>
                           </div>
-                          <div className="text-xs text-gray-500">{compat.label} · {compat.desc}</div>
+                          <div className="text-xs text-gray-500">{labelText} · {descText}</div>
                         </div>
                       </div>
                       <svg
@@ -305,7 +322,7 @@ function Tabs({ axisScores, resultData }: { axisScores: AxisScores | null; resul
                     </button>
                     {isOpen && (
                       <div className="px-4 py-3 bg-gradient-to-r from-indigo-50 to-purple-50 border-t border-gray-100">
-                        <p className="text-xs text-gray-700 leading-relaxed">{result.summary}</p>
+                        <p className="text-xs text-gray-700 leading-relaxed">{langResult?.summary}</p>
                       </div>
                     )}
                   </div>

@@ -2,31 +2,36 @@
 import React, { useState, Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { questions } from "../../src/data/questions";
+import { questionsEn } from "../../src/data/questions.en";
 import { calculateResult } from "../../src/data/results";
 import { recordVisit, recordTestResult } from "../../src/utils/analytics";
 import { encodeAnswers } from "../../src/utils/encodeAnswers";
+import { useLang } from "../../src/context/LangContext";
+import { t } from "../../src/data/ui";
 
-const likertLabels = [
-  "전혀 그렇지 않다",
-  "그렇지 않다",
-  "조금 그렇지 않다",
-  "보통이다",
-  "조금 그렇다",
-  "그렇다",
-  "매우 그렇다",
+const likertLabelsKo = [
+  "전혀 그렇지 않다", "그렇지 않다", "조금 그렇지 않다",
+  "보통이다", "조금 그렇다", "그렇다", "매우 그렇다",
+];
+const likertLabelsEn = [
+  "Strongly disagree", "Disagree", "Slightly disagree",
+  "Neutral", "Slightly agree", "Agree", "Strongly agree",
 ];
 
 function ResultContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { lang } = useLang();
   const userName = searchParams.get('user') || '';
   const mbti = searchParams.get('mbti') || '';
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState<(number | null)[]>(Array(questions.length).fill(null));
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const qs = lang === "en" ? questionsEn : questions;
+  const likertLabels = lang === "en" ? likertLabelsEn : likertLabelsKo;
 
   useEffect(() => {
-    // 퀴즈 페이지 방문 기록
     recordVisit('/quiz')
   }, [])
 
@@ -34,15 +39,14 @@ function ResultContent() {
     if (isSubmitting) return
     setIsSubmitting(true)
     const result = calculateResult(finalAnswers);
-    
-    // 테스트 결과 기록 (이름/MBTI 포함)
+
     await recordTestResult(
       result.code,
       result.nickname,
       result.summary,
       { userName, mbti }
     )
-    
+
     const params = new URLSearchParams({
       code: result.code,
       answers: encodeAnswers(finalAnswers)
@@ -58,13 +62,12 @@ function ResultContent() {
     if (current < questions.length - 1) {
       setCurrent(current + 1);
     } else {
-      // 마지막 질문이면 바로 제출
       if (updated.every(ans => ans !== null)) {
         if (!isSubmitting) {
           void goToResult(updated);
         }
       } else {
-        alert("모든 질문에 답해주세요!");
+        alert(t('answerAll', lang));
       }
     }
   };
@@ -78,7 +81,6 @@ function ResultContent() {
       if (current < questions.length - 1) {
         setCurrent(current + 1);
       } else {
-        // 마지막 문항이고 모두 답변했으면 결과로
         if (answers.every(a => a !== null)) {
           if (!isSubmitting) {
             void goToResult(answers);
@@ -95,7 +97,7 @@ function ResultContent() {
           <span>Q{current + 1} / {questions.length}</span>
           <span>{Math.round(((current + 1) / questions.length) * 100)}%</span>
         </div>
-         <h2 className="text-sm sm:text-base md:text-lg font-bold mb-6 text-center min-h-[32px] sm:min-h-[40px] md:min-h-[48px] text-gray-900 leading-tight px-2 whitespace-pre-line break-keep text-pretty">{questions[current].text}</h2>
+         <h2 className="text-sm sm:text-base md:text-lg font-bold mb-6 text-center min-h-[32px] sm:min-h-[40px] md:min-h-[48px] text-gray-900 leading-tight px-2 whitespace-pre-line break-keep text-pretty">{qs[current].text}</h2>
         <div className="flex flex-col gap-2 w-full mb-6">
           <div className="flex justify-between text-xs text-gray-500 px-1">
             <span>{likertLabels[0]}</span>
@@ -120,14 +122,13 @@ function ResultContent() {
             className="bg-gray-200 rounded px-3 py-2 text-gray-500 disabled:opacity-50 text-sm sm:text-base"
             onClick={handlePrev}
             disabled={current === 0}
-          >이전</button>
-          {/* 이미 답변한 문항일 때만 다음 버튼 노출 */}
+          >{t('prev', lang)}</button>
           {answers[current] !== null ? (
             <button
               className="bg-blue-500 hover:bg-blue-600 text-white rounded px-4 py-2 text-sm sm:text-base"
               onClick={handleNextIfAnswered}
               disabled={isSubmitting}
-            >다음</button>
+            >{t('next', lang)}</button>
           ) : (
             <span className="px-4 py-2 text-transparent">placeholder</span>
           )}
@@ -139,8 +140,8 @@ function ResultContent() {
 
 export default function ResultPage() {
   return (
-    <Suspense fallback={<div>결과를 불러오는 중...</div>}>
+    <Suspense fallback={<div>Loading...</div>}>
       <ResultContent />
     </Suspense>
   );
-} 
+}

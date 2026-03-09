@@ -2,17 +2,19 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useLang } from "../../src/context/LangContext";
+import { t } from "../../src/data/ui";
 
 export default function LoadingPage() {
   const router = useRouter();
+  const { lang } = useLang();
 
   useEffect(() => {
-    // 1.5초 후 결과 페이지로 이동 (살짝 기대감 주는 연출)
-    const t = setTimeout(() => {
+    const timer = setTimeout(() => {
       const search = typeof window !== 'undefined' ? window.location.search : '';
       router.replace(`/result${search}`);
     }, 1500);
-    return () => clearTimeout(t);
+    return () => clearTimeout(timer);
   }, [router]);
 
   return (
@@ -21,11 +23,9 @@ export default function LoadingPage() {
         <div className="flex items-center justify-center mb-4">
           <div className="w-10 h-10 rounded-full border-4 border-purple-300 border-t-transparent animate-spin"></div>
         </div>
-        <h2 className="text-xl font-bold text-gray-800 mb-1">결과 조합 중...</h2>
-        <p className="text-sm text-gray-600">개그코드 결과를 준비하고 있어요 ⏳</p>
+        <h2 className="text-xl font-bold text-gray-800 mb-1">{t('loading', lang)}</h2>
+        <p className="text-sm text-gray-600">{t('loadingSub', lang)}</p>
       </div>
     </main>
   );
 }
-
-
