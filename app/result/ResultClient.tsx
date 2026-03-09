@@ -2,8 +2,9 @@
 
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import ShareButtons from "../../src/components/ShareButtons";
+import SaveImageButton from "../../src/components/SaveImageButton";
 import { recordVisit } from "../../src/utils/analytics";
 import { gagResults, calculateAxisScores, getTopCompatibleTypes, getCompatibilityLabel } from "../../src/data/results";
 import type { AxisScores, GagResult } from "../../src/data/results";
@@ -47,6 +48,8 @@ export default function ResultClient() {
     }
   }, [code, nickname]);
 
+  const captureRef = useRef<HTMLDivElement>(null);
+
   const shareData = {
     code: effectiveCode,
     nickname,
@@ -72,6 +75,8 @@ export default function ResultClient() {
       <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full opacity-15 blur-lg animate-bounce"></div>
       
       <div className="relative z-10 w-full max-w-lg">
+        {/* 이미지 캡처 영역 시작 */}
+        <div ref={captureRef}>
         {/* 메인 결과 카드 */}
         <div id="result-container" className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/20 p-8 mb-6">
           {/* 결과 헤더 */}
@@ -118,6 +123,8 @@ export default function ResultClient() {
 
         {/* 개그코드 분석(막대그래프) */}
         {displayScores && <AxisBarChart scores={displayScores} />}
+        </div>
+        {/* 이미지 캡처 영역 끝 */}
 
         {/* 탭: 강점/약점 | 개그 궁합 (막대 아래) */}
         {displayScores && <Tabs axisScores={displayScores} resultData={resultData} />}
@@ -134,7 +141,8 @@ export default function ResultClient() {
             </p>
           </div>
           
-          <div className="flex gap-3 justify-center mb-4">
+          <div className="flex gap-3 justify-center flex-wrap mb-4">
+            <SaveImageButton targetRef={captureRef} fileName={`gag-code-${effectiveCode}`} />
             <Link
               href="/"
               className="group bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-xl px-6 py-3 text-sm font-medium transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center gap-2"
