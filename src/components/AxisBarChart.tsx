@@ -70,8 +70,7 @@ const AxisBarChart: React.FC<AxisBarChartProps> = ({ scores, lang = "ko" }) => {
   const calculateBarData = (value: number, axis: keyof AxisScores) => {
     const distance = Math.abs(value - 4) / 3;
     const percent = 50 + Math.round(distance * 50);
-    const side = value >= 4 ? 'left' : 'right';
-
+    const side = value > 4 ? 'left' : 'right';
     return {
       percent,
       side,
