@@ -47,16 +47,11 @@ export default function Home() {
       
       <div className="relative z-10 w-full max-w-lg p-8">
         {/* 메인 카드 */}
-        <div className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/20 p-8 transform hover:scale-105 transition-all duration-300">
+        <div className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/20 p-8 transition-all duration-300">
           {/* 로고/아이콘 */}
           <div className="flex justify-center mb-6">
-            <div className="relative">
-              <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg select-none">
-                <span className="text-4xl select-none" draggable={false}>🎤</span>
-              </div>
-              <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-pink-500 to-red-500 rounded-full flex items-center justify-center select-none">
-                <span className="text-xs text-white select-none" draggable={false}>✨</span>
-              </div>
+            <div className="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center select-none">
+              <span className="text-3xl select-none" draggable={false}>🎤</span>
             </div>
           </div>
           
@@ -100,14 +95,13 @@ export default function Home() {
 
           {/* 시작 버튼 */}
           <div className="flex justify-center">
-            <button onClick={handleStart} className="group relative bg-gradient-to-r from-blue-600 to-purple-700 hover:from-blue-700 hover:to-purple-800 text-white rounded-2xl px-10 py-4 text-lg font-semibold shadow-2xl ring-2 ring-purple-300/40 transform hover:scale-110 transition-all duration-300 overflow-hidden">
-              <span className="relative z-10 flex items-center gap-2">
+            <button onClick={handleStart} className="group bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl px-8 py-3.5 text-base font-semibold shadow-sm transition-all duration-200">
+              <span className="flex items-center gap-2">
                 시작하기
-                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
             </button>
           </div>
         </div>

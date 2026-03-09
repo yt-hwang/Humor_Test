@@ -130,59 +130,52 @@ export default function ResultClient() {
         {displayScores && <Tabs axisScores={displayScores} resultData={resultData} />}
 
         {/* 공유 섹션 */}
-        <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/30">
-          <div className="text-center mb-4">
-            <h3 className="text-lg font-semibold text-gray-800 mb-2 flex items-center justify-center gap-2">
-              <span>🎉</span>
-              결과를 공유해보세요!
-            </h3>
-            <p className="text-sm text-gray-600">
-              친구들과 함께 재미있는 개그유형 테스트를 해보세요
-            </p>
-          </div>
-          
-          <div className="flex gap-3 justify-center flex-wrap mb-4">
+        <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-5 mb-5 border border-white/30">
+          <p className="text-center text-sm font-medium text-gray-700 mb-3">
+            결과를 공유해보세요!
+          </p>
+
+          {/* 이미지 저장 + 공유 버튼들 (한 줄) */}
+          <div className="flex gap-2 justify-center items-center mb-4">
             <SaveImageButton targetRef={captureRef} fileName={`gag-code-${effectiveCode}`} />
-            <Link
-              href="/"
-              className="group bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-xl px-6 py-3 text-sm font-medium transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center gap-2"
-            >
-              테스트 다시하기
-              <svg className="w-4 h-4 group-hover:rotate-180 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-              </svg>
-            </Link>
             <ShareButtons data={shareData} />
           </div>
-        </div>
 
-        {/* 하단 링크들 */}
-        <div className="text-center space-y-3">
-          <div className="flex justify-center gap-3 flex-wrap">
-            <Link 
-              href="/guide" 
-              className="inline-flex items-center gap-2 text-sm text-white bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl px-4 py-2 shadow hover:opacity-95"
+          {/* 액션 버튼들 (2x2 그리드) */}
+          <div className="grid grid-cols-2 gap-2">
+            <Link
+              href="/"
+              className="flex items-center justify-center gap-1.5 bg-white/80 hover:bg-white text-gray-700 border border-gray-200 rounded-xl px-3 py-2.5 text-xs font-medium transition-colors"
             >
-              개그 코드 설명
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
+              테스트 다시하기
             </Link>
-            <Link 
-              href="/types" 
-              className="inline-flex items-center gap-2 text-sm text-white bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl px-4 py-2 shadow hover:opacity-95"
+            <Link
+              href="/guide"
+              className="flex items-center justify-center gap-1.5 bg-white/80 hover:bg-white text-gray-700 border border-gray-200 rounded-xl px-3 py-2.5 text-xs font-medium transition-colors"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+              <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              개그 코드 설명
+            </Link>
+            <Link
+              href="/types"
+              className="flex items-center justify-center gap-1.5 bg-white/80 hover:bg-white text-gray-700 border border-gray-200 rounded-xl px-3 py-2.5 text-xs font-medium transition-colors"
+            >
+              <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
               </svg>
               전체 유형 보기
             </Link>
-            <Link 
-              href="/" 
-              className="inline-flex items-center gap-2 text-sm text-white bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl px-4 py-2 shadow hover:opacity-95"
+            <Link
+              href="/"
+              className="flex items-center justify-center gap-1.5 bg-white/80 hover:bg-white text-gray-700 border border-gray-200 rounded-xl px-3 py-2.5 text-xs font-medium transition-colors"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1" />
               </svg>
               메인으로 돌아가기
             </Link>
@@ -201,26 +194,26 @@ function Tabs({ axisScores, resultData }: { axisScores: AxisScores | null; resul
 
   return (
     <div>
-      <div className="flex justify-center gap-3 mb-4">
+      <div className="flex justify-center gap-2 mb-4">
         <button
-          className={`px-5 py-2.5 rounded-full text-sm font-semibold border shadow-sm transition ${
+          className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold border shadow-sm transition ${
             active === 'strengths'
               ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white border-transparent ring-2 ring-blue-200'
               : 'bg-white/90 text-gray-700 border-gray-300 hover:bg-gray-50'
           }`}
           onClick={() => setActive('strengths')}
         >
-          🔎 강점/약점 보기
+          🔎 강점/약점
         </button>
         <button
-          className={`px-5 py-2.5 rounded-full text-sm font-semibold border shadow-sm transition ${
+          className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold border shadow-sm transition ${
             active === 'compat'
               ? 'bg-gradient-to-r from-pink-500 to-orange-500 text-white border-transparent ring-2 ring-pink-200'
               : 'bg-white/90 text-gray-700 border-gray-300 hover:bg-gray-50'
           }`}
           onClick={() => setActive('compat')}
         >
-          💞 개그 궁합 보기
+          💞 개그 궁합
         </button>
       </div>
 
