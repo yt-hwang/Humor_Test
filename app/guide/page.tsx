@@ -85,7 +85,7 @@ const AXIS = [
         "Enjoys imaginative world-building and rich metaphors, even when they're not immediately obvious."
       ]
     },
-    whatItJudges: "개그의 맥락을을 설명합니다. 현실적 맥락에서 빠르게 공감을 얻는 개그와 맥락을 깨고 허를 찌르는는 개그 중 어느 쪽에 더 끌리는지 알아봅니다.",
+    whatItJudges: "개그의 맥락을 설명합니다. 현실적 맥락에서 빠르게 공감을 얻는 개그와 맥락을 깨고 허를 찌르는 개그 중 어느 쪽에 더 끌리는지 알아봅니다.",
     whatItJudgesEn: "Measures your preference for context — whether you enjoy relatable, intuitive humor or abstract, context-breaking comedy."
   },
   {
