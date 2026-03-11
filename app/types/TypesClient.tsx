@@ -9,6 +9,7 @@ import { recordVisit } from "../../src/utils/analytics";
 import TypeDetailModal from "../../src/components/TypeDetailModal";
 import { useLang } from "../../src/context/LangContext";
 import { t } from "../../src/data/ui";
+import Footer from "../../src/components/Footer";
 
 const categories = [
   { nameKey: "cat1" as const, descKey: "cat1desc" as const, types: ["ONVB", "ONPB", "INVB", "INPB"], color: "from-yellow-400 to-orange-400" },
@@ -118,6 +119,8 @@ export default function TypesClient() {
             {t('homeLink', lang)}
           </Link>
         </div>
+
+        <Footer />
       </div>
 
       {/* Modal */}

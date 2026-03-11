@@ -8,6 +8,7 @@ import { recordVisit, recordTestResult } from "../../src/utils/analytics";
 import { encodeAnswers } from "../../src/utils/encodeAnswers";
 import { useLang } from "../../src/context/LangContext";
 import { t } from "../../src/data/ui";
+import Footer from "../../src/components/Footer";
 
 const likertLabelsKo = [
   "전혀 그렇지 않다", "그렇지 않다", "조금 그렇지 않다",
@@ -133,6 +134,9 @@ function ResultContent() {
             <span className="px-4 py-2 text-transparent">placeholder</span>
           )}
         </div>
+      </div>
+      <div className="w-full max-w-md mt-4">
+        <Footer />
       </div>
     </main>
   );

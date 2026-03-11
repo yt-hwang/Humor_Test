@@ -6,6 +6,7 @@ import Link from "next/link";
 import { recordVisit } from "../../src/utils/analytics";
 import { useLang } from "../../src/context/LangContext";
 import { t } from "../../src/data/ui";
+import Footer from "../../src/components/Footer";
 
 const AXIS = [
   {
@@ -248,6 +249,8 @@ export default function GuidePage() {
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
           </Link>
         </div>
+
+        <Footer />
       </div>
     </main>
   );
