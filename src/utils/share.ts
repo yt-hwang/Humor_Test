@@ -59,6 +59,10 @@ const getShareText = (platform: string, data: ShareData) => {
 
 // 카카오톡 공유 - SDK를 사용한 자동 공유
 export const shareToKakao = async (data: ShareData) => {
+  // 결과 페이지 URL 생성
+  const resultUrl = `${window.location.origin}/result?code=${data.code}`;
+  const homeUrl = `${window.location.origin}/`;
+
   // 카카오톡 SDK가 있는 경우 사용
   if (typeof window !== 'undefined' && window.Kakao && window.Kakao.isInitialized()) {
     try {
@@ -66,31 +70,26 @@ export const shareToKakao = async (data: ShareData) => {
         objectType: 'feed',
         content: {
           title: `🎭 나의 개그유형: ${data.code} - ${data.nickname}`,
-          description: `${data.summary}\n\n예시: ${data.examples.join(', ')}`,
+          description: `${data.summary}`,
           imageUrl: `${window.location.origin}/images/result/${data.code}.png`,
           link: {
-            mobileWebUrl: window.location.origin + '/',
-            webUrl: window.location.origin + '/',
+            mobileWebUrl: resultUrl,
+            webUrl: resultUrl,
           },
-        },
-        social: {
-          likeCount: 286,
-          commentCount: 45,
-          sharedCount: 845
         },
         buttons: [
           {
-            title: '🎯 테스트 하러가기',
+            title: '👀 결과 보기',
             link: {
-              mobileWebUrl: window.location.origin + '/',
-              webUrl: window.location.origin + '/',
+              mobileWebUrl: resultUrl,
+              webUrl: resultUrl,
             },
           },
           {
-            title: '📸 결과 이미지로 공유',
+            title: '🎯 나도 테스트하기',
             link: {
-              mobileWebUrl: window.location.origin + '/',
-              webUrl: window.location.origin + '/',
+              mobileWebUrl: homeUrl,
+              webUrl: homeUrl,
             },
           },
         ],
@@ -100,7 +99,7 @@ export const shareToKakao = async (data: ShareData) => {
       console.error('카카오톡 SDK 공유 실패:', error);
     }
   }
-  
+
   // SDK가 없거나 실패한 경우 안내
   alert('카카오톡 앱이 설치되어 있지 않거나 SDK 초기화에 실패했습니다.\n\n다른 공유 방법을 이용해주세요.');
 };
