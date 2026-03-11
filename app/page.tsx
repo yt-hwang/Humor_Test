@@ -130,6 +130,16 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        {/* 푸터 링크 */}
+        <div className="mt-4 text-center">
+          <div className="flex items-center justify-center gap-4 text-xs text-gray-400">
+            <a href="/privacy" className="hover:text-gray-600 transition-colors">개인정보처리방침</a>
+            <span>|</span>
+            <a href="/terms" className="hover:text-gray-600 transition-colors">이용약관</a>
+          </div>
+          <p className="mt-2 text-xs text-gray-300">© 2024 개그유형 테스트. All rights reserved.</p>
+        </div>
       </div>
     </main>
   );
