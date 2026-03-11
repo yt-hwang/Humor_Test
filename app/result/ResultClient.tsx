@@ -56,7 +56,8 @@ export default function ResultClient() {
     code: effectiveCode,
     nickname,
     summary,
-    examples
+    examples,
+    encodedAnswers: encodedAnswers || undefined
   };
 
   // 코드만 있을 때도 그래프/강점 노출을 위해 코드→대략 점수 변환

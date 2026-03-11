@@ -44,8 +44,11 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
 
   const handleCopyLink = async () => {
     try {
-      const shareText = `🎭 나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n🔗 개그유형 테스트 하러가기: ${window.location.origin}/`;
-      
+      // 결과 페이지 URL 생성 (answers가 있으면 포함)
+      const answersParam = data.encodedAnswers ? `&answers=${data.encodedAnswers}` : '';
+      const resultUrl = `${window.location.origin}/result?code=${data.code}${answersParam}`;
+      const shareText = `🎭 나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n👀 내 결과 보기: ${resultUrl}\n🎯 나도 테스트하기: ${window.location.origin}/`;
+
       if (navigator.clipboard) {
         await navigator.clipboard.writeText(shareText);
         alert('✅ 링크와 결과가 클립보드에 복사되었습니다!');
