@@ -33,9 +33,9 @@ const i18n = {
     wild: "예측불가형",
   },
   en: {
-    title: "Humor Code Test",
-    userSuffix: "'s Humor Code",
-    defaultTitle: "My Humor Code",
+    title: "Humor Type Test",
+    userSuffix: "'s Humor Type",
+    defaultTitle: "My Humor Type",
     best: "Best Match",
     worst: "Worst Match",
     mood: "Mood Makers",
@@ -377,7 +377,7 @@ function showImageOverlay(dataUrl: string, lang: Lang) {
 
 export default function SaveImageButton({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  targetRef, fileName = "my-gag-code",
+  targetRef, fileName = "my-humor-type",
   userName, code, nickname, summary, bestMatch, worstMatch, lang = "ko",
 }: SaveImageButtonProps) {
   const [saving, setSaving] = useState(false);

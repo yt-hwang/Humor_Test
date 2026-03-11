@@ -23,11 +23,11 @@ const ui = {
 
   // Loading
   loading: { ko: "결과 조합 중...", en: "Calculating results..." },
-  loadingSub: { ko: "개그코드 결과를 준비하고 있어요 ⏳", en: "Preparing your humor code ⏳" },
+  loadingSub: { ko: "개그코드 결과를 준비하고 있어요 ⏳", en: "Preparing your Humor Type result ⏳" },
 
   // Result
-  gagCode: { ko: "개그코드", en: "Humor Code" },
-  gagCodeOf: { ko: "의 개그코드", en: "'s Humor Code" },
+  gagCode: { ko: "개그코드", en: "Humor Type" },
+  gagCodeOf: { ko: "의 개그코드", en: "'s Humor Type" },
   organized: { ko: "준비형", en: "Organized" },
   improvised: { ko: "즉흥형", en: "Improvised" },
   intuitive: { ko: "직관형", en: "Intuitive" },
@@ -52,11 +52,11 @@ const ui = {
   top3Title: { ko: "나와 잘 맞는 개그 유형 TOP 3", en: "Top 3 Types That Match You" },
 
   // AxisBarChart
-  chartTitle: { ko: "개그코드 분석", en: "Humor Code Analysis" },
+  chartTitle: { ko: "개그코드 분석", en: "Humor Type Analysis" },
 
   // Guide
-  guideTitle: { ko: "개그 코드 설명", en: "Humor Code Guide" },
-  guideSub: { ko: "아래의 네 가지 기준으로 본인의 유머 코드를 이해해보세요.", en: "Understand your humor code through these four dimensions." },
+  guideTitle: { ko: "개그 코드 설명", en: "Humor Type Guide" },
+  guideSub: { ko: "아래의 네 가지 기준으로 본인의 유머 코드를 이해해보세요.", en: "Understand your Humor Type through these four dimensions." },
   backToResult: { ko: "결과 페이지로 돌아가기", en: "Back to Results" },
 
   // Types
@@ -115,7 +115,7 @@ const ui = {
   },
   aboutSection1Text2: {
     ko: "MBTI처럼 4가지 축(짜여진/즉흥적, 직관적/추상적, 언어적/비언어적, 밝은/어두운)을 기반으로 당신의 유머 코드를 분석합니다.",
-    en: "Similar to MBTI, it analyzes your humor code based on four dimensions: Organized/Improvised, Intuitive/Abstract, Verbal/Physical, and Bright/Dark."
+    en: "Similar to MBTI, it analyzes your Humor Type based on four dimensions: Organized/Improvised, Intuitive/Abstract, Verbal/Physical, and Bright/Dark."
   },
   aboutSection1Sub: {
     ko: "This test analyzes your humor style and categorizes you into one of 16 comedy types, similar to MBTI personality types.",
@@ -451,18 +451,18 @@ const ui = {
 
   // Theory page - Header
   theoryBadge: { ko: "Deep Dive", en: "Deep Dive" },
-  theoryTitle: { ko: "개그코드 이론의 깊은 이해", en: "Deep Understanding of GagCode Theory" },
+  theoryTitle: { ko: "개그코드 이론의 깊은 이해", en: "Deep Understanding of Humor Type Theory" },
   theorySubtitle1: { ko: "왜 16가지 유형을 4개의 대분류로 나누었을까요?", en: "Why did we divide 16 types into 4 categories?" },
-  theorySubtitle2: { ko: "MBTI의 분류 철학에서 영감을 받아 개그코드만의 체계를 만든 이야기입니다.", en: "This is the story of how GagCode created its own system inspired by MBTI's classification philosophy." },
+  theorySubtitle2: { ko: "MBTI의 분류 철학에서 영감을 받아 개그코드만의 체계를 만든 이야기입니다.", en: "This is the story of how Humor Type created its own system inspired by MBTI's classification philosophy." },
 
   // Theory - Table of Contents
   theoryTocTitle: { ko: "목차", en: "Table of Contents" },
   theoryTocItem1: { ko: "1. 왜 4개의 대분류인가?", en: "1. Why 4 Major Categories?" },
   theoryTocItem2: { ko: "2. MBTI는 어떻게 분류했나?", en: "2. How Does MBTI Classify?" },
   theoryTocItem3: { ko: "3. MBTI 분류의 숨겨진 논리", en: "3. Hidden Logic of MBTI Classification" },
-  theoryTocItem4: { ko: "4. 개그코드는 어떻게 분류했나?", en: "4. How Does GagCode Classify?" },
+  theoryTocItem4: { ko: "4. 개그코드는 어떻게 분류했나?", en: "4. How Does Humor Type Classify?" },
   theoryTocItem5: { ko: "5. 두 체계의 비교", en: "5. Comparison of Two Systems" },
-  theoryTocItem6: { ko: "6. 개그코드 4대 분류 상세", en: "6. Detailed GagCode 4 Major Categories" },
+  theoryTocItem6: { ko: "6. 개그코드 4대 분류 상세", en: "6. Detailed Humor Type 4 Major Categories" },
 
   // Theory - Section 1
   theoryS1Title: { ko: "왜 4개의 대분류인가?", en: "Why 4 Major Categories?" },
@@ -473,7 +473,7 @@ const ui = {
   theoryS1ExAC: { ko: "A와 C로 묶으면: AC, AD, BC, BD 4그룹", en: "Grouping A and C: 4 groups AC, AD, BC, BD" },
   theoryS1ExAE: { ko: "A와 E로 묶으면: AE, AF, BE, BF 4그룹", en: "Grouping A and E: 4 groups AE, AF, BE, BF" },
   theoryS1ExCG: { ko: "C와 G로 묶으면: CG, CH, DG, DH 4그룹", en: "Grouping C and G: 4 groups CG, CH, DG, DH" },
-  theoryS1Conclusion: { ko: "어떤 축의 조합이 가장 의미 있는 그룹을 만들어내는가? 이것이 분류 체계 설계의 핵심입니다. MBTI와 개그코드 모두 이 질문에 대한 답을 찾아야 했습니다.", en: "Which combination of axes creates the most meaningful groups? This is the core of classification system design. Both MBTI and GagCode had to find answers to this question." },
+  theoryS1Conclusion: { ko: "어떤 축의 조합이 가장 의미 있는 그룹을 만들어내는가? 이것이 분류 체계 설계의 핵심입니다. MBTI와 개그코드 모두 이 질문에 대한 답을 찾아야 했습니다.", en: "Which combination of axes creates the most meaningful groups? This is the core of classification system design. Both MBTI and Humor Type had to find answers to this question." },
 
   // Theory - Section 2
   theoryS2Title: { ko: "MBTI는 어떻게 분류했나?", en: "How Does MBTI Classify?" },
@@ -540,9 +540,9 @@ const ui = {
   theoryS3WhyEI: { ko: "왜 E/I는 분류 기준에서 빠졌나?", en: "Why was E/I excluded from classification criteria?" },
   theoryS3WhyEIDetail: { ko: "E/I(에너지 방향)는 \"기질의 본질\"과 덜 관련됩니다. 외향적 분석가(ENTJ)나 내향적 분석가(INTJ)나 둘 다 논리적 전략가입니다. 에너지를 어디서 얻느냐만 다를 뿐, 세상을 인식하고 판단하는 방식은 같습니다. 그래서 E/I는 대분류가 아닌, 각 유형 내의 변형으로 처리됩니다.", en: "E/I (Energy Direction) is less related to \"the essence of temperament.\" Both extroverted analysts (ENTJ) and introverted analysts (INTJ) are logical strategists. Only where you get energy differs; how you perceive and judge the world is the same. So E/I is treated as a variation within each type, not as a major category." },
 
-  // Theory - Section 4: How GagCode Classifies
-  theoryS4Title: { ko: "개그코드는 어떻게 분류했나?", en: "How Does GagCode Classify?" },
-  theoryS4Intro: { ko: "개그코드도 4개의 축이 있습니다:", en: "GagCode also has 4 axes:" },
+  // Theory - Section 4: How Humor Type Classifies
+  theoryS4Title: { ko: "개그코드는 어떻게 분류했나?", en: "How Does Humor Type Classify?" },
+  theoryS4Intro: { ko: "개그코드도 4개의 축이 있습니다:", en: "Humor Type also has 4 axes:" },
   theoryS4OI: { ko: "O/I (준비 방식)", en: "O/I (Preparation Method)" },
   theoryS4OISub: { ko: "Organized vs Improvised", en: "Organized vs Improvised" },
   theoryS4OIDesc: { ko: "짜여진 개그 vs 즉흥적 개그", en: "Structured comedy vs Improvised comedy" },
@@ -555,7 +555,7 @@ const ui = {
   theoryS4BD: { ko: "B/D (주제 톤)", en: "B/D (Tone)" },
   theoryS4BDSub: { ko: "Bright vs Dark", en: "Bright vs Dark" },
   theoryS4BDDesc: { ko: "밝고 유쾌함 vs 어둡고 풍자적", en: "Bright and cheerful vs Dark and satirical" },
-  theoryS4FundamentalAxis: { ko: "MBTI의 논리를 개그코드에 적용하면, 가장 근본적인 축은 N/B(맥락 방식)입니다.", en: "Applying MBTI's logic to GagCode, the most fundamental axis is N/B (Context Method)." },
+  theoryS4FundamentalAxis: { ko: "MBTI의 논리를 개그코드에 적용하면, 가장 근본적인 축은 N/B(맥락 방식)입니다.", en: "Applying MBTI's logic to Humor Type, the most fundamental axis is N/B (Context Method)." },
   theoryS4Insight: { ko: "핵심 통찰", en: "Key Insight" },
   theoryS4InsightDetail: { ko: "유머를 \"어떤 맥락에서 찾느냐\"가 그 사람의 개그 기질을 가장 크게 결정합니다. 현실에서 공감 포인트를 찾는가(N), 현실을 비틀어 병맛을 만드는가(B)?", en: "What context you find humor in most greatly determines a person's comedy temperament. Do you find empathy points in reality (N), or twist reality to create absurdity (B)?" },
   theoryAtmosphere: { ko: "분위기메이커형", en: "Atmosphere Maker" },
@@ -614,8 +614,8 @@ const ui = {
   theoryS5ExplorerUnpred: { ko: "탐험가형 ↔ 예측불가형", en: "Explorer ↔ Unpredictable" },
   theoryS5ExplorerUnpredDesc: { ko: "둘 다 즉흥성과 유연함이 핵심. 하나는 경험을, 하나는 웃음을 즉흥으로 만듭니다.", en: "Both have spontaneity and flexibility as core. One creates experience spontaneously, the other creates laughter." },
 
-  // Theory - Section 6: GagCode 4 Categories Detail
-  theoryS6Title: { ko: "개그코드 4대 분류 상세", en: "Detailed GagCode 4 Major Categories" },
+  // Theory - Section 6: Humor Type 4 Categories Detail
+  theoryS6Title: { ko: "개그코드 4대 분류 상세", en: "Detailed Humor Type 4 Major Categories" },
   theoryS6AtmoDetails: { ko: "N + B(밝음) | ONVB, ONPB, INVB, INPB", en: "N + B(Bright) | ONVB, ONPB, INVB, INPB" },
   theoryS6AtmoTagline: { ko: "\"모두가 함께 웃을 수 있는 유쾌한 공감의 달인\"", en: "\"Master of pleasant empathy where everyone can laugh together\"" },
   theoryS6Characteristics: { ko: "특징", en: "Characteristics" },

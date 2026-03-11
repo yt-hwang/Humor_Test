@@ -143,7 +143,7 @@ export default function ResultClient() {
           <div className="flex gap-2 justify-center items-center mb-4">
             <SaveImageButton
               targetRef={captureRef}
-              fileName={`gag-code-${effectiveCode}`}
+              fileName={`humor-type-${effectiveCode}`}
               userName={displayUser}
               code={effectiveCode}
               nickname={nickname}
