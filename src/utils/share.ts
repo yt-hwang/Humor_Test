@@ -1,9 +1,12 @@
+import type { Lang } from '../context/LangContext';
+
 export interface ShareData {
   code: string;
   nickname: string;
   summary: string;
   examples: string[];
   encodedAnswers?: string; // 인코딩된 답변 데이터
+  lang?: Lang; // 언어 설정
 }
 
 // 플랫폼별 해시태그 전략 (보고서 기반 최적화)
@@ -60,10 +63,11 @@ const getShareText = (platform: string, data: ShareData) => {
 
 // 카카오톡 공유 - SDK를 사용한 자동 공유
 export const shareToKakao = async (data: ShareData) => {
-  // 결과 페이지 URL 생성 (answers가 있으면 포함)
+  // 결과 페이지 URL 생성 (answers, lang 포함)
+  const langParam = data.lang ? `&lang=${data.lang}` : '';
   const answersParam = data.encodedAnswers ? `&answers=${data.encodedAnswers}` : '';
-  const resultUrl = `${window.location.origin}/result?code=${data.code}${answersParam}`;
-  const homeUrl = `${window.location.origin}/`;
+  const resultUrl = `${window.location.origin}/result?code=${data.code}${langParam}${answersParam}`;
+  const homeUrl = data.lang ? `${window.location.origin}/?lang=${data.lang}` : `${window.location.origin}/`;
 
   // 카카오톡 SDK가 있는 경우 사용
   if (typeof window !== 'undefined' && window.Kakao && window.Kakao.isInitialized()) {

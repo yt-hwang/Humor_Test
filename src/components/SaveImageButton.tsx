@@ -376,6 +376,7 @@ function showImageOverlay(dataUrl: string, lang: Lang) {
 }
 
 export default function SaveImageButton({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   targetRef, fileName = "my-gag-code",
   userName, code, nickname, summary, bestMatch, worstMatch, lang = "ko",
 }: SaveImageButtonProps) {

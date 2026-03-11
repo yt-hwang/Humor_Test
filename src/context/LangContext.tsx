@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
 export type Lang = "ko" | "en";
 
@@ -13,15 +14,31 @@ const LangContext = createContext<LangContextType>({ lang: "ko", setLang: () => 
 
 export function LangProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("ko");
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
-    const saved = localStorage.getItem("humor_test_lang") as Lang | null;
-    if (saved === "en" || saved === "ko") setLangState(saved);
-  }, []);
+    // Priority: URL > localStorage > default
+    const urlLang = searchParams.get("lang") as Lang | null;
+    const savedLang = localStorage.getItem("humor_test_lang") as Lang | null;
 
-  const setLang = (l: Lang) => {
-    setLangState(l);
-    localStorage.setItem("humor_test_lang", l);
+    if (urlLang === "en" || urlLang === "ko") {
+      setLangState(urlLang);
+      localStorage.setItem("humor_test_lang", urlLang);
+    } else if (savedLang === "en" || savedLang === "ko") {
+      setLangState(savedLang);
+    }
+  }, [searchParams]);
+
+  const setLang = (newLang: Lang) => {
+    setLangState(newLang);
+    localStorage.setItem("humor_test_lang", newLang);
+
+    // Update URL with new lang parameter
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("lang", newLang);
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
   return (

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
 import KakaoSDK from "../src/components/KakaoSDK";
 import { LangProvider } from "../src/context/LangContext";
@@ -74,9 +75,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <KakaoSDK />
-        <LangProvider>
-          {children}
-        </LangProvider>
+        <Suspense fallback={null}>
+          <LangProvider>
+            {children}
+          </LangProvider>
+        </Suspense>
       </body>
     </html>
   );

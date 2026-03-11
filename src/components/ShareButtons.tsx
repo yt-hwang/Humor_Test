@@ -2,12 +2,14 @@
 
 import React, { useState } from 'react';
 import { ShareData, shareToKakao, trackShare } from '../utils/share';
+import { useLang } from '../context/LangContext';
 
 interface ShareButtonsProps {
   data: ShareData;
 }
 
 export default function ShareButtons({ data }: ShareButtonsProps) {
+  const { lang } = useLang();
   const [copiedPlatform, setCopiedPlatform] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<string | null>(null);
 
@@ -44,14 +46,22 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
 
   const handleCopyLink = async () => {
     try {
-      // 결과 페이지 URL 생성 (answers가 있으면 포함)
+      // 결과 페이지 URL 생성 (lang, answers 포함)
+      const langParam = `&lang=${lang}`;
       const answersParam = data.encodedAnswers ? `&answers=${data.encodedAnswers}` : '';
-      const resultUrl = `${window.location.origin}/result?code=${data.code}${answersParam}`;
-      const shareText = `🎭 나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n👀 내 결과 보기: ${resultUrl}\n🎯 나도 테스트하기: ${window.location.origin}/`;
+      const resultUrl = `${window.location.origin}/result?code=${data.code}${langParam}${answersParam}`;
+      const homeUrl = `${window.location.origin}/?lang=${lang}`;
+      const shareText = lang === 'en'
+        ? `🎭 My Humor Type: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n👀 See my result: ${resultUrl}\n🎯 Take the test: ${homeUrl}`
+        : `🎭 나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n👀 내 결과 보기: ${resultUrl}\n🎯 나도 테스트하기: ${homeUrl}`;
+
+      const successMsg = lang === 'en'
+        ? '✅ Link and result copied to clipboard!'
+        : '✅ 링크와 결과가 클립보드에 복사되었습니다!';
 
       if (navigator.clipboard) {
         await navigator.clipboard.writeText(shareText);
-        alert('✅ 링크와 결과가 클립보드에 복사되었습니다!');
+        alert(successMsg);
       } else {
         // fallback for older browsers
         const textArea = document.createElement('textarea');
@@ -60,20 +70,26 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
         textArea.select();
         document.execCommand('copy');
         document.body.removeChild(textArea);
-        alert('✅ 링크와 결과가 클립보드에 복사되었습니다!');
+        alert(successMsg);
       }
     } catch (error) {
       console.error('링크 복사 실패:', error);
-      alert('링크 복사에 실패했습니다. 다시 시도해주세요.');
+      const errorMsg = lang === 'en'
+        ? 'Failed to copy link. Please try again.'
+        : '링크 복사에 실패했습니다. 다시 시도해주세요.';
+      alert(errorMsg);
     }
   };
 
   const handleKakaoShare = async () => {
     try {
-      await shareToKakao(data);
+      await shareToKakao({ ...data, lang });
     } catch (error) {
       console.error('카카오톡 공유 실패:', error);
-      alert('카카오톡 공유에 실패했습니다. 다시 시도해주세요.');
+      const errorMsg = lang === 'en'
+        ? 'KakaoTalk sharing failed. Please try again.'
+        : '카카오톡 공유에 실패했습니다. 다시 시도해주세요.';
+      alert(errorMsg);
     }
   };
 
@@ -124,7 +140,7 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
         onClick={() => handleShare('copy')}
         className={getButtonStyle('copy')}
         disabled={isLoading !== null}
-        title="링크 복사"
+        title={lang === 'en' ? 'Copy Link' : '링크 복사'}
       >
         {getButtonIcon('copy')}
       </button>
@@ -134,7 +150,7 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
         onClick={() => handleShare('kakao')}
         className={getButtonStyle('kakao')}
         disabled={isLoading !== null}
-        title="카카오톡 공유"
+        title={lang === 'en' ? 'Share to KakaoTalk' : '카카오톡 공유'}
       >
         {getButtonIcon('kakao')}
       </button>
