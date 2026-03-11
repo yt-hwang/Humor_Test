@@ -133,10 +133,16 @@ export default function Home() {
 
         {/* 푸터 링크 */}
         <div className="mt-4 text-center">
-          <div className="flex items-center justify-center gap-4 text-xs text-gray-400">
-            <a href="/privacy" className="hover:text-gray-600 transition-colors">개인정보처리방침</a>
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs text-gray-400">
+            <a href="/about" className="hover:text-gray-600 transition-colors">서비스소개</a>
+            <span>|</span>
+            <a href="/ads" className="hover:text-gray-600 transition-colors">광고안내</a>
             <span>|</span>
             <a href="/terms" className="hover:text-gray-600 transition-colors">이용약관</a>
+            <span>|</span>
+            <a href="/privacy" className="hover:text-gray-600 transition-colors font-semibold text-yellow-600">개인정보처리방침</a>
+            <span>|</span>
+            <a href="/youth" className="hover:text-gray-600 transition-colors">청소년보호정책</a>
           </div>
           <p className="mt-2 text-xs text-gray-300">© 2024 개그유형 테스트. All rights reserved.</p>
         </div>
