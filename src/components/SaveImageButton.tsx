@@ -17,7 +17,6 @@ interface SaveImageButtonProps {
   lang?: Lang;
 }
 
-const isDev = process.env.NODE_ENV === "development";
 
 // Aligned with ui.ts official names (emoji included in getCat)
 const i18n = {
@@ -383,7 +382,6 @@ export default function SaveImageButton({
   const [saving, setSaving] = useState(false);
 
   const handleSave = useCallback(async () => {
-    if (!isDev) { alert("준비중인 기능입니다!"); return; }
     if (saving) return;
     setSaving(true);
 
