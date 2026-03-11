@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Footer from '../../src/components/Footer'
 
 export default function AdsPage() {
   return (
@@ -115,6 +116,8 @@ export default function AdsPage() {
             </Link>
           </div>
         </div>
+
+        <Footer />
       </div>
     </main>
   )

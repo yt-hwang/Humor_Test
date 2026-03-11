@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useEffect } from 'react'
 import { recordVisit } from '../../src/utils/analytics'
+import Footer from '../../src/components/Footer'
 
 export default function TheoryPage() {
   useEffect(() => {
@@ -733,6 +734,8 @@ export default function TheoryPage() {
             16가지 유형 보기
           </Link>
         </div>
+
+        <Footer />
       </div>
     </main>
   )

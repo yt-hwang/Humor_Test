@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Footer from '../../src/components/Footer'
 
 export default function AboutPage() {
   return (
@@ -126,15 +127,7 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* 관련 링크 */}
-        <div className="mt-6 flex justify-center gap-4 text-sm">
-          <Link href="/privacy" className="text-gray-500 hover:text-gray-700 underline">
-            개인정보처리방침
-          </Link>
-          <Link href="/terms" className="text-gray-500 hover:text-gray-700 underline">
-            이용약관
-          </Link>
-        </div>
+        <Footer />
       </div>
     </main>
   )

@@ -6,6 +6,7 @@ import { recordVisit } from "../src/utils/analytics";
 import { useLang } from "../src/context/LangContext";
 import { t } from "../src/data/ui";
 import LangToggle from "../src/components/LangToggle";
+import Footer from "../src/components/Footer";
 
 // MBTI 옵션을 알파벳 순으로 정렬하여 제공
 const MBTI_TYPES = [
@@ -131,21 +132,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* 푸터 링크 */}
-        <div className="mt-4 text-center">
-          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs text-gray-400">
-            <a href="/about" className="hover:text-gray-600 transition-colors">서비스소개</a>
-            <span>|</span>
-            <a href="/ads" className="hover:text-gray-600 transition-colors">광고안내</a>
-            <span>|</span>
-            <a href="/terms" className="hover:text-gray-600 transition-colors">이용약관</a>
-            <span>|</span>
-            <a href="/privacy" className="hover:text-gray-600 transition-colors">개인정보처리방침</a>
-            <span>|</span>
-            <a href="/youth" className="hover:text-gray-600 transition-colors">청소년보호정책</a>
-          </div>
-          <p className="mt-2 text-xs text-gray-300">© 2026 개그유형 테스트. All rights reserved.</p>
-        </div>
+        <Footer />
       </div>
     </main>
   );

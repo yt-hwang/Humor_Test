@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Footer from '../../src/components/Footer'
 
 export default function TermsPage() {
   return (
@@ -179,12 +180,7 @@ export default function TermsPage() {
           </div>
         </div>
 
-        {/* 관련 링크 */}
-        <div className="mt-6 text-center">
-          <Link href="/privacy" className="text-gray-500 hover:text-gray-700 text-sm underline">
-            개인정보처리방침 보기 (Privacy Policy)
-          </Link>
-        </div>
+        <Footer />
       </div>
     </main>
   )

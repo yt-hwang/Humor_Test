@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Footer from '../../src/components/Footer'
 
 export default function YouthProtectionPage() {
   return (
@@ -140,6 +141,8 @@ export default function YouthProtectionPage() {
             </Link>
           </div>
         </div>
+
+        <Footer />
       </div>
     </main>
   )
