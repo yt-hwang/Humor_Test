@@ -139,7 +139,17 @@ export default function ResultClient() {
 
           {/* 이미지 저장 + 공유 버튼들 (한 줄) */}
           <div className="flex gap-2 justify-center items-center mb-4">
-            <SaveImageButton targetRef={captureRef} fileName={`gag-code-${effectiveCode}`} />
+            <SaveImageButton
+              targetRef={captureRef}
+              fileName={`gag-code-${effectiveCode}`}
+              userName={displayUser}
+              code={effectiveCode}
+              nickname={nickname}
+              summary={summary}
+              bestMatch={resultData.bestMatch ? { code: resultData.bestMatch, nickname: results[resultData.bestMatch]?.nickname || "", reason: resultData.bestMatchReason || "" } : undefined}
+              worstMatch={resultData.worstMatch ? { code: resultData.worstMatch, nickname: results[resultData.worstMatch]?.nickname || "", reason: resultData.worstMatchReason || "" } : undefined}
+              lang={lang}
+            />
             <ShareButtons data={shareData} />
           </div>
 

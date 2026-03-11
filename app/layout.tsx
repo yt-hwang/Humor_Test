@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     siteName: "개그유형 테스트",
     images: [
       {
-        url: "/og-image.png",
+        url: "/api/og",
         width: 1200,
         height: 630,
         alt: "개그유형 테스트",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "개그유형 테스트 - 나의 개그코드를 알아보자!",
     description: "당신만의 개그 유형을 테스트해보세요!",
-    images: ["/og-image.png"],
+    images: ["/api/og"],
   },
   robots: "index, follow",
 };

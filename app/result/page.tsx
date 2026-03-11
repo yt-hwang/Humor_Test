@@ -24,7 +24,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
       siteName: "개그유형 테스트",
       images: [
         {
-          url: "/og-image.png",
+          url: `/api/og?code=${code}`,
           width: 1200,
           height: 630,
           alt: `개그유형 테스트 결과 - ${code} ${nickname}`,
@@ -35,7 +35,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
       card: "summary_large_image",
       title: `개그유형 테스트 결과 - ${code} ${nickname}`,
       description: summary,
-      images: ["/og-image.png"],
+      images: [`/api/og?code=${code}`],
     },
   };
 }
