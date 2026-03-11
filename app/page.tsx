@@ -140,11 +140,11 @@ export default function Home() {
             <span>|</span>
             <a href="/terms" className="hover:text-gray-600 transition-colors">이용약관</a>
             <span>|</span>
-            <a href="/privacy" className="hover:text-gray-600 transition-colors font-semibold text-yellow-600">개인정보처리방침</a>
+            <a href="/privacy" className="hover:text-gray-600 transition-colors">개인정보처리방침</a>
             <span>|</span>
             <a href="/youth" className="hover:text-gray-600 transition-colors">청소년보호정책</a>
           </div>
-          <p className="mt-2 text-xs text-gray-300">© 2024 개그유형 테스트. All rights reserved.</p>
+          <p className="mt-2 text-xs text-gray-300">© 2026 개그유형 테스트. All rights reserved.</p>
         </div>
       </div>
     </main>

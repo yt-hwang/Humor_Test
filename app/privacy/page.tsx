@@ -13,7 +13,7 @@ export default function PrivacyPage() {
               개인정보처리방침
             </h1>
             <p className="text-gray-500 text-sm">Privacy Policy</p>
-            <p className="text-gray-400 text-xs mt-2">최종 수정일: 2024년 1월 1일 | Last Updated: January 1, 2024</p>
+            <p className="text-gray-400 text-xs mt-2">최종 수정일: 2026년 1월 1일 | Last Updated: January 1, 2026</p>
           </div>
 
           <div className="space-y-8 text-gray-700 leading-relaxed">
