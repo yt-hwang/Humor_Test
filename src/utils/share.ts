@@ -69,13 +69,21 @@ export const shareToKakao = async (data: ShareData) => {
   const resultUrl = `${window.location.origin}/result?code=${data.code}${langParam}${answersParam}`;
   const homeUrl = data.lang ? `${window.location.origin}/?lang=${data.lang}` : `${window.location.origin}/`;
 
+  // 언어별 텍스트
+  const isEn = data.lang === 'en';
+  const shareTitle = isEn
+    ? `🎭 My Humor Type: ${data.code} - ${data.nickname}`
+    : `🎭 나의 개그유형: ${data.code} - ${data.nickname}`;
+  const viewResultBtn = isEn ? '👀 View Result' : '👀 결과 보기';
+  const takeTestBtn = isEn ? '🎯 Take the Test' : '🎯 나도 테스트하기';
+
   // 카카오톡 SDK가 있는 경우 사용
   if (typeof window !== 'undefined' && window.Kakao && window.Kakao.isInitialized()) {
     try {
       window.Kakao.Share.sendDefault({
         objectType: 'feed',
         content: {
-          title: `🎭 나의 개그유형: ${data.code} - ${data.nickname}`,
+          title: shareTitle,
           description: `${data.summary}`,
           imageUrl: `${window.location.origin}/images/result/${data.code}.png`,
           link: {
@@ -85,14 +93,14 @@ export const shareToKakao = async (data: ShareData) => {
         },
         buttons: [
           {
-            title: '👀 결과 보기',
+            title: viewResultBtn,
             link: {
               mobileWebUrl: resultUrl,
               webUrl: resultUrl,
             },
           },
           {
-            title: '🎯 나도 테스트하기',
+            title: takeTestBtn,
             link: {
               mobileWebUrl: homeUrl,
               webUrl: homeUrl,
