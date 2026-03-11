@@ -198,8 +198,7 @@ export default function GuidePage() {
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <h2 className="text-xl font-bold text-gray-800">
-                    {lang === "en" ? axis.titleEn : axis.titleKo}{" "}
-                    <span className="text-gray-400">/ {lang === "en" ? axis.titleKo : axis.titleEn}</span>
+                    {lang === "en" ? axis.titleEn : axis.titleKo}
                   </h2>
                   <p className="text-sm text-gray-600 mt-1">{lang === "en" ? axis.whatItJudgesEn : axis.whatItJudges}</p>
                 </div>

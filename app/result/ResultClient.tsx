@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 import ShareButtons from "../../src/components/ShareButtons";
 import SaveImageButton from "../../src/components/SaveImageButton";
+import Footer from "../../src/components/Footer";
 import { recordVisit } from "../../src/utils/analytics";
 import { gagResults, calculateAxisScores, getTopCompatibleTypes, getCompatibilityLabel } from "../../src/data/results";
 import { gagResultsEn } from "../../src/data/results.en";
@@ -194,6 +195,9 @@ export default function ResultClient() {
             </Link>
           </div>
         </div>
+
+        {/* Footer */}
+        <Footer />
       </div>
     </main>
   );
