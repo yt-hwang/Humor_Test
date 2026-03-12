@@ -41,6 +41,7 @@ const ui = {
   retake: { ko: "테스트 다시하기", en: "Retake Test" },
   guideLink: { ko: "개그 코드 설명", en: "Code Guide" },
   typesLink: { ko: "전체 유형 보기", en: "All Types" },
+  theoryLink: { ko: "분류 이론 보기", en: "Theory" },
   homeLink: { ko: "메인으로 돌아가기", en: "Back to Home" },
   strengths: { ko: "강점", en: "Strengths" },
   weaknesses: { ko: "약점", en: "Weaknesses" },
