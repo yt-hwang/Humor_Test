@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { recordVisit } from '../../src/utils/analytics'
 import Footer from '../../src/components/Footer'
 import { useLang } from '../../src/context/LangContext'
@@ -9,6 +10,7 @@ import { t } from '../../src/data/ui'
 
 export default function TheoryPage() {
   const { lang } = useLang()
+  const router = useRouter()
 
   useEffect(() => {
     recordVisit('/theory')
@@ -686,6 +688,15 @@ export default function TheoryPage() {
 
         {/* 하단 네비게이션 */}
         <div className="flex flex-wrap justify-center gap-3 mt-10">
+          <button
+            onClick={() => router.back()}
+            className="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl px-6 py-3 font-medium transition-colors"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            {t('theoryNavBack', lang)}
+          </button>
           <Link
             href={`/?lang=${lang}`}
             className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-700 hover:from-blue-700 hover:to-purple-800 text-white rounded-xl px-6 py-3 font-medium shadow-lg transition-all duration-300"

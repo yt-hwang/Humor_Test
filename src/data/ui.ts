@@ -657,6 +657,7 @@ const ui = {
   theoryS6UnpredStyle3: { ko: "노홍철의 예측불가 행동", en: "Noh Hong-chul's unpredictable behavior" },
 
   // Theory - Navigation
+  theoryNavBack: { ko: "뒤로가기", en: "Go Back" },
   theoryNavTest: { ko: "테스트 하러가기", en: "Take the Test" },
   theoryNavGuide: { ko: "4가지 축 설명", en: "4 Axes Guide" },
   theoryNavTypes: { ko: "16가지 유형 보기", en: "View 16 Types" },
