@@ -690,11 +690,9 @@ export default function TheoryPage() {
         <div className="flex flex-wrap justify-center gap-3 mt-10">
           <button
             onClick={() => router.back()}
-            className="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl px-6 py-3 font-medium transition-colors"
+            className="inline-flex items-center gap-2 bg-white/80 hover:bg-white text-gray-700 border border-gray-200 rounded-xl px-6 py-3 font-medium transition-colors"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
+            <span>←</span>
             {t('theoryNavBack', lang)}
           </button>
           <Link
