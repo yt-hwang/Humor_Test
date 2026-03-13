@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Suspense } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import KakaoSDK from "../src/components/KakaoSDK";
 import { LangProvider } from "../src/context/LangContext";
@@ -80,6 +81,7 @@ export default function RootLayout({
             {children}
           </LangProvider>
         </Suspense>
+        <Analytics />
       </body>
     </html>
   );

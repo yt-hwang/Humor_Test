@@ -141,6 +141,50 @@ export async function recordTestResult(
   }
 }
 
+// 공유 기록
+export async function recordShare(
+  platform: string,
+  resultCode: string,
+  lang: string = 'ko'
+): Promise<void> {
+  const DEBUG = process.env.NEXT_PUBLIC_DEBUG_ANALYTICS === '1'
+  if (DEBUG) console.log('[recordShare] start', { platform, resultCode, lang })
+  try {
+    if (typeof window === 'undefined') return
+
+    const { supabase, isSupabaseConfigured } = await import('../lib/supabase')
+    if (!isSupabaseConfigured || !supabase) {
+      console.warn('Supabase not configured; skipping share record')
+      return
+    }
+    const client: SupabaseClient = supabase as SupabaseClient
+
+    const sessionId = getSessionId()
+    const timestamp = new Date().toISOString()
+
+    const shareRecord = {
+      platform,
+      result_code: resultCode,
+      lang,
+      session_id: sessionId,
+      timestamp,
+    }
+
+    if (DEBUG) console.log('[recordShare] inserting to shares', shareRecord)
+    const { error } = await client
+      .from('shares')
+      .insert([shareRecord])
+
+    if (error) {
+      console.error('Error recording share:', error)
+      return
+    }
+    if (DEBUG) console.log('[recordShare] ok')
+  } catch (error) {
+    console.error('Failed to record share:', error)
+  }
+}
+
 // 세션 ID 관리
 function getSessionId(): string {
   let sessionId = localStorage.getItem('humor_test_session_id')

@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from 'react';
-import { ShareData, shareToKakao, trackShare } from '../utils/share';
+import { ShareData, shareToKakao } from '../utils/share';
+import { recordShare } from '../utils/analytics';
 import { useLang } from '../context/LangContext';
 
 interface ShareButtonsProps {
@@ -29,8 +30,8 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
           break;
       }
       
-      // 공유 통계 추적
-      trackShare(platform, data);
+      // 공유 통계 추적 (Supabase)
+      recordShare(platform, data.code, lang);
       
       // 3초 후 복사 상태 초기화
       if (platform === 'copy') {

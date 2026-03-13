@@ -2,6 +2,7 @@
 
 import React, { useCallback, useState } from "react";
 import type { Lang } from "../context/LangContext";
+import { recordShare } from "../utils/analytics";
 
 interface MatchInfo { code: string; nickname: string; reason: string }
 
@@ -401,6 +402,9 @@ export default function SaveImageButton({
 
       const blob = await new Promise<Blob | null>((r) => canvas.toBlob(r, "image/png"));
       if (!blob) { alert("이미지 생성에 실패했습니다."); return; }
+
+      // 이미지 저장 통계 추적
+      recordShare("image_save", code, lang);
 
       const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
       const headline = userName ? `${userName}${i18n[lang].userSuffix}` : i18n[lang].defaultTitle;
