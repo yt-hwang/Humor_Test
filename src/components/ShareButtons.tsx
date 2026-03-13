@@ -26,6 +26,9 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
         case 'kakao':
           await handleKakaoShare();
           break;
+        case 'sms':
+          handleSmsShare();
+          break;
         default:
           break;
       }
@@ -94,6 +97,18 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
     }
   };
 
+  const handleSmsShare = () => {
+    const langParam = `&lang=${lang}`;
+    const answersParam = data.encodedAnswers ? `&answers=${data.encodedAnswers}` : '';
+    const resultUrl = `${window.location.origin}/result?code=${data.code}${langParam}${answersParam}`;
+    const homeUrl = `${window.location.origin}/?lang=${lang}`;
+    const body = lang === 'en'
+      ? `🎭 My Humor Type: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n👀 See my result: ${resultUrl}\n🎯 Take the test: ${homeUrl}`
+      : `🎭 나의 개그유형: ${data.code} - ${data.nickname}\n\n${data.summary}\n\n👀 내 결과 보기: ${resultUrl}\n🎯 나도 테스트하기: ${homeUrl}`;
+    // iOS uses &body=, Android uses ?body= — sms:?&body= works on both
+    window.location.href = `sms:?&body=${encodeURIComponent(body)}`;
+  };
+
   const getButtonStyle = (platform: string) => {
     const baseStyle = "flex items-center justify-center w-14 h-14 rounded-2xl text-sm font-medium transition-all duration-300 transform hover:scale-105 aspect-square";
     
@@ -110,6 +125,8 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
         return `${baseStyle} bg-gray-100 text-gray-700 hover:bg-gray-200`;
       case 'kakao':
         return `${baseStyle} bg-yellow-400 text-black hover:bg-yellow-500`;
+      case 'sms':
+        return `${baseStyle} bg-green-500 text-white hover:bg-green-600`;
       default:
         return `${baseStyle} bg-gray-100 text-gray-700 hover:bg-gray-200`;
     }
@@ -128,6 +145,12 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
           <div className="w-6 h-6 bg-black rounded-sm flex items-center justify-center">
             <span className="text-sm font-bold text-yellow-400">K</span>
           </div>
+        );
+      case 'sms':
+        return (
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+          </svg>
         );
       default:
         return null;
@@ -154,6 +177,16 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
         title={lang === 'en' ? 'Share to KakaoTalk' : '카카오톡 공유'}
       >
         {getButtonIcon('kakao')}
+      </button>
+
+      {/* 문자 메시지 공유 버튼 */}
+      <button
+        onClick={() => handleShare('sms')}
+        className={getButtonStyle('sms')}
+        disabled={isLoading !== null}
+        title={lang === 'en' ? 'Share via Text' : '문자로 공유'}
+      >
+        {getButtonIcon('sms')}
       </button>
     </div>
   );
