@@ -10,7 +10,7 @@ export const questionsEn: Question[] = [
   { id: 7, text: "I enjoy making people laugh through\nfacial expressions, gestures, and physical acting.", axis: "VP", reverse: true },
   { id: 8, text: "I find roast-style or confrontational comedy funny.", axis: "BD", reverse: true },
   { id: 9, text: "Clever wordplay is more entertaining\nthan voice impressions.", axis: "VP", reverse: false },
-  { id: 10, text: "Humor that reads the room and responds\nto context is the funniest.", axis: "NB", reverse: true },
+  { id: 10, text: "Humor needs a relatable, real-life situation\nto actually be funny.", axis: "NB", reverse: false },
   { id: 11, text: "I enjoy comedy that carefully controls\ntiming and delivery through words.", axis: "VP", reverse: false },
   { id: 12, text: "The comedy I like is mostly the kind\nthat everyone can comfortably laugh at.", axis: "BD", reverse: false },
   { id: 13, text: "Throwing out jokes spontaneously based on\nthe vibe is my style.", axis: "OI", reverse: true },
@@ -20,5 +20,5 @@ export const questionsEn: Question[] = [
   { id: 17, text: "I enjoy pre-prepared impressions, skits,\nor funny stories.", axis: "OI", reverse: false },
   { id: 18, text: "I like humor that takes realistic situations\nand elevates them into something funny.", axis: "NB", reverse: true },
   { id: 19, text: "Physical comedy is funnier than wordplay.", axis: "VP", reverse: true },
-  { id: 20, text: "I find it entertaining when social issues\nor political topics are used as comedy material.", axis: "BD", reverse: true },
+  { id: 20, text: "Light and cheerful comedy\nworks best for me.", axis: "BD", reverse: false },
 ];
