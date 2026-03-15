@@ -28,5 +28,5 @@ export const questions: Question[] = [
   { id: 17, text: "사전에 준비된 성대모사, 꽁트, \n혹은 웃긴 썰을 좋아한다.", axis: "OI", reverse: false },
   { id: 18, text: "현실적인 상황을 웃기게 승화시켜 \n풀어낸 것을 좋아한다.", axis: "NB", reverse: false },
   { id: 19, text: "몸개그가 말장난 보다 재밌다.", axis: "VP", reverse: true },
-  { id: 20, text: "가볍고 유쾌한 개그가\n나한테는 가장 잘 먹힌다.", axis: "BD", reverse: false },
+  { id: 20, text: "블랙코미디보다 밝고 가벼운 유머가\n더 내 취향이다.", axis: "BD", reverse: false },
 ]; 

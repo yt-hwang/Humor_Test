@@ -20,5 +20,5 @@ export const questionsEn: Question[] = [
   { id: 17, text: "I enjoy pre-prepared impressions, skits,\nor funny stories.", axis: "OI", reverse: false },
   { id: 18, text: "I like humor that takes realistic situations\nand elevates them into something funny.", axis: "NB", reverse: true },
   { id: 19, text: "Physical comedy is funnier than wordplay.", axis: "VP", reverse: true },
-  { id: 20, text: "Light and cheerful comedy\nworks best for me.", axis: "BD", reverse: false },
+  { id: 20, text: "I prefer light and cheerful humor\nover dark or black comedy.", axis: "BD", reverse: false },
 ];
