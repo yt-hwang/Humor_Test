@@ -4,6 +4,10 @@ import React from "react";
 import { gagResults } from "../data/results";
 import { gagResultsEn } from "../data/results.en";
 import StrengthsWeaknesses, { AxisScores } from "./StrengthsWeaknesses";
+import HumorPhilosophy from "./HumorPhilosophy";
+import SocialDynamics from "./SocialDynamics";
+import GrowthTips from "./GrowthTips";
+import MBTICorrelationTabs from "./MBTICorrelationTabs";
 import { useLang } from "../context/LangContext";
 import { t } from "../data/ui";
 
@@ -42,7 +46,7 @@ export default function TypeDetailModal({
   const results = lang === "en" ? gagResultsEn : gagResults;
   const data = open ? results[typeCode] : null;
   const scores = open ? codeToScores(typeCode) : { OI: 4, NB: 4, VP: 4, BD: 4 };
-  const [tab, setTab] = React.useState<'strengths' | 'compat'>('strengths');
+  const [tab, setTab] = React.useState<'strengths' | 'compat' | 'mbti'>('strengths');
 
   if (!open || !data) return null;
 
@@ -68,16 +72,27 @@ export default function TypeDetailModal({
             </p>
           </div>
 
+          {/* Humor Philosophy */}
+          {data.humorPhilosophy && (
+            <HumorPhilosophy philosophy={data.humorPhilosophy} categoryColor={gradient} />
+          )}
+
           {/* Tab buttons */}
-          <div className="flex gap-2 mb-3">
+          <div className="flex gap-2 mb-3 overflow-x-auto">
             <button
-              className={`px-4 py-2 rounded-full text-sm font-semibold border ${tab==='strengths'?`bg-gradient-to-r ${gradient} text-white border-transparent`:'bg-white text-gray-700 border-gray-300'}`}
+              className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-semibold border ${tab==='strengths'?`bg-gradient-to-r ${gradient} text-white border-transparent`:'bg-white text-gray-700 border-gray-300'}`}
               onClick={()=>setTab('strengths')}
             >{t('strengthsTab', lang)}</button>
             <button
-              className={`px-4 py-2 rounded-full text-sm font-semibold border ${tab==='compat'?`bg-gradient-to-r ${gradient} text-white border-transparent`:'bg-white text-gray-700 border-gray-300'}`}
+              className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-semibold border ${tab==='compat'?`bg-gradient-to-r ${gradient} text-white border-transparent`:'bg-white text-gray-700 border-gray-300'}`}
               onClick={()=>setTab('compat')}
             >{t('compatTab', lang)}</button>
+            {data.mbtiCorrelations && data.mbtiCorrelations.length > 0 && (
+              <button
+                className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-semibold border ${tab==='mbti'?`bg-gradient-to-r ${gradient} text-white border-transparent`:'bg-white text-gray-700 border-gray-300'}`}
+                onClick={()=>setTab('mbti')}
+              >{t('mbtiTab', lang)}</button>
+            )}
           </div>
 
           {tab==='strengths' && (
@@ -111,6 +126,20 @@ export default function TypeDetailModal({
                 </div>
               </div>
             </div>
+          )}
+
+          {tab==='mbti' && data.mbtiCorrelations && (
+            <MBTICorrelationTabs correlations={data.mbtiCorrelations} categoryColor={gradient} />
+          )}
+
+          {/* Social Dynamics */}
+          {data.socialDynamics && (
+            <SocialDynamics dynamics={data.socialDynamics} categoryColor={gradient} />
+          )}
+
+          {/* Growth Tips */}
+          {data.growthTips && data.growthTips.length > 0 && (
+            <GrowthTips tips={data.growthTips} categoryColor={gradient} />
           )}
         </div>
 

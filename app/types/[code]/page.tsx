@@ -9,6 +9,10 @@ import { recordVisit } from "../../../src/utils/analytics";
 import { useLang } from "../../../src/context/LangContext";
 import { t } from "../../../src/data/ui";
 import Footer from "../../../src/components/Footer";
+import HumorPhilosophy from "../../../src/components/HumorPhilosophy";
+import SocialDynamics from "../../../src/components/SocialDynamics";
+import GrowthTips from "../../../src/components/GrowthTips";
+import MBTITypeExpression from "../../../src/components/MBTITypeExpression";
 
 // 카테고리 정보
 const categories = {
@@ -196,6 +200,24 @@ export default function TypeDetailPage() {
             </div>
           </div>
         </section>
+
+        {/* Humor Philosophy */}
+        {typeData.humorPhilosophy && (
+          <HumorPhilosophy philosophy={typeData.humorPhilosophy} categoryColor={category.color} />
+        )}
+
+        {/* Social Dynamics */}
+        {typeData.socialDynamics && (
+          <SocialDynamics dynamics={typeData.socialDynamics} categoryColor={category.color} />
+        )}
+
+        {/* MBTI Type Expression */}
+        <MBTITypeExpression humorCode={code} categoryColor={category.color} />
+
+        {/* Growth Tips */}
+        {typeData.growthTips && typeData.growthTips.length > 0 && (
+          <GrowthTips tips={typeData.growthTips} categoryColor={category.color} />
+        )}
 
         {/* Compatibility */}
         <section className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl border border-white/20 p-6 mb-6">

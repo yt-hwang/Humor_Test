@@ -1,6 +1,23 @@
 import { questions } from "./questions";
 
+export interface MBTICorrelation {
+  dimension: 'EI' | 'NS' | 'TF' | 'JP';
+  letterA: {
+    letter: string;
+    expression: string;      // 표현 방식
+    reception: string;       // 반응 패턴
+    whenJokesFail: string;   // 개그가 안 먹힐 때
+  };
+  letterB: {
+    letter: string;
+    expression: string;
+    reception: string;
+    whenJokesFail: string;
+  };
+}
+
 export interface GagResult {
+  // 기존 필드
   code: string;
   nickname: string;
   summary: string;
@@ -11,6 +28,18 @@ export interface GagResult {
   worstMatchReason?: string;
   strengths?: string[];
   weaknesses?: string[];
+
+  // 새로운 필드
+  deepSummary?: string;           // 확장된 설명 (2-3 문단)
+  humorPhilosophy?: string;       // 유머 철학/신념
+  signatureTechniques?: string[]; // 대표 기법 (4-5개)
+  socialDynamics?: {
+    inGroups: string;             // 그룹에서의 모습
+    oneOnOne: string;             // 1:1에서의 모습
+    asAudience: string;           // 청중으로서의 모습
+  };
+  growthTips?: string[];          // 성장 팁 (3-4개)
+  mbtiCorrelations?: MBTICorrelation[];  // MBTI 상관관계 (4개 축)
 }
 
 export interface AxisScores {
@@ -30,12 +59,12 @@ export const gagResults: Record<string, GagResult> = {
     examples: [
       "대화를 설계해 모두가 말하게 만드는 진행형 토크",
       "상황 브리핑→포인트 콜백→마무리 멘트의 3단 구성",
-      "패널 간 타이밍 조율로 폭탄 발언 ‘살려주기’"
+      "패널 간 타이밍 조율로 폭탄 발언 '살려주기'"
     ],
     bestMatch: "INPB",
     worstMatch: "IBPD",
     bestMatchReason: "토크마스터가 말로 분위기를 만들면, 리액션 장인이 찐 반응으로 웃음을 배로 키워줘요. 말하는 사람 + 반응하는 사람의 황금 조합이에요.",
-    worstMatchReason: "무표정 광대는 돌발·무정형 퍼포먼스로 흐름을 깨며 방향을 전환합니다. 구조·맥락을 중시하는 토크마스터와는 ‘호흡의 기준’이 달라 충돌이 잦습니다.",
+    worstMatchReason: "무표정 광대는 돌발·무정형 퍼포먼스로 흐름을 깨며 방향을 전환합니다. 구조·맥락을 중시하는 토크마스터와는 '호흡의 기준'이 달라 충돌이 잦습니다.",
     strengths: [
       "대화 흐름을 안정적으로 잡아줘요",
       "사람들 말을 이끌어내고 정리해요",
@@ -49,6 +78,46 @@ export const gagResults: Record<string, GagResult> = {
       "감정의 세기가 약하게 느껴질 수 있어요",
       "과도한 안전 운전은 밋밋하게 보여요",
       "새로움보다 안정에 치우칠 때가 있어요",
+    ],
+    deepSummary: "토크마스터는 대화의 설계자입니다. 누가 언제 말하고, 어디서 웃음이 터지고, 어떻게 마무리될지를 머릿속에서 미리 그립니다. 이들에게 좋은 대화란 모두가 편하게 참여하고, 자연스럽게 웃음이 나오며, 끝나고 나서 '오늘 재밌었다'는 여운이 남는 것입니다.\n\n준비된 유머를 선호하기에 즉석에서 치고받는 것보다는, 이야기의 흐름을 미리 설계해두는 편을 좋아합니다. 상대방의 발언에서 포인트를 잡아 콜백하고, 적절한 타이밍에 정리 멘트를 던지는 것이 자연스럽습니다.",
+    humorPhilosophy: "모두가 편하게 웃을 수 있는 자리를 만드는 것, 그게 진짜 유머의 힘이다.",
+    signatureTechniques: [
+      "콜백 연결: 앞서 나온 이야기를 적절한 타이밍에 다시 꺼내 웃음 유발",
+      "균형 패싱: 말이 적은 사람에게 자연스럽게 발언권 넘기기",
+      "타이밍 조율: 폭탄 발언이 나왔을 때 적절히 '살려주기'",
+      "분위기 정리: 산만해진 대화를 한 문장으로 깔끔하게 마무리"
+    ],
+    socialDynamics: {
+      inGroups: "자연스럽게 MC 역할을 맡게 됩니다. 모두가 말할 수 있도록 대화를 조율하고, 분위기가 처질 때 적절한 타이밍에 이야기를 전환합니다.",
+      oneOnOne: "상대방의 이야기를 잘 들어주고, 적절한 리액션과 질문으로 대화를 이어갑니다. 준비된 유머보다는 공감 위주의 대화를 선호합니다.",
+      asAudience: "다른 사람의 유머에 적극적으로 반응하고, 좋은 포인트가 나오면 기억해뒀다가 나중에 콜백합니다. 분위기를 읽고 박수 타이밍을 맞추는 데 능숙합니다."
+    },
+    growthTips: [
+      "가끔은 흐름을 깨고 돌발적인 멘트를 시도해보세요. 예측불가능함도 매력이 될 수 있어요.",
+      "설명보다 함축적인 한 줄이 더 강력할 때가 있어요. 말의 밀도를 높여보세요.",
+      "감정의 진폭을 조금 더 크게 표현해보세요. 안전한 톤만으로는 깊은 인상을 남기기 어려워요."
+    ],
+    mbtiCorrelations: [
+      {
+        dimension: 'EI',
+        letterA: { letter: 'E', expression: '공개적으로 대화를 주도하며, 자연스러운 MC 역할을 합니다.', reception: '청중의 반응에서 에너지를 얻고, 활발한 호응에 더 신이 납니다.', whenJokesFail: '빠르게 다른 주제로 전환하며, 침묵을 더 많은 말로 채웁니다.' },
+        letterB: { letter: 'I', expression: '소규모 친밀한 환경에서 대화를 이끌며, 충전 시간이 필요합니다.', reception: '내적으로 처리하며, 고개 끄덕임으로 감상을 표현합니다.', whenJokesFail: '내적 불편함을 느끼며, 무엇이 잘못됐는지 분석 후 잠시 후퇴합니다.' }
+      },
+      {
+        dimension: 'NS',
+        letterA: { letter: 'N', expression: '추상적 연결과 메타포를 활용해 큰 그림을 그리는 대화를 합니다.', reception: '숨겨진 의미와 패턴을 찾으며, 복잡한 연결에서 재미를 느낍니다.', whenJokesFail: '더 깊은 맥락으로 연결하려 시도하거나, 철학적 전환을 시도합니다.' },
+        letterB: { letter: 'S', expression: '구체적인 상황과 실생활 예시를 활용해 명확하게 전달합니다.', reception: '직접적이고 명확한 펀치라인을 선호하며, 복잡한 연결보다 즉각적 웃음을 좋아합니다.', whenJokesFail: '더 구체적인 예시를 들거나, 현실적인 상황으로 재설명합니다.' }
+      },
+      {
+        dimension: 'TF',
+        letterA: { letter: 'T', expression: '논리적 구조와 위트 있는 분석으로 유머를 설계합니다.', reception: '개그의 구조를 분석하고, 잘 짜인 셋업에 감탄합니다.', whenJokesFail: '데이터로 취급하며, 다음에 개선할 포인트로 기록합니다.' },
+        letterB: { letter: 'F', expression: '감정적 공명을 중시하며, 따뜻한 분위기 조성에 집중합니다.', reception: '관계에 미치는 영향을 고려하며, 모두가 편한지 체크합니다.', whenJokesFail: '관계 복구에 집중하며, 불편해진 사람이 없는지 살핍니다.' }
+      },
+      {
+        dimension: 'JP',
+        letterA: { letter: 'J', expression: '계획된 전달과 구조화된 흐름으로 안정적인 진행을 합니다.', reception: '예측 가능한 리듬을 좋아하며, 갑작스러운 전환에 당황합니다.', whenJokesFail: '계획에서 벗어났다고 느끼며, 원래 흐름으로 돌아가려 합니다.' },
+        letterB: { letter: 'P', expression: '즉흥적으로 기회를 포착하며, 상황에 맞게 유연하게 적응합니다.', reception: '예상치 못한 전개를 즐기며, 돌발 상황도 재료로 활용합니다.', whenJokesFail: '실패를 새로운 재료로 삼아 다른 방향으로 전환합니다.' }
+      }
     ]
   },
   ONPB: {
@@ -74,9 +143,49 @@ export const gagResults: Record<string, GagResult> = {
     weaknesses: [
       "말로 푸는 유머와 어긋날 때가 있어요",
       "새로움이 줄면 금방 싱거워질 수 있어요",
-      "반복되면 ‘양식화’ 피로가 생겨요",
+      "반복되면 '양식화' 피로가 생겨요",
       "메시지가 약하면 가벼워 보일 수 있어요",
       "긴 호흡의 이야기엔 힘이 약해요",
+    ],
+    deepSummary: "짤 제조기는 시각적 임팩트의 마스터입니다. 한 장의 이미지, 한 번의 표정, 하나의 제스처로 수천 마디의 말보다 강력한 웃음을 만들어냅니다. 이들은 '보는 순간 웃긴' 것의 가치를 잘 알고, 그것을 만들어내는 데 탁월한 감각을 가지고 있습니다.\n\n준비된 비주얼 콘셉트를 좋아하기에, 즉석에서 뭔가를 만들기보다는 미리 기획하고 연출하는 것을 선호합니다. 소품 하나, 의상 하나에도 신경을 쓰고, 짧은 영상이나 이미지에서 최대의 효과를 뽑아냅니다.",
+    humorPhilosophy: "말보다 그림이 빠르고, 그림보다 표정이 강하다. 한 컷이면 충분하다.",
+    signatureTechniques: [
+      "시그니처 표정: 반복해서 쓸 수 있는 대표 리액션 개발",
+      "소품 활용: 상황 설명을 단번에 끝내는 시각적 장치",
+      "밈 포맷 감각: 퍼지기 좋은 구조의 콘텐츠 기획",
+      "숏폼 최적화: 짧은 시간 안에 임팩트 극대화"
+    ],
+    socialDynamics: {
+      inGroups: "표정과 리액션으로 분위기를 띄우는 역할을 합니다. 말이 많지 않아도 시각적 존재감이 강하고, 다른 사람의 개그에 좋은 반응을 보여줍니다.",
+      oneOnOne: "편한 상대와는 장난기 넘치는 표정과 제스처를 보여주고, 사진이나 짧은 영상으로 소통하는 것을 즐깁니다.",
+      asAudience: "웃기는 장면이 나오면 바로 캡처할 준비가 되어 있습니다. 좋은 짤감을 발견하면 저장하고 공유하며, 시각적으로 기억에 남는 포인트를 잘 포착합니다."
+    },
+    growthTips: [
+      "가끔은 말로 푸는 유머도 시도해보세요. 비주얼과 버벌이 결합되면 더 강력해요.",
+      "새로운 표정과 제스처를 계속 개발하세요. 시그니처가 고정되면 신선함이 줄어들어요.",
+      "메시지나 의미를 담은 콘텐츠도 도전해보세요. 재미와 의미가 함께 가면 더 오래 기억돼요."
+    ],
+    mbtiCorrelations: [
+      {
+        dimension: 'EI',
+        letterA: { letter: 'E', expression: '대중 앞에서 자신 있게 퍼포먼스하며, 관객 반응에서 에너지를 얻습니다.', reception: '많은 사람의 호응에 더 신이 나고, 바이럴 반응을 즐깁니다.', whenJokesFail: '더 큰 리액션으로 만회하거나, 다른 표정으로 빠르게 전환합니다.' },
+        letterB: { letter: 'I', expression: '카메라 앞에서는 빛나지만, 대면 상황에서는 조용한 편입니다.', reception: '소수의 깊은 반응을 선호하며, 댓글보다 DM 피드백에 더 반응합니다.', whenJokesFail: '혼자 복기하며 다음 콘텐츠를 준비합니다.' }
+      },
+      {
+        dimension: 'NS',
+        letterA: { letter: 'N', expression: '트렌드를 빠르게 캐치하고, 새로운 밈 포맷을 창조합니다.', reception: '숨겨진 레퍼런스와 메타 유머를 알아보고 감탄합니다.', whenJokesFail: '다른 맥락으로 재해석하거나, 새로운 트렌드에 맞춰 변형합니다.' },
+        letterB: { letter: 'S', expression: '검증된 포맷과 클래식한 리액션을 활용합니다.', reception: '직관적이고 명확한 시각 개그를 선호합니다.', whenJokesFail: '더 명확하고 강렬한 비주얼로 재시도합니다.' }
+      },
+      {
+        dimension: 'TF',
+        letterA: { letter: 'T', expression: '데이터를 분석해 어떤 콘텐츠가 잘 퍼지는지 파악합니다.', reception: '알고리즘과 조회수 패턴에 관심이 많습니다.', whenJokesFail: '지표를 분석하고 다음 콘텐츠에 반영합니다.' },
+        letterB: { letter: 'F', expression: '사람들이 기분 좋아지는 콘텐츠를 만들고 싶어합니다.', reception: '따뜻한 댓글과 공감 반응에 보람을 느낍니다.', whenJokesFail: '상처받은 사람이 없는지 확인하고, 긍정적인 방향으로 수정합니다.' }
+      },
+      {
+        dimension: 'JP',
+        letterA: { letter: 'J', expression: '콘텐츠 일정을 계획하고, 일관된 콘셉트를 유지합니다.', reception: '정기적인 업로드와 시리즈물을 좋아합니다.', whenJokesFail: '계획을 조정하되, 전체 방향성은 유지합니다.' },
+        letterB: { letter: 'P', expression: '영감이 올 때 바로 촬영하고, 트렌드에 빠르게 반응합니다.', reception: '순발력 있는 콘텐츠와 타이밍을 중요시합니다.', whenJokesFail: '바로 새로운 아이디어로 넘어갑니다.' }
+      }
     ]
   },
   INVB: {
@@ -84,7 +193,7 @@ export const gagResults: Record<string, GagResult> = {
     nickname: "국민MC",
     summary: "언어 중심의 즉흥적이고 밝은 톤을 좋아합니다. 대화 흐름을 읽고 타이밍 좋게 한마디를 얹는 식의 센스 있는 유머를 선호합니다.",
     examples: [
-      "돌발 상황에도 ‘정리 멘트’로 장면 수습",
+      "돌발 상황에도 '정리 멘트'로 장면 수습",
       "게스트 포인트 캐치→즉석 별명·콜백 생성",
       "팀 전체 대화량 균형 맞추는 패싱·받아치기"
     ],
@@ -105,6 +214,46 @@ export const gagResults: Record<string, GagResult> = {
       "독자 캐릭터 각인이 약해질 수 있어요",
       "강한 메시지와의 결합이 어렵게 느껴질 수 있어요",
       "긴장감 있는 전환엔 소극적일 수 있어요",
+    ],
+    deepSummary: "국민MC는 즉흥의 달인입니다. 미리 준비하는 것보다 현장에서 흐름을 읽고 타이밍에 맞춰 한마디를 던지는 것을 좋아합니다. 대화가 어디로 흐를지 모르는 상황에서 오히려 빛을 발하고, 예상치 못한 발언에도 능숙하게 대응합니다.\n\n밝은 톤을 유지하면서 모두가 편하게 참여할 수 있는 분위기를 만드는 데 능숙합니다. 누군가 실수를 해도 자연스럽게 넘기고, 긴장감이 돌 때도 적절한 농담으로 분위기를 풀어줍니다.",
+    humorPhilosophy: "좋은 타이밍의 한마디가 천 마디의 준비된 대본보다 낫다.",
+    signatureTechniques: [
+      "현장 캐치: 지금 이 순간의 포인트를 놓치지 않고 잡아냄",
+      "즉석 별명 제조: 상대의 특징을 재치 있게 포착해 별명으로 만들기",
+      "균형 패싱: 조용한 사람에게 자연스럽게 발언 기회 넘기기",
+      "분위기 수습: 어색한 상황을 유머로 자연스럽게 넘기기"
+    ],
+    socialDynamics: {
+      inGroups: "자연스럽게 대화를 조율하는 역할을 합니다. 누가 말을 많이 하고 누가 조용한지 파악하고, 균형을 맞추려 노력합니다.",
+      oneOnOne: "상대방의 이야기에 적극적으로 반응하고, 재치 있는 코멘트로 대화를 이어갑니다. 편안한 분위기를 만드는 데 능숙합니다.",
+      asAudience: "좋은 포인트가 나오면 바로 반응하고, 분위기를 띄우는 역할을 합니다. 다른 사람의 유머를 더 빛나게 해주는 리액션을 잘합니다."
+    },
+    growthTips: [
+      "가끔은 강한 메시지나 깊은 감정을 담은 유머도 시도해보세요.",
+      "안전한 영역을 벗어나 리스크 있는 농담도 도전해보세요. 실패해도 괜찮아요.",
+      "본인만의 캐릭터를 더 강하게 각인시켜보세요. 균형만 잡다 보면 개성이 흐려질 수 있어요."
+    ],
+    mbtiCorrelations: [
+      {
+        dimension: 'EI',
+        letterA: { letter: 'E', expression: '무대 위에서 에너지가 넘치고, 즉흥적인 관객 소통을 즐깁니다.', reception: '활발한 호응에 더 신이 나고, 분위기가 달아오를수록 더 잘합니다.', whenJokesFail: '바로 다른 방향으로 전환하며 에너지를 유지합니다.' },
+        letterB: { letter: 'I', expression: '친한 사람들 사이에서 재치를 발휘하며, 소규모 모임을 선호합니다.', reception: '깊은 대화와 의미 있는 반응을 좋아합니다.', whenJokesFail: '잠시 침묵한 후 다른 화제로 자연스럽게 넘어갑니다.' }
+      },
+      {
+        dimension: 'NS',
+        letterA: { letter: 'N', expression: '연결고리를 빠르게 찾아 예상치 못한 비유를 던집니다.', reception: '복잡한 레퍼런스와 메타 유머를 이해하고 즐깁니다.', whenJokesFail: '더 창의적인 방향으로 재시도합니다.' },
+        letterB: { letter: 'S', expression: '현실적인 상황과 구체적인 예시로 공감을 이끌어냅니다.', reception: '직접적이고 명확한 유머를 선호합니다.', whenJokesFail: '더 구체적인 예시로 설명을 보충합니다.' }
+      },
+      {
+        dimension: 'TF',
+        letterA: { letter: 'T', expression: '논리적인 위트와 말장난을 즐깁니다.', reception: '잘 짜인 구조의 개그에 감탄합니다.', whenJokesFail: '왜 안 먹혔는지 분석합니다.' },
+        letterB: { letter: 'F', expression: '상대방의 기분을 살피며 따뜻한 유머를 구사합니다.', reception: '모두가 웃는지 확인하고, 소외된 사람이 없는지 체크합니다.', whenJokesFail: '상처받은 사람이 없는지 확인하고 분위기를 회복시킵니다.' }
+      },
+      {
+        dimension: 'JP',
+        letterA: { letter: 'J', expression: '흐름을 예측하고 적절한 타이밍을 계산합니다.', reception: '예상대로 흘러가는 대화를 좋아합니다.', whenJokesFail: '원래 계획으로 돌아가려 합니다.' },
+        letterB: { letter: 'P', expression: '완전한 즉흥으로 순간의 기회를 잡습니다.', reception: '예측 불가능한 전개를 즐깁니다.', whenJokesFail: '바로 새로운 방향을 찾아 전환합니다.' }
+      }
     ]
   },
   INPB: {
@@ -113,12 +262,12 @@ export const gagResults: Record<string, GagResult> = {
     summary: "분위기를 읽고 온몸으로 반응하는 스타일을 좋아해요. 직접 드립치는 것보다 남이 웃길 때 '진짜 웃음'으로 반응해주는 게 더 빛나고, 표정이나 몸짓으로 '아 진짜 웃기다ㅋㅋ'를 보여주는 사람에게 끌려요.",
     examples: [
       "빙의형 웃음·놀람·당황 리액션 클립",
-      "다른 사람의 드립을 ‘표정 서브타이틀’로 번역",
+      "다른 사람의 드립을 '표정 서브타이틀'로 번역",
       "웃음·눈물 등 감정 동조 유도"
     ],
     bestMatch: "ONVB",
     worstMatch: "ONVD",
-    bestMatchReason: "토크마스터(ONVB)의 정교한 말개그가 리액션 장인(INPB)의 진짜 반응으로 완성됩니다. ‘설명’과 ‘공감’의 시너지.",
+    bestMatchReason: "토크마스터(ONVB)의 정교한 말개그가 리액션 장인(INPB)의 진짜 반응으로 완성됩니다. '설명'과 '공감'의 시너지.",
     worstMatchReason: "ONVD는 논리와 메시지가 중심이라 감정보다 생각을 자극해요. 감정으로 반응하는 스타일과는 방향이 달라서 호흡이 안 맞을 수 있어요.",
     strengths: [
       "진짜 반응으로 공감을 크게 만들어요",
@@ -133,6 +282,46 @@ export const gagResults: Record<string, GagResult> = {
       "감정이 과하면 장면을 압도할 수 있어요",
       "긴 설명이 필요한 상황에선 답답할 수 있어요",
       "차분한 톤과의 결합이 어려울 수 있어요",
+    ],
+    deepSummary: "리액션 장인은 감정 증폭기입니다. 누군가의 유머가 재미있을 때 그것을 진심으로 반응해서 두 배, 세 배로 키워주는 능력을 가지고 있습니다. 웃긴 걸 봤을 때 억지로 웃는 게 아니라 진짜로 빵 터지고, 놀라운 걸 봤을 때 진짜로 눈이 커지고, 감동적인 걸 봤을 때 진짜로 눈물이 납니다.\n\n이들의 반응은 전염성이 있습니다. 리액션 장인이 웃으면 주변 사람들도 덩달아 웃게 되고, 그들이 감탄하면 다른 사람들도 '그게 그렇게 대단한가?' 하고 다시 보게 됩니다.",
+    humorPhilosophy: "진짜 웃음은 전염된다. 내가 진심으로 웃으면 모두가 웃는다.",
+    signatureTechniques: [
+      "진성 리액션: 억지가 아닌 진심에서 나오는 반응",
+      "표정 서브타이틀: 말 없이도 상황을 설명하는 표정 연기",
+      "감정 동조: 웃음·놀람·감동을 전염시키는 능력",
+      "타이밍 리액션: 정확한 순간에 터지는 반응"
+    ],
+    socialDynamics: {
+      inGroups: "다른 사람들의 유머에 좋은 반응을 보여주며, 그룹의 에너지를 높이는 역할을 합니다. 조용히 있다가도 웃긴 순간에는 확실하게 반응합니다.",
+      oneOnOne: "상대방의 이야기에 진심으로 반응하며, 감정적 교류를 좋아합니다. 말보다 표정과 리액션으로 많은 것을 전달합니다.",
+      asAudience: "최고의 청중입니다. 공연자가 가장 원하는 타입의 관객이며, 진심 어린 반응으로 무대를 빛내줍니다."
+    },
+    growthTips: [
+      "가끔은 직접 드립을 시도해보세요. 반응만 잘하는 것에서 벗어나 주도권을 잡아보세요.",
+      "논리적인 유머에도 반응하는 연습을 해보세요. 감정 외의 영역에서도 즐길 수 있어요.",
+      "반응의 강도를 조절해보세요. 때로는 절제된 반응이 더 강력할 수 있어요."
+    ],
+    mbtiCorrelations: [
+      {
+        dimension: 'EI',
+        letterA: { letter: 'E', expression: '큰 리액션으로 에너지를 발산하며, 모두가 볼 수 있게 반응합니다.', reception: '많은 사람과 함께 웃는 것을 좋아하며, 집단 에너지에서 힘을 얻습니다.', whenJokesFail: '분위기를 살리려 더 큰 반응을 시도합니다.' },
+        letterB: { letter: 'I', expression: '친한 사람에게만 진짜 반응을 보여주며, 에너지 충전 시간이 필요합니다.', reception: '소수의 친밀한 관계에서 가장 진정한 반응을 보여줍니다.', whenJokesFail: '잠시 조용해지며 내적으로 처리합니다.' }
+      },
+      {
+        dimension: 'NS',
+        letterA: { letter: 'N', expression: '숨겨진 의미와 복잡한 유머에도 반응하며, 레퍼런스를 잘 캐치합니다.', reception: '메타적인 유머와 층위 있는 개그를 이해하고 즐깁니다.', whenJokesFail: '다른 해석의 가능성을 찾아봅니다.' },
+        letterB: { letter: 'S', expression: '직접적이고 명확한 유머에 강하게 반응합니다.', reception: '복잡하지 않은, 바로 이해되는 개그를 선호합니다.', whenJokesFail: '더 명확한 설명을 기다립니다.' }
+      },
+      {
+        dimension: 'TF',
+        letterA: { letter: 'T', expression: '논리적으로 구성된 개그에도 반응할 수 있습니다.', reception: '잘 짜인 구조에 감탄하며, 지적인 유머도 즐깁니다.', whenJokesFail: '왜 웃겨야 하는지 분석해봅니다.' },
+        letterB: { letter: 'F', expression: '감정에 기반한 진심 어린 반응을 보여줍니다.', reception: '따뜻한 유머와 감동적인 순간에 강하게 반응합니다.', whenJokesFail: '상대방의 기분을 살피며 분위기를 회복시키려 합니다.' }
+      },
+      {
+        dimension: 'JP',
+        letterA: { letter: 'J', expression: '예상되는 포인트에서 적절히 반응하며, 흐름을 따라갑니다.', reception: '구조화된 유머의 예측 가능한 펀치라인을 즐깁니다.', whenJokesFail: '원래 흐름으로 돌아가길 기대합니다.' },
+        letterB: { letter: 'P', expression: '예상치 못한 순간에도 자연스럽게 반응합니다.', reception: '돌발적인 유머와 즉흥적인 전개를 즐깁니다.', whenJokesFail: '새로운 방향을 열린 마음으로 받아들입니다.' }
+      }
     ]
   },
 
@@ -159,6 +348,46 @@ export const gagResults: Record<string, GagResult> = {
       "설명이 길면 재미가 떨어질 수 있어요",
       "톤이 무거워 피로가 올 수 있어요",
       "시각 중심 유머와 어울리기 어려워요",
+    ],
+    deepSummary: "개그 비평가는 웃음 속에 메시지를 담는 사람입니다. 단순히 웃기기만 하는 것이 아니라, 웃음을 통해 무언가를 말하고 싶어합니다. 사회의 모순, 일상의 불합리, 권력의 위선 같은 것들을 날카롭게 짚어내면서 웃음으로 포장합니다.\n\n준비된 구조와 논리를 중시하기에, 즉흥적으로 던지는 것보다는 미리 생각하고 다듬은 한 줄을 선호합니다. 그 한 줄이 정확히 핵심을 찌를 때의 쾌감을 알고, 그것을 위해 공을 들입니다.",
+    humorPhilosophy: "웃음은 가장 강력한 비평의 도구다. 웃기면서 생각하게 만들어라.",
+    signatureTechniques: [
+      "한 줄 풍자: 핵심을 찌르는 압축된 직설",
+      "논리 역설: 당연하게 여겨지는 것의 모순을 드러내기",
+      "사회 비평: 일상 속 불합리함을 유머로 지적하기",
+      "구조적 빌드업: 논리적으로 쌓아올린 후 펀치라인 전달"
+    ],
+    socialDynamics: {
+      inGroups: "날카로운 관찰과 코멘트로 존재감을 드러냅니다. 말수는 많지 않지만, 한마디 할 때 무게감이 있습니다.",
+      oneOnOne: "깊은 대화를 좋아하며, 사회 이슈나 현상에 대해 이야기하는 것을 즐깁니다. 가벼운 수다보다 의미 있는 대화를 선호합니다.",
+      asAudience: "비평적 시선으로 콘텐츠를 봅니다. 잘 만들어진 풍자에 감탄하고, 얕은 유머에는 반응하지 않습니다."
+    },
+    growthTips: [
+      "때로는 메시지 없이 순수하게 웃기는 것도 가치가 있어요. 가벼움도 힘이에요.",
+      "감정적 반응에도 열린 마음을 가져보세요. 논리만으로는 닿지 않는 영역이 있어요.",
+      "톤을 조절해보세요. 계속 날카로우면 듣는 사람이 지칠 수 있어요."
+    ],
+    mbtiCorrelations: [
+      {
+        dimension: 'EI',
+        letterA: { letter: 'E', expression: '공개적으로 의견을 표현하며, 토론과 논쟁을 즐깁니다.', reception: '다양한 반응에 에너지를 얻고, 논쟁적인 주제도 꺼리지 않습니다.', whenJokesFail: '다른 각도로 재시도하며 대화를 이어갑니다.' },
+        letterB: { letter: 'I', expression: '글이나 준비된 발언을 통해 메시지를 전달합니다.', reception: '깊이 있는 소수의 반응을 선호하며, 1:1 대화에서 빛납니다.', whenJokesFail: '혼자 복기하며 더 나은 표현을 찾습니다.' }
+      },
+      {
+        dimension: 'NS',
+        letterA: { letter: 'N', expression: '큰 그림과 패턴을 보며 시스템적 비평을 합니다.', reception: '추상적인 아이디어와 복잡한 연결을 즐깁니다.', whenJokesFail: '더 큰 맥락으로 연결하려 시도합니다.' },
+        letterB: { letter: 'S', expression: '구체적인 사례와 실제 경험을 바탕으로 비평합니다.', reception: '현실적이고 명확한 풍자를 선호합니다.', whenJokesFail: '더 구체적인 예시를 들어 재설명합니다.' }
+      },
+      {
+        dimension: 'TF',
+        letterA: { letter: 'T', expression: '논리적 분석과 객관적 비평에 집중합니다.', reception: '잘 구조화된 논증에 감탄합니다.', whenJokesFail: '논리적 허점을 분석하고 수정합니다.' },
+        letterB: { letter: 'F', expression: '사람들의 경험과 감정을 대변하는 비평을 합니다.', reception: '공감을 이끌어내는 풍자에 반응합니다.', whenJokesFail: '상대방의 기분을 살피며 접근 방식을 조정합니다.' }
+      },
+      {
+        dimension: 'JP',
+        letterA: { letter: 'J', expression: '체계적으로 준비된 비평을 전달합니다.', reception: '구조화되고 완결된 풍자를 선호합니다.', whenJokesFail: '계획대로 진행하며 흐름을 유지합니다.' },
+        letterB: { letter: 'P', expression: '상황에 맞게 유연하게 비평 포인트를 조절합니다.', reception: '즉흥적인 통찰과 돌발적인 풍자도 즐깁니다.', whenJokesFail: '새로운 방향으로 빠르게 전환합니다.' }
+      }
     ]
   },
   ONPD: {
@@ -183,6 +412,46 @@ export const gagResults: Record<string, GagResult> = {
       "돌발성은 다소 약할 수 있어요",
       "설명이 길면 템포가 느려져요",
       "새로움 갱신이 필요해요",
+    ],
+    deepSummary: "패러디 장인은 관찰과 재현의 달인입니다. 누군가의 말투, 표정, 행동 패턴을 정확하게 포착하고, 그것을 살짝 과장해서 보여줌으로써 '아 맞아 저 사람 딱 저래!' 하는 공감 웃음을 만들어냅니다. 원본을 아는 사람들끼리 나누는 그 웃음의 쾌감을 잘 알고 있습니다.\n\n준비된 연출을 선호하기에, 현장에서 즉흥적으로 따라하기보다는 미리 연습하고 다듬은 패러디를 보여주는 것을 좋아합니다. 디테일에 공을 들이고, 작은 특징 하나가 전체를 살린다는 것을 압니다.",
+    humorPhilosophy: "과장은 진실의 돋보기다. 살짝 키우면 본질이 보인다.",
+    signatureTechniques: [
+      "억양 재현: 특정 인물이나 유형의 말투를 정확하게 포착",
+      "표정 연기: 대상의 특징적인 표정을 과장해서 표현",
+      "디테일 포착: 남들이 놓치는 작은 특징을 잡아내기",
+      "캐릭터 풍자: 유형화된 인물상을 코믹하게 재현"
+    ],
+    socialDynamics: {
+      inGroups: "특정 인물이나 상황을 따라해서 웃기는 역할을 합니다. 모두가 아는 대상일 때 더 빛나며, 공유된 경험을 유머로 승화시킵니다.",
+      oneOnOne: "상대방의 특징을 장난스럽게 따라하거나, 공통으로 아는 사람 이야기로 웃음을 만듭니다.",
+      asAudience: "패러디 콘텐츠에 잘 반응하며, 디테일을 놓치지 않고 포착합니다. 잘 만든 모사에 진심으로 감탄합니다."
+    },
+    growthTips: [
+      "레퍼런스에 의존하지 않는 오리지널 유머도 개발해보세요.",
+      "즉흥적인 모사도 연습해보세요. 현장에서 바로 할 수 있으면 더 강력해요.",
+      "과장의 강도를 조절해보세요. 너무 세면 본질을 놓칠 수 있어요."
+    ],
+    mbtiCorrelations: [
+      {
+        dimension: 'EI',
+        letterA: { letter: 'E', expression: '무대 위에서 과감하게 캐릭터를 연기하며, 관객 반응에 에너지를 얻습니다.', reception: '많은 사람이 알아보고 웃어줄 때 가장 신이 납니다.', whenJokesFail: '더 과장된 연기로 관심을 끌려고 합니다.' },
+        letterB: { letter: 'I', expression: '가까운 사람들 사이에서 조용히 모사를 선보입니다.', reception: '알아주는 소수의 깊은 반응을 선호합니다.', whenJokesFail: '다음에 더 잘하기 위해 연습합니다.' }
+      },
+      {
+        dimension: 'NS',
+        letterA: { letter: 'N', expression: '추상적인 유형이나 트렌드를 패러디합니다.', reception: '메타적인 풍자와 층위 있는 패러디를 즐깁니다.', whenJokesFail: '다른 맥락으로 재해석합니다.' },
+        letterB: { letter: 'S', expression: '구체적인 인물과 상황을 정확하게 재현합니다.', reception: '디테일이 살아있는 모사에 감탄합니다.', whenJokesFail: '더 정확한 디테일을 추가합니다.' }
+      },
+      {
+        dimension: 'TF',
+        letterA: { letter: 'T', expression: '대상의 패턴을 분석해 핵심 특징을 추출합니다.', reception: '정확한 분석에 기반한 풍자를 선호합니다.', whenJokesFail: '무엇이 빠졌는지 분석합니다.' },
+        letterB: { letter: 'F', expression: '대상에 대한 애정을 담은 따뜻한 패러디를 합니다.', reception: '상처 주지 않는 유쾌한 모사를 좋아합니다.', whenJokesFail: '대상이 불쾌할까 걱정하며 조정합니다.' }
+      },
+      {
+        dimension: 'JP',
+        letterA: { letter: 'J', expression: '철저하게 준비하고 연습한 패러디를 보여줍니다.', reception: '완성도 높은 퍼포먼스를 선호합니다.', whenJokesFail: '더 많은 준비로 보완합니다.' },
+        letterB: { letter: 'P', expression: '순간의 영감으로 즉흥 모사를 시도합니다.', reception: '예상치 못한 순간의 패러디를 즐깁니다.', whenJokesFail: '다른 대상으로 빠르게 전환합니다.' }
+      }
     ]
   },
   INVD: {
@@ -207,6 +476,46 @@ export const gagResults: Record<string, GagResult> = {
       "반복되면 독설로 피로가 생겨요",
       "감정 공감을 만들기 어려울 수 있어요",
       "무거운 공기가 생길 수 있어요",
+    ],
+    deepSummary: "디스 장인은 언어의 저격수입니다. 말이 많지 않지만, 한번 입을 열면 정확히 핵심을 찌릅니다. 다른 사람들이 애둘러 말하거나 넘어가는 것들을 직설적으로 짚어내고, 그 날카로움 속에서 웃음을 만들어냅니다.\n\n즉흥적인 관찰과 순발력이 강점입니다. 현장에서 포착한 모순이나 위선을 바로 언어로 전환하는 능력이 있고, 그 한마디가 남기는 여운의 힘을 알고 있습니다.",
+    humorPhilosophy: "진실은 날카롭고, 날카로운 것은 웃기다. 정확히 찌르면 웃음이 터진다.",
+    signatureTechniques: [
+      "원펀치: 한마디로 상황을 정리하는 직설",
+      "관찰 저격: 남들이 놓치는 포인트를 정확히 포착",
+      "냉소적 위트: 감정을 빼고 팩트로 승부하기",
+      "여운 남기기: 웃음 뒤에 생각거리를 던지기"
+    ],
+    socialDynamics: {
+      inGroups: "조용히 관찰하다가 정확한 타이밍에 한마디 던집니다. 말수는 적지만 존재감이 있고, 그 한마디가 대화의 방향을 바꾸기도 합니다.",
+      oneOnOne: "진지한 대화를 선호하며, 수다보다는 깊은 이야기를 좋아합니다. 가까운 사람에게는 날카로움보다 따뜻함을 더 보여줍니다.",
+      asAudience: "비평적인 시선으로 콘텐츠를 봅니다. 얄팍한 유머에는 반응하지 않고, 깊이 있는 풍자에 진심으로 반응합니다."
+    },
+    growthTips: [
+      "때로는 따뜻한 유머도 시도해보세요. 날카로움만으로는 닿지 않는 마음이 있어요.",
+      "시각적 유머에도 열린 마음을 가져보세요. 말 외의 표현도 강력할 수 있어요.",
+      "쉬어가는 타이밍도 중요해요. 계속 찌르면 듣는 사람이 방어막을 세워요."
+    ],
+    mbtiCorrelations: [
+      {
+        dimension: 'EI',
+        letterA: { letter: 'E', expression: '공개적으로 날카로운 코멘트를 던지며 논쟁을 두려워하지 않습니다.', reception: '다양한 반응에 자극받고, 토론을 즐깁니다.', whenJokesFail: '다른 각도로 재공격합니다.' },
+        letterB: { letter: 'I', expression: '조용히 관찰하다 정확한 타이밍에 한마디를 던집니다.', reception: '소수의 깊은 이해를 선호합니다.', whenJokesFail: '내적으로 복기하며 다음을 준비합니다.' }
+      },
+      {
+        dimension: 'NS',
+        letterA: { letter: 'N', expression: '큰 그림과 시스템의 모순을 짚어냅니다.', reception: '복잡한 연결과 메타적 풍자를 즐깁니다.', whenJokesFail: '더 큰 맥락으로 연결합니다.' },
+        letterB: { letter: 'S', expression: '구체적인 사례와 현실의 모순을 짚어냅니다.', reception: '명확하고 직접적인 풍자를 선호합니다.', whenJokesFail: '더 구체적인 예시를 들어 설명합니다.' }
+      },
+      {
+        dimension: 'TF',
+        letterA: { letter: 'T', expression: '논리적 모순과 비효율을 날카롭게 지적합니다.', reception: '분석적인 비평에 감탄합니다.', whenJokesFail: '논리를 점검하고 수정합니다.' },
+        letterB: { letter: 'F', expression: '사람들의 위선과 가식을 지적하되 마음을 생각합니다.', reception: '공감이 담긴 풍자에 반응합니다.', whenJokesFail: '상대방이 상처받았는지 확인합니다.' }
+      },
+      {
+        dimension: 'JP',
+        letterA: { letter: 'J', expression: '미리 준비된 날카로운 한마디를 적절한 타이밍에 사용합니다.', reception: '구조화된 비평을 선호합니다.', whenJokesFail: '다음 기회를 위해 저장해둡니다.' },
+        letterB: { letter: 'P', expression: '현장에서 즉흥적으로 포인트를 잡아 던집니다.', reception: '돌발적인 통찰을 즐깁니다.', whenJokesFail: '바로 다른 방향으로 전환합니다.' }
+      }
     ]
   },
   INPD: {
@@ -231,6 +540,46 @@ export const gagResults: Record<string, GagResult> = {
       "과몰입 시 분위기를 가라앉힐 수 있어요",
       "설명이 부족하면 오해가 생길 수 있어요",
       "반전이 예상되면 힘이 빠질 수 있어요",
+    ],
+    deepSummary: "불편한 익살꾼은 감정의 연금술사입니다. 웃음과 눈물 사이의 경계를 자유롭게 넘나들며, 그 어색한 중간 지점에서 묘한 쾌감을 만들어냅니다. 웃긴 건지 슬픈 건지 모르겠는 그 순간, '이게 뭐지?' 하다가 터지는 웃음의 매력을 압니다.\n\n즉흥적인 감정 표현과 신체 언어에 강점이 있습니다. 말보다 표정으로, 설명보다 침묵으로 더 많은 것을 전달하고, 감정의 진폭을 섬세하게 조율하는 능력이 있습니다.",
+    humorPhilosophy: "웃음과 눈물은 한 끗 차이다. 그 경계에서 가장 진한 감정이 나온다.",
+    signatureTechniques: [
+      "감정 반전: 웃기다가 먹먹하게, 슬프다가 터지게 만들기",
+      "표정 연기: 말 없이 표정만으로 상황을 전달하기",
+      "침묵의 코미디: 적절한 정적으로 긴장감 만들기",
+      "감정 과잉: 진지한 표정으로 황당한 상황 버티기"
+    ],
+    socialDynamics: {
+      inGroups: "감정 깊은 분위기를 만드는 역할을 합니다. 웃음만 있는 가벼운 모임보다 깊이 있는 대화가 섞인 자리를 선호합니다.",
+      oneOnOne: "감정적으로 깊이 연결되는 대화를 좋아하며, 표면적인 수다보다 진솔한 이야기를 나눕니다.",
+      asAudience: "감정이 담긴 콘텐츠에 깊이 몰입합니다. 단순히 웃긴 것보다 여운이 남는 것을 좋아합니다."
+    },
+    growthTips: [
+      "가끔은 가볍고 순수한 웃음도 즐겨보세요. 모든 유머에 깊이가 필요한 건 아니에요.",
+      "감정 조절의 균형을 찾아보세요. 과몰입하면 오히려 전달이 안 될 수 있어요.",
+      "언어적 표현도 연습해보세요. 표정만으로는 닿지 않는 영역도 있어요."
+    ],
+    mbtiCorrelations: [
+      {
+        dimension: 'EI',
+        letterA: { letter: 'E', expression: '감정을 크게 표현하며 주변을 휘어잡습니다.', reception: '많은 사람의 감정적 반응에서 에너지를 얻습니다.', whenJokesFail: '더 강렬한 감정으로 분위기를 만회합니다.' },
+        letterB: { letter: 'I', expression: '가까운 사람에게만 깊은 감정을 보여줍니다.', reception: '소수의 깊은 공감을 선호합니다.', whenJokesFail: '혼자 감정을 정리하며 다음을 준비합니다.' }
+      },
+      {
+        dimension: 'NS',
+        letterA: { letter: 'N', expression: '추상적인 감정과 상징을 활용합니다.', reception: '숨겨진 의미와 감정의 층위를 즐깁니다.', whenJokesFail: '다른 해석의 가능성을 찾아봅니다.' },
+        letterB: { letter: 'S', expression: '구체적인 상황과 경험에 기반한 감정을 표현합니다.', reception: '현실적이고 공감 가능한 감정을 선호합니다.', whenJokesFail: '더 구체적인 상황으로 재설명합니다.' }
+      },
+      {
+        dimension: 'TF',
+        letterA: { letter: 'T', expression: '감정을 분석적으로 구조화해서 표현합니다.', reception: '감정의 논리적 전개를 이해합니다.', whenJokesFail: '무엇이 전달되지 않았는지 분석합니다.' },
+        letterB: { letter: 'F', expression: '진심 어린 감정을 그대로 보여줍니다.', reception: '진정성 있는 감정 표현에 깊이 반응합니다.', whenJokesFail: '상대방과의 감정적 연결을 재시도합니다.' }
+      },
+      {
+        dimension: 'JP',
+        letterA: { letter: 'J', expression: '감정의 흐름을 계획하고 구조화합니다.', reception: '예상 가능한 감정 전개를 선호합니다.', whenJokesFail: '계획을 점검하고 조정합니다.' },
+        letterB: { letter: 'P', expression: '즉흥적으로 감정을 터뜨립니다.', reception: '예상치 못한 감정의 폭발을 즐깁니다.', whenJokesFail: '자연스럽게 다른 감정으로 전환합니다.' }
+      }
     ]
   },
 
@@ -257,6 +606,46 @@ export const gagResults: Record<string, GagResult> = {
       "현실감이 떨어지면 몰입이 깨져요",
       "세팅 비용/시간이 들 수 있어요",
       "패턴화되면 새로움이 줄어요",
+    ],
+    deepSummary: "꽁트 장인은 세계관의 건축가입니다. 현실에서는 말이 안 되지만 그 세계 안에서는 완벽하게 논리적인, 그런 병맛 유니버스를 설계합니다. 캐릭터가 살아있고, 대사가 치밀하고, 복선이 깔려있고, 콜백이 터지는 - 그런 완성도 높은 코미디를 만들고 즐깁니다.\n\n준비된 구조를 중시하기에, 즉석에서 뭔가를 만들기보다는 미리 기획하고 다듬는 과정을 거칩니다. 대본 한 줄, 타이밍 하나에도 신경을 쓰고, 작은 디테일이 전체를 살린다는 것을 압니다.",
+    humorPhilosophy: "말이 안 되는데 말이 되는 세계. 그 역설에서 가장 큰 웃음이 나온다.",
+    signatureTechniques: [
+      "세계관 구축: 내부 논리가 있는 병맛 유니버스 설계",
+      "캐릭터 설계: 일관된 성격과 말투를 가진 인물 창조",
+      "대사 엔지니어링: 타이밍과 리듬이 계산된 대화 구성",
+      "복선과 콜백: 앞에 깔아둔 것을 뒤에서 회수하는 구조"
+    ],
+    socialDynamics: {
+      inGroups: "이야기를 이끌어가는 역할을 합니다. 상황극이나 설정 놀이를 좋아하며, 함께 세계관을 만들어가는 것을 즐깁니다.",
+      oneOnOne: "'만약에...'로 시작하는 가정 이야기를 좋아하며, 함께 엉뚱한 설정을 발전시키는 대화를 즐깁니다.",
+      asAudience: "잘 짜인 콩트와 스케치에 감탄합니다. 복선과 콜백을 놓치지 않고 잡아내며, 구조의 완성도를 평가합니다."
+    },
+    growthTips: [
+      "즉흥적인 상황에도 대응하는 연습을 해보세요. 준비된 것만으로는 한계가 있어요.",
+      "진입 장벽을 낮춰보세요. 설명이 길어지면 관객이 떠나요.",
+      "새로운 패턴을 계속 개발하세요. 익숙해지면 신선함이 줄어요."
+    ],
+    mbtiCorrelations: [
+      {
+        dimension: 'EI',
+        letterA: { letter: 'E', expression: '무대 위에서 에너지 넘치게 연기하며, 관객 반응에서 힘을 얻습니다.', reception: '많은 사람의 웃음에 더 신이 납니다.', whenJokesFail: '에너지를 높여 분위기를 만회합니다.' },
+        letterB: { letter: 'I', expression: '글이나 영상으로 조용히 세계관을 보여줍니다.', reception: '깊이 있는 소수의 팬을 선호합니다.', whenJokesFail: '혼자 스크립트를 다듬으며 다음을 준비합니다.' }
+      },
+      {
+        dimension: 'NS',
+        letterA: { letter: 'N', expression: '추상적이고 기발한 설정을 만들어냅니다.', reception: '메타적인 유머와 복잡한 구조를 즐깁니다.', whenJokesFail: '더 창의적인 방향으로 수정합니다.' },
+        letterB: { letter: 'S', expression: '현실에 기반한 상황을 비틀어 병맛을 만듭니다.', reception: '공감 가능한 설정을 선호합니다.', whenJokesFail: '더 현실적인 디테일을 추가합니다.' }
+      },
+      {
+        dimension: 'TF',
+        letterA: { letter: 'T', expression: '논리적으로 세계관과 캐릭터를 설계합니다.', reception: '구조의 정교함에 감탄합니다.', whenJokesFail: '구조를 분석하고 수정합니다.' },
+        letterB: { letter: 'F', expression: '캐릭터의 감정선을 중시합니다.', reception: '캐릭터에 감정 이입하며 즐깁니다.', whenJokesFail: '감정적 연결을 강화합니다.' }
+      },
+      {
+        dimension: 'JP',
+        letterA: { letter: 'J', expression: '체계적으로 기획하고 완성도를 높입니다.', reception: '잘 완성된 콘텐츠를 선호합니다.', whenJokesFail: '계획을 조정하며 완성도를 높입니다.' },
+        letterB: { letter: 'P', expression: '아이디어가 떠오르면 바로 실행합니다.', reception: '실험적인 시도를 즐깁니다.', whenJokesFail: '새로운 방향으로 빠르게 전환합니다.' }
+      }
     ]
   },
   OBVD: {
@@ -281,6 +670,46 @@ export const gagResults: Record<string, GagResult> = {
       "설명이 많아지면 장난기가 줄어요",
       "밝은 시각 유머와 리듬이 달라요",
       "분위기가 과도하게 진지해질 수 있어요",
+    ],
+    deepSummary: "블랙 스탠드업 코미디언은 가면 뒤의 메시지를 전하는 사람입니다. 겉으로는 황당한 설정과 웃긴 대사지만, 그 안에는 날카로운 사회 비판이 숨어있습니다. '웃기면서 생각하게' 만드는 것이 목표이고, 그 이중성의 쾌감을 잘 압니다.\n\n준비된 구조와 블랙 유머의 조합입니다. 설정 안에 메시지를 숨기고, 웃음 뒤에 여운을 남기고, 가볍게 시작해서 무겁게 끝나는 - 그런 구조를 설계합니다.",
+    humorPhilosophy: "진짜 날카로운 비판은 웃음으로 포장되어야 한다. 그래야 마음에 박힌다.",
+    signatureTechniques: [
+      "이중 해석: 겉은 병맛, 속은 풍자인 구조 설계",
+      "아이러니 설정: 현실의 모순을 과장된 세계관으로 드러내기",
+      "후폭풍 유머: 웃고 나서 생각하게 만드는 여운",
+      "다크 유토피아: 밝은 표면 아래 어두운 메시지 숨기기"
+    ],
+    socialDynamics: {
+      inGroups: "깊이 있는 대화를 이끄는 역할을 합니다. 가벼운 수다보다 사회 이슈나 현상에 대한 토론을 좋아합니다.",
+      oneOnOne: "진지한 대화를 선호하며, 세상에 대한 관점을 나누는 것을 좋아합니다.",
+      asAudience: "메시지가 있는 콘텐츠에 반응합니다. 얕은 유머보다 깊이 있는 풍자에 감탄합니다."
+    },
+    growthTips: [
+      "때로는 순수하게 웃기는 것도 가치가 있어요. 메시지 없는 웃음도 힐링이에요.",
+      "톤을 조절해보세요. 계속 무거우면 관객이 지쳐요.",
+      "밝은 유머와의 조화도 시도해보세요. 대비가 있으면 더 강력해요."
+    ],
+    mbtiCorrelations: [
+      {
+        dimension: 'EI',
+        letterA: { letter: 'E', expression: '무대 위에서 과감하게 메시지를 전달합니다.', reception: '관객의 반응에서 에너지를 얻습니다.', whenJokesFail: '다른 각도로 재시도합니다.' },
+        letterB: { letter: 'I', expression: '글이나 영상으로 메시지를 전달합니다.', reception: '깊이 있는 소수의 반응을 선호합니다.', whenJokesFail: '혼자 콘텐츠를 다듬으며 다음을 준비합니다.' }
+      },
+      {
+        dimension: 'NS',
+        letterA: { letter: 'N', expression: '추상적인 아이디어와 시스템을 풍자합니다.', reception: '메타적인 비평을 즐깁니다.', whenJokesFail: '더 큰 맥락으로 연결합니다.' },
+        letterB: { letter: 'S', expression: '구체적인 현실 사례를 풍자합니다.', reception: '명확한 레퍼런스를 선호합니다.', whenJokesFail: '더 구체적인 예시를 들어 설명합니다.' }
+      },
+      {
+        dimension: 'TF',
+        letterA: { letter: 'T', expression: '논리적 분석을 바탕으로 비판합니다.', reception: '잘 구조화된 풍자에 감탄합니다.', whenJokesFail: '논리를 점검하고 수정합니다.' },
+        letterB: { letter: 'F', expression: '사람들의 고통과 모순을 대변합니다.', reception: '공감이 담긴 비평에 반응합니다.', whenJokesFail: '감정적 연결을 강화합니다.' }
+      },
+      {
+        dimension: 'JP',
+        letterA: { letter: 'J', expression: '체계적으로 메시지를 구성합니다.', reception: '완성도 높은 콘텐츠를 선호합니다.', whenJokesFail: '구조를 조정하며 완성도를 높입니다.' },
+        letterB: { letter: 'P', expression: '시사적인 이슈에 빠르게 반응합니다.', reception: '시의적절한 풍자를 즐깁니다.', whenJokesFail: '새로운 이슈로 빠르게 전환합니다.' }
+      }
     ]
   },
   OBPB: {
@@ -305,6 +734,46 @@ export const gagResults: Record<string, GagResult> = {
       "새로움이 줄면 피로가 쌓여요",
       "긴 호흡에선 늘어질 수 있어요",
       "간결한 메시지 전달은 약할 수 있어요",
+    ],
+    deepSummary: "컨셉 광대는 비주얼 코미디의 장인입니다. 의상, 소품, 효과음, 조명까지 - 보이는 모든 것이 웃음의 재료입니다. '이거 찍으려고 얼마나 준비했어?' 하는 그 정성과 노력이 웃음으로 전환되는 것을 알고, 기꺼이 그 수고를 감당합니다.\n\n준비된 연출을 중시하기에, 현장에서 즉흥적으로 뭔가를 만들기보다는 미리 기획하고 세팅하는 과정을 거칩니다. 촬영 전 체크리스트가 있고, 소품 하나에도 의미를 부여합니다.",
+    humorPhilosophy: "그림이 웃기면 말이 필요 없다. 눈에 보이는 것만으로 폭소를 터뜨려라.",
+    signatureTechniques: [
+      "비주얼 세팅: 보는 순간 웃긴 화면 구성",
+      "소품 코미디: 물건 하나로 상황을 전환",
+      "코스튬 플레이: 의상과 분장으로 캐릭터 완성",
+      "B급 미학: 일부러 조악하게 만들어 웃음 유발"
+    ],
+    socialDynamics: {
+      inGroups: "분장하거나 역할극을 하며 분위기를 띄웁니다. 준비물을 가져와서 갑자기 뭔가를 보여주는 것을 좋아합니다.",
+      oneOnOne: "재미있는 물건이나 사진을 보여주며 웃음을 나눕니다. 시각적 재미를 공유하는 것을 좋아합니다.",
+      asAudience: "비주얼이 강한 콘텐츠에 잘 반응합니다. 세팅의 정성과 디테일을 알아보고 감탄합니다."
+    },
+    growthTips: [
+      "말 유머와의 조화도 시도해보세요. 비주얼과 버벌이 합쳐지면 더 강력해요.",
+      "준비 티가 너무 나면 오히려 병맛이 깨질 수 있어요. 자연스러움도 연구해보세요.",
+      "새로운 소재와 스타일을 계속 개발하세요. 같은 콘셉트만 반복하면 피로가 쌓여요."
+    ],
+    mbtiCorrelations: [
+      {
+        dimension: 'EI',
+        letterA: { letter: 'E', expression: '무대 위에서 에너지 넘치는 퍼포먼스를 보여줍니다.', reception: '관객의 환호에서 에너지를 얻습니다.', whenJokesFail: '더 큰 비주얼로 관심을 끕니다.' },
+        letterB: { letter: 'I', expression: '영상이나 사진으로 콘텐츠를 보여줍니다.', reception: '온라인 반응을 선호합니다.', whenJokesFail: '혼자 다음 콘텐츠를 준비합니다.' }
+      },
+      {
+        dimension: 'NS',
+        letterA: { letter: 'N', expression: '기발하고 새로운 콘셉트를 개발합니다.', reception: '창의적인 아이디어를 즐깁니다.', whenJokesFail: '완전히 새로운 방향을 시도합니다.' },
+        letterB: { letter: 'S', expression: '검증된 포맷과 클래식한 연출을 활용합니다.', reception: '익숙하면서 새로운 변주를 선호합니다.', whenJokesFail: '더 명확한 비주얼로 재시도합니다.' }
+      },
+      {
+        dimension: 'TF',
+        letterA: { letter: 'T', expression: '효율적인 세팅과 최적의 타이밍을 계산합니다.', reception: '기술적 완성도에 감탄합니다.', whenJokesFail: '무엇이 잘못됐는지 분석합니다.' },
+        letterB: { letter: 'F', expression: '보는 사람이 기분 좋아지는 콘텐츠를 만듭니다.', reception: '따뜻한 반응에 보람을 느낍니다.', whenJokesFail: '불편해진 사람이 없는지 확인합니다.' }
+      },
+      {
+        dimension: 'JP',
+        letterA: { letter: 'J', expression: '철저하게 기획하고 체크리스트를 따릅니다.', reception: '계획대로 진행되는 것을 좋아합니다.', whenJokesFail: '계획을 조정하며 재시도합니다.' },
+        letterB: { letter: 'P', expression: '영감이 오면 바로 실행합니다.', reception: '즉흥적인 아이디어를 즐깁니다.', whenJokesFail: '새로운 아이디어로 빠르게 전환합니다.' }
+      }
     ]
   },
   OBPD: {
@@ -329,6 +798,46 @@ export const gagResults: Record<string, GagResult> = {
       "균형·연결 중심 파트너와 리듬이 어긋나요",
       "밝은 톤을 기대하는 관객에겐 무거울 수 있어요",
       "반전이 예상되면 힘이 줄어요",
+    ],
+    deepSummary: "병맛 광대는 감정의 롤러코스터를 설계하는 사람입니다. 웃기다가 갑자기 먹먹하고, 슬프다가 갑자기 황당하고, 진지하다가 갑자기 터지는 - 그 감정의 급격한 전환에서 묘한 쾌감을 만들어냅니다. '웃어야 하나 울어야 하나' 하는 그 혼란스러운 순간이 바로 이들이 노리는 지점입니다.\n\n준비된 연출과 감정의 조합입니다. 어디서 감정을 올리고 어디서 비틀 것인지를 미리 설계하고, 시청각 연출로 그 효과를 극대화합니다.",
+    humorPhilosophy: "웃음과 눈물은 종이 한 장 차이다. 그 경계에서 가장 강렬한 감정이 터진다.",
+    signatureTechniques: [
+      "감정 롤러코스터: 웃음과 감동 사이를 급격히 전환",
+      "연출된 반전: 예상을 비트는 감정 전개",
+      "시청각 감정 연출: 음악, 조명, 표정의 조화",
+      "먹먹한 병맛: 웃긴데 슬프고 슬픈데 웃긴 묘한 감정"
+    ],
+    socialDynamics: {
+      inGroups: "분위기를 극적으로 전환하는 역할을 합니다. 웃기다가 갑자기 진지해지거나, 진지하다가 갑자기 웃기는 순간을 만듭니다.",
+      oneOnOne: "감정적으로 깊은 대화를 좋아하며, 함께 영화를 보거나 음악을 들으며 감정을 나누는 것을 좋아합니다.",
+      asAudience: "감정선이 있는 콘텐츠에 깊이 몰입합니다. 예상을 뒤엎는 전개에 강하게 반응합니다."
+    },
+    growthTips: [
+      "감정 연출의 강도를 조절해보세요. 과하면 오히려 역효과가 날 수 있어요.",
+      "가벼운 웃음도 가치가 있어요. 모든 유머에 깊은 감정이 필요한 건 아니에요.",
+      "반전의 타이밍을 다양하게 시도해보세요. 예측되면 힘이 빠져요."
+    ],
+    mbtiCorrelations: [
+      {
+        dimension: 'EI',
+        letterA: { letter: 'E', expression: '무대 위에서 감정을 크게 표현하며 관객을 휘어잡습니다.', reception: '관객의 감정적 반응에서 에너지를 얻습니다.', whenJokesFail: '더 강렬한 감정으로 분위기를 만회합니다.' },
+        letterB: { letter: 'I', expression: '영상이나 글로 감정을 전달합니다.', reception: '깊이 있는 소수의 반응을 선호합니다.', whenJokesFail: '혼자 감정을 정리하며 다음을 준비합니다.' }
+      },
+      {
+        dimension: 'NS',
+        letterA: { letter: 'N', expression: '추상적인 감정과 상징을 활용합니다.', reception: '숨겨진 의미를 찾아내며 즐깁니다.', whenJokesFail: '다른 해석의 가능성을 찾아봅니다.' },
+        letterB: { letter: 'S', expression: '구체적인 상황과 경험에 기반한 감정을 표현합니다.', reception: '현실적이고 공감 가능한 감정을 선호합니다.', whenJokesFail: '더 구체적인 상황으로 재설명합니다.' }
+      },
+      {
+        dimension: 'TF',
+        letterA: { letter: 'T', expression: '감정의 구조와 타이밍을 계산해서 설계합니다.', reception: '잘 구성된 감정 전개에 감탄합니다.', whenJokesFail: '구조를 분석하고 수정합니다.' },
+        letterB: { letter: 'F', expression: '진심 어린 감정을 그대로 보여줍니다.', reception: '진정성 있는 감정에 깊이 반응합니다.', whenJokesFail: '감정적 연결을 재시도합니다.' }
+      },
+      {
+        dimension: 'JP',
+        letterA: { letter: 'J', expression: '감정의 흐름을 체계적으로 기획합니다.', reception: '예상대로 전개되는 것을 좋아합니다.', whenJokesFail: '계획을 조정하며 완성도를 높입니다.' },
+        letterB: { letter: 'P', expression: '감정에 따라 즉흥적으로 전개합니다.', reception: '예상치 못한 감정 전환을 즐깁니다.', whenJokesFail: '자연스럽게 다른 방향으로 전환합니다.' }
+      }
     ]
   },
 
@@ -355,6 +864,46 @@ export const gagResults: Record<string, GagResult> = {
       "무거운 정서와는 잘 안 맞아요",
       "긴 호흡에서는 힘이 빠질 수 있어요",
       "설명이 필요한 상황에선 답답해질 수 있어요",
+    ],
+    deepSummary: "천진난만 꽃밭은 순수한 에너지의 폭탄입니다. 아무 맥락 없이 튀어나오는 한마디, '지금 이걸 왜?' 싶은 타이밍, 논리는 없지만 어쩐지 웃기는 그 순간들을 만들어냅니다. 계산이 아닌 본능, 구조가 아닌 감각으로 웃음을 터뜨립니다.\n\n즉흥적이고 밝은 에너지가 특징입니다. 복잡한 생각 없이 느낀 대로 말하고, 그 솔직함이 오히려 웃음이 됩니다. 분위기가 처지면 갑자기 한마디로 띄우고, 긴장되면 엉뚱한 소리로 풀어줍니다.",
+    humorPhilosophy: "생각하면 웃음이 늦는다. 느끼는 대로 말해라, 그게 제일 웃기다.",
+    signatureTechniques: [
+      "타이밍 폭탄: 예상치 못한 순간에 터지는 한마디",
+      "맥락 무시: 논리 없이 직관으로 던지기",
+      "분위기 전환: 무거운 공기를 한 방에 띄우기",
+      "순수 돌발: 계산 없는 솔직한 반응"
+    ],
+    socialDynamics: {
+      inGroups: "분위기를 띄우는 바이브 메이커 역할을 합니다. 조용해지면 갑자기 뭔가를 던져서 웃음을 만들고, 모두가 편하게 웃을 수 있는 공기를 만듭니다.",
+      oneOnOne: "친한 사람과는 더 자유롭게 엉뚱한 이야기를 합니다. 진지한 대화보다 가볍고 즐거운 수다를 좋아합니다.",
+      asAudience: "밝고 즐거운 콘텐츠에 잘 반응합니다. 복잡한 것보다 바로 웃기는 것을 선호합니다."
+    },
+    growthTips: [
+      "가끔은 깊이 있는 유머도 시도해보세요. 가벼움만으로는 한계가 있어요.",
+      "타이밍뿐 아니라 내용의 재미도 연구해보세요.",
+      "무거운 상황에서도 빛날 수 있는 유머를 개발해보세요."
+    ],
+    mbtiCorrelations: [
+      {
+        dimension: 'EI',
+        letterA: { letter: 'E', expression: '에너지 넘치게 분위기를 띄우며, 많은 사람 앞에서 빛납니다.', reception: '활발한 호응에 더 신이 납니다.', whenJokesFail: '바로 다른 시도로 분위기를 유지합니다.' },
+        letterB: { letter: 'I', expression: '친한 사람들 사이에서 돌발 멘트를 던집니다.', reception: '소수의 친밀한 반응을 선호합니다.', whenJokesFail: '잠시 조용해졌다가 다시 시도합니다.' }
+      },
+      {
+        dimension: 'NS',
+        letterA: { letter: 'N', expression: '엉뚱한 연결과 비유로 웃음을 만듭니다.', reception: '기발한 발상을 즐깁니다.', whenJokesFail: '더 엉뚱한 방향으로 전환합니다.' },
+        letterB: { letter: 'S', expression: '눈앞에 보이는 것에 즉각 반응합니다.', reception: '직접적인 유머를 선호합니다.', whenJokesFail: '다른 눈에 보이는 것으로 전환합니다.' }
+      },
+      {
+        dimension: 'TF',
+        letterA: { letter: 'T', expression: '역설과 논리 오류를 장난스럽게 활용합니다.', reception: '똑똑한 병맛을 즐깁니다.', whenJokesFail: '왜 안 먹혔는지 생각해봅니다.' },
+        letterB: { letter: 'F', expression: '따뜻하고 순수한 에너지를 발산합니다.', reception: '함께 웃는 것 자체를 좋아합니다.', whenJokesFail: '분위기를 신경쓰며 조정합니다.' }
+      },
+      {
+        dimension: 'JP',
+        letterA: { letter: 'J', expression: '타이밍을 계산하지만 내용은 즉흥입니다.', reception: '적절한 순간을 노립니다.', whenJokesFail: '다른 타이밍을 찾습니다.' },
+        letterB: { letter: 'P', expression: '완전한 즉흥으로 흘러가는 대로 반응합니다.', reception: '예측 불가능한 전개를 즐깁니다.', whenJokesFail: '자연스럽게 다른 것으로 넘어갑니다.' }
+      }
     ]
   },
   IBVD: {
@@ -379,6 +928,46 @@ export const gagResults: Record<string, GagResult> = {
       "감정 기반 리액션과 충돌해요",
       "메시지가 오독될 위험이 있어요",
       "긴 흐름 유지가 어려울 수 있어요",
+    ],
+    deepSummary: "엉뚱한 맥커터는 혼돈 속의 통찰자입니다. 말이 안 되는 것 같은데 갑자기 핵심을 찌르고, 병맛인 줄 알았는데 날카로운 풍자고, '뭐지?' 하다가 '아 맞네!' 하게 되는 - 그 충격과 쾌감을 만들어냅니다. 무논리와 논리, 병맛과 풍자 사이를 자유롭게 넘나듭니다.\n\n즉흥적인 돌발과 다크한 관점의 조합입니다. 흐름을 따라가다 갑자기 맥을 끊어버리고, 그 단절 속에서 새로운 의미를 만들어냅니다.",
+    humorPhilosophy: "혼돈 속에 진실이 있다. 말이 안 되는 것 같을 때 가장 정확한 말이 나온다.",
+    signatureTechniques: [
+      "맥 끊기: 흐름을 갑자기 끊어서 충격 만들기",
+      "혼돈의 통찰: 병맛 속에 숨긴 날카로운 한마디",
+      "반전 공격: 무논리에서 갑자기 핵심 찌르기",
+      "돌발 풍자: 예상치 못한 타이밍의 비판"
+    ],
+    socialDynamics: {
+      inGroups: "흐름을 깨는 역할을 합니다. 모두가 한 방향으로 갈 때 갑자기 다른 시각을 던지고, 그 불협화음에서 웃음이 나옵니다.",
+      oneOnOne: "진지한 대화 중에 갑자기 엉뚱한 말을 해서 긴장을 풀거나, 가벼운 대화 중에 갑자기 날카로운 관찰을 던집니다.",
+      asAudience: "예측 불가능한 콘텐츠를 좋아하며, 날카로운 풍자에 반응합니다. 단순한 유머보다 층위가 있는 것을 선호합니다."
+    },
+    growthTips: [
+      "맥 끊기의 강도를 조절해보세요. 너무 자주 끊으면 피로가 쌓여요.",
+      "감정적인 연결도 시도해보세요. 논리만으로는 닿지 않는 영역이 있어요.",
+      "긴 흐름 유지도 연습해보세요. 돌발만으로는 한계가 있어요."
+    ],
+    mbtiCorrelations: [
+      {
+        dimension: 'EI',
+        letterA: { letter: 'E', expression: '공개적으로 맥을 끊으며 관심을 끕니다.', reception: '다양한 반응을 즐깁니다.', whenJokesFail: '다른 방향으로 재도전합니다.' },
+        letterB: { letter: 'I', expression: '조용히 관찰하다 정확한 순간에 끼어듭니다.', reception: '알아주는 소수의 반응을 선호합니다.', whenJokesFail: '다음 기회를 기다립니다.' }
+      },
+      {
+        dimension: 'NS',
+        letterA: { letter: 'N', expression: '추상적인 연결을 끊어 새로운 의미를 만듭니다.', reception: '복잡한 층위를 즐깁니다.', whenJokesFail: '더 큰 맥락으로 연결합니다.' },
+        letterB: { letter: 'S', expression: '눈앞의 상황을 직접적으로 비틉니다.', reception: '명확한 전환을 선호합니다.', whenJokesFail: '더 구체적인 포인트를 찾습니다.' }
+      },
+      {
+        dimension: 'TF',
+        letterA: { letter: 'T', expression: '논리적 허점을 찌르며 맥을 끊습니다.', reception: '날카로운 분석을 즐깁니다.', whenJokesFail: '논리를 점검합니다.' },
+        letterB: { letter: 'F', expression: '감정의 위선이나 가식을 지적합니다.', reception: '진정성 있는 비판에 반응합니다.', whenJokesFail: '상대방의 기분을 살핍니다.' }
+      },
+      {
+        dimension: 'JP',
+        letterA: { letter: 'J', expression: '정확한 타이밍을 계산해서 끼어듭니다.', reception: '구조화된 혼돈을 좋아합니다.', whenJokesFail: '다른 타이밍을 찾습니다.' },
+        letterB: { letter: 'P', expression: '완전히 즉흥적으로 맥을 끊습니다.', reception: '예측 불가능한 전개를 즐깁니다.', whenJokesFail: '자연스럽게 다른 방향으로 흘러갑니다.' }
+      }
     ]
   },
   IBPB: {
@@ -403,6 +992,46 @@ export const gagResults: Record<string, GagResult> = {
       "말유머와 리듬이 어긋날 수 있어요",
       "정제감이 낮으면 산만해 보여요",
       "메시지 전달은 약할 수 있어요",
+    ],
+    deepSummary: "괴짜 몸개그 장인은 신체의 언어로 말하는 사람입니다. 대사 없이, 설명 없이, 오직 몸짓과 표정과 동작만으로 웃음을 만들어냅니다. 갑자기 이상한 동작, 예상치 못한 리액션, 물리적 과장 - 이 모든 것이 이들의 무기입니다.\n\n즉흥적이고 밝은 에너지가 특징입니다. 상황을 보고 바로 몸으로 반응하고, 그 신선함과 즉각성이 웃음을 만듭니다. 공간 전체를 활용하고, 온몸을 던지는 퍼포먼스를 합니다.",
+    humorPhilosophy: "말은 생각이 필요하지만 몸은 본능이다. 본능이 가장 재미있다.",
+    signatureTechniques: [
+      "신체 과장: 일상적 동작을 극단적으로 크게 표현",
+      "돌발 퍼포먼스: 예상치 못한 순간에 터지는 몸개그",
+      "공간 활용: 주변 환경을 코미디 도구로 사용",
+      "리액션 극대화: 온몸으로 반응하는 임팩트"
+    ],
+    socialDynamics: {
+      inGroups: "분위기를 띄우는 에너자이저 역할을 합니다. 말없이 동작만으로 웃음을 만들고, 다른 사람들의 개그에 온몸으로 반응합니다.",
+      oneOnOne: "장난기 넘치는 스킨십과 표정으로 소통합니다. 말보다 행동으로 친밀감을 표현합니다.",
+      asAudience: "시각적 퍼포먼스에 강하게 반응합니다. 몸으로 하는 개그를 보면 따라하고 싶어집니다."
+    },
+    growthTips: [
+      "말 유머와의 조화도 시도해보세요. 몸과 말이 합쳐지면 더 강력해요.",
+      "새로운 동작과 퍼포먼스를 계속 개발하세요. 같은 개그는 빨리 닳아요.",
+      "타이밍의 완급을 연습하세요. 계속 격렬하면 오히려 임팩트가 줄어요."
+    ],
+    mbtiCorrelations: [
+      {
+        dimension: 'EI',
+        letterA: { letter: 'E', expression: '무대 전체를 활용해 에너지 넘치게 퍼포먼스합니다.', reception: '관객의 환호에서 에너지를 얻습니다.', whenJokesFail: '더 큰 동작으로 관심을 끕니다.' },
+        letterB: { letter: 'I', expression: '친한 사람들 앞에서 장난스러운 동작을 보여줍니다.', reception: '소수의 친밀한 반응을 선호합니다.', whenJokesFail: '잠시 멈췄다가 다른 시도를 합니다.' }
+      },
+      {
+        dimension: 'NS',
+        letterA: { letter: 'N', expression: '추상적인 개념을 몸으로 시각화합니다.', reception: '기발한 표현을 즐깁니다.', whenJokesFail: '다른 표현 방식을 찾습니다.' },
+        letterB: { letter: 'S', expression: '눈앞의 상황에 즉각적으로 몸으로 반응합니다.', reception: '직접적인 신체 코미디를 선호합니다.', whenJokesFail: '다른 동작으로 바로 전환합니다.' }
+      },
+      {
+        dimension: 'TF',
+        letterA: { letter: 'T', expression: '물리적 타이밍과 동작을 계산합니다.', reception: '정확한 물리 코미디에 감탄합니다.', whenJokesFail: '무엇이 잘못됐는지 분석합니다.' },
+        letterB: { letter: 'F', expression: '감정을 온몸으로 표현합니다.', reception: '따뜻한 에너지를 발산하며 함께 즐깁니다.', whenJokesFail: '분위기를 살피며 조정합니다.' }
+      },
+      {
+        dimension: 'JP',
+        letterA: { letter: 'J', expression: '특정 동작을 연습해서 준비해둡니다.', reception: '완성도 높은 퍼포먼스를 좋아합니다.', whenJokesFail: '다음에 더 연습합니다.' },
+        letterB: { letter: 'P', expression: '완전히 즉흥적으로 몸이 가는 대로 움직입니다.', reception: '예측 불가능한 동작을 즐깁니다.', whenJokesFail: '자연스럽게 다른 동작으로 넘어갑니다.' }
+      }
     ]
   },
   IBPD: {
@@ -427,6 +1056,46 @@ export const gagResults: Record<string, GagResult> = {
       "자극이 과하면 금방 피로해져요",
       "과유불급이 잦으면 매력이 줄어요",
       "긴 흐름 유지는 어려울 수 있어요",
+    ],
+    deepSummary: "무표정 광대는 '무'에서 '폭발'로 가는 극적 대비의 달인입니다. 아무렇지도 않은 얼굴, 차분한 톤, 그러다 갑자기 터지는 감정과 몸짓. 이 예측 불가능한 전환이 엄청난 웃음을 만들어냅니다.\n\n논리를 무시하고, 맥락을 무시하고, 그냥 터집니다. 감정, 병맛, 풍자, 퍼포먼스가 한꺼번에 쏟아지는 '정신없지만 웃긴' 상태를 즐깁니다. 장도연 스타일의 급발진 감성개그가 대표적입니다.",
+    humorPhilosophy: "무표정은 폭발 전의 정적이다. 정적이 깊을수록 폭발은 더 크다.",
+    signatureTechniques: [
+      "급발진: 무표정에서 갑자기 감정 폭발",
+      "대비 활용: 차분함과 광기의 극적 전환",
+      "규칙 파괴: 예상 가능한 흐름을 의도적으로 박살",
+      "감정 증폭: 작은 것을 거대한 감정으로 표현"
+    ],
+    socialDynamics: {
+      inGroups: "처음엔 조용히 있다가 갑자기 터져서 모두를 놀라게 합니다. 예측 불가능함이 그룹의 재미입니다.",
+      oneOnOne: "진지하게 대화하다 갑자기 웃기는 행동을 합니다. 친밀한 관계에서 더 자주 터집니다.",
+      asAudience: "무표정으로 보다가 예상 못한 장면에서 크게 반응합니다. 반응 자체가 또 하나의 개그가 됩니다."
+    },
+    growthTips: [
+      "폭발의 타이밍을 연습하세요. 너무 자주 터지면 효과가 줄어요.",
+      "맥락과 서사도 조금씩 고려해보세요. 무조건 터지는 것보다 이야기 안에서 터지는 게 더 강력해요.",
+      "무표정과 폭발 사이의 그라데이션도 시도해보세요. 다양한 강도가 있으면 더 풍부해져요."
+    ],
+    mbtiCorrelations: [
+      {
+        dimension: 'EI',
+        letterA: { letter: 'E', expression: '모든 사람 앞에서 급발진 퍼포먼스를 터뜨립니다.', reception: '넓은 청중의 반응에서 에너지를 얻습니다.', whenJokesFail: '더 강하게 터뜨려서 반응을 끌어냅니다.' },
+        letterB: { letter: 'I', expression: '친한 사람들 앞에서만 진짜 모습을 보여줍니다.', reception: '소수의 깊은 반응을 선호합니다.', whenJokesFail: '잠시 무표정으로 돌아가 다음 기회를 노립니다.' }
+      },
+      {
+        dimension: 'NS',
+        letterA: { letter: 'N', expression: '추상적인 감정을 갑자기 폭발시킵니다.', reception: '예상 못한 전개를 즐깁니다.', whenJokesFail: '다른 차원으로 연결합니다.' },
+        letterB: { letter: 'S', expression: '눈앞의 상황에 즉각적으로 급발진합니다.', reception: '직접적인 감정 표현을 선호합니다.', whenJokesFail: '다른 구체적 상황으로 전환합니다.' }
+      },
+      {
+        dimension: 'TF',
+        letterA: { letter: 'T', expression: '감정 폭발도 계산된 타이밍에 합니다.', reception: '효과적인 대비에 감탄합니다.', whenJokesFail: '왜 안 먹혔는지 분석합니다.' },
+        letterB: { letter: 'F', expression: '진짜 감정이 터지면서 웃음이 됩니다.', reception: '진정성 있는 감정 폭발에 공감합니다.', whenJokesFail: '분위기를 살피며 조정합니다.' }
+      },
+      {
+        dimension: 'JP',
+        letterA: { letter: 'J', expression: '특정 순간에 터질 준비를 해둡니다.', reception: '완성도 높은 대비를 좋아합니다.', whenJokesFail: '다음에 더 잘 준비합니다.' },
+        letterB: { letter: 'P', expression: '언제 터질지 자기도 모릅니다.', reception: '완전한 즉흥성을 즐깁니다.', whenJokesFail: '그냥 다른 방향으로 흘러갑니다.' }
+      }
     ]
   },
 };
