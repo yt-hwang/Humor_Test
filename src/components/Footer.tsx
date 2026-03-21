@@ -10,6 +10,7 @@ export default function Footer() {
   const links = [
     { href: '/about', key: 'footerAbout' as const },
     { href: '/theory', key: 'footerTheory' as const },
+    { href: '/faq', key: 'footerFaq' as const },
     { href: '/ads', key: 'footerAds' as const },
     { href: '/terms', key: 'footerTerms' as const },
     { href: '/privacy', key: 'footerPrivacy' as const },

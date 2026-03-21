@@ -66,6 +66,7 @@ const ui = {
   typesHeader: { ko: "개그유형 전체보기", en: "All Humor Types" },
   backToResults: { ko: "결과로 돌아가기", en: "Back to Results" },
   preview: { ko: "빠른 미리보기 →", en: "Quick preview →" },
+  viewDetail: { ko: "상세 보기 →", en: "View details →" },
   close: { ko: "닫기", en: "Close" },
 
   // Compatibility labels
@@ -93,6 +94,7 @@ const ui = {
   // Footer
   footerAbout: { ko: "서비스소개", en: "About" },
   footerTheory: { ko: "개그코드 이론", en: "Theory" },
+  footerFaq: { ko: "자주 묻는 질문", en: "FAQ" },
   footerAds: { ko: "광고안내", en: "Ads" },
   footerTerms: { ko: "이용약관", en: "Terms" },
   footerPrivacy: { ko: "개인정보처리방침", en: "Privacy" },

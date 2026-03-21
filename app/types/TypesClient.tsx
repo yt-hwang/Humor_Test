@@ -2,11 +2,10 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { gagResults } from "../../src/data/results";
 import { gagResultsEn } from "../../src/data/results.en";
 import { recordVisit } from "../../src/utils/analytics";
-import TypeDetailModal from "../../src/components/TypeDetailModal";
 import { useLang } from "../../src/context/LangContext";
 import { t } from "../../src/data/ui";
 import Footer from "../../src/components/Footer";
@@ -26,8 +25,6 @@ export default function TypesClient() {
   useEffect(() => {
     recordVisit('/types');
   }, []);
-
-  const [openCode, setOpenCode] = useState<string | null>(null);
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 relative overflow-hidden p-4">
@@ -64,8 +61,8 @@ export default function TypesClient() {
                   if (!typeData) return null;
 
                   return (
-                    <div key={typeCode} className="group cursor-pointer" onClick={() => setOpenCode(typeCode)}>
-                      <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 border border-white/30 hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer">
+                    <Link key={typeCode} href={`/types/${typeCode}?lang=${lang}`} className="group cursor-pointer">
+                      <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 border border-white/30 hover:shadow-lg transform hover:scale-105 transition-all duration-300 cursor-pointer h-full">
                         {/* Type code */}
                         <div className="text-center mb-3">
                           <div className={`inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r ${category.color} text-white rounded-xl font-mono font-bold text-lg mb-2 group-hover:scale-110 transition-transform duration-300`}>
@@ -74,23 +71,23 @@ export default function TypesClient() {
                         </div>
 
                         {/* Nickname */}
-                        <h3 className="text-lg font-bold text-gray-800 text-center mb-2 group-hover:text-blue-600 transition-colors">
+                        <h3 className="text-lg font-bold text-gray-800 text-center mb-2 group-hover:text-blue-600 transition-colors break-keep">
                           {typeData.nickname}
                         </h3>
 
                         {/* Summary */}
-                        <p className="text-sm text-gray-600 text-center leading-relaxed line-clamp-3">
+                        <p className="text-sm text-gray-600 text-center leading-relaxed line-clamp-3 break-keep">
                           {typeData.summary}
                         </p>
 
                         {/* Click hint */}
                         <div className="mt-3 text-center">
                           <span className="text-xs text-blue-500 font-medium group-hover:underline">
-                            {t('preview', lang)}
+                            {t('viewDetail', lang)}
                           </span>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   );
                 })}
               </div>
@@ -122,9 +119,6 @@ export default function TypesClient() {
 
         <Footer />
       </div>
-
-      {/* Modal */}
-      <TypeDetailModal open={!!openCode} onClose={() => setOpenCode(null)} typeCode={openCode || ''} />
     </main>
   );
 }
