@@ -88,7 +88,7 @@ export const humorMBTICoaching3: HumorMBTICoaching[] = [
     mbtiType: "ENTP",
     comboName: "논쟁적 풍자꾼",
     strengths: [
-      "말장난과 논리를 결합해 재치 있는 사회 비판을 즉석에서 만듭니다",
+      "말장난과 논리를 결합해 재치 있는 사회 비판을 설계합니다",
       "민감한 주제도 유머로 풀어내 사람들이 생각하게 만듭니다",
       "여러 관점을 오가며 다층적인 풍자를 구사합니다"
     ],
@@ -331,7 +331,7 @@ export const humorMBTICoaching3: HumorMBTICoaching[] = [
     comboName: "액션형 풍자가",
     strengths: [
       "과감한 전달력으로 블랙유머의 임팩트를 극대화합니다",
-      "현장의 분위기를 읽고 즉석에서 날카로운 풍자를 던집니다",
+      "현장의 분위기를 읽고 준비된 풍자를 최적의 타이밍에 던집니다",
       "대담하게 금기를 건드리면서도 웃음을 이끌어냅니다"
     ],
     watchOut: [
@@ -443,11 +443,11 @@ export const humorMBTICoaching3: HumorMBTICoaching[] = [
   {
     humorCode: "ONPD",
     mbtiType: "ENTP",
-    comboName: "즉흥 무표정 마스터",
+    comboName: "계산된 무표정 마스터",
     strengths: [
-      "순발력 있는 패러디를 무표정으로 던져 의외성을 극대화합니다",
+      "치밀하게 준비된 패러디를 무표정으로 던져 의외성을 극대화합니다",
       "논쟁적 상황도 아이러니로 비틀어 웃음을 만듭니다",
-      "상황을 읽고 즉석에서 무표정 캐릭터를 만들어냅니다"
+      "상황을 분석하고 설계된 무표정 캐릭터를 완벽하게 구현합니다"
     ],
     watchOut: [
       "말이 많아지면 무표정의 효과가 사라져요",
@@ -689,7 +689,7 @@ export const humorMBTICoaching3: HumorMBTICoaching[] = [
     strengths: [
       "역동적인 패러디를 무표정으로 더욱 강렬하게 만듭니다",
       "대담한 아이러니로 청중을 사로잡습니다",
-      "현장의 흐름을 읽고 즉석 무표정 연기를 펼칩니다"
+      "현장의 흐름을 읽고 준비된 무표정 연기를 정확한 타이밍에 펼칩니다"
     ],
     watchOut: [
       "에너지가 넘쳐 무표정 유지가 어려울 수 있어요",
@@ -1046,7 +1046,7 @@ export const humorMBTICoaching3: HumorMBTICoaching[] = [
     strengths: [
       "역동적인 요소로 몰입감 있는 다크 세계관을 만듭니다",
       "대담한 시도로 충격적인 풍자를 연출합니다",
-      "현장 반응에 따라 세계관을 즉석에서 조정합니다"
+      "현장 반응을 분석해 준비된 세계관의 밀도를 조절합니다"
     ],
     watchOut: [
       "준비형 컨셉에 즉흥형 성격이 충돌할 수 있어요",
@@ -1402,7 +1402,7 @@ export const humorMBTICoaching3: HumorMBTICoaching[] = [
     comboName: "대담한 충격 퍼포머",
     strengths: [
       "과감한 행동력으로 폭발적인 반전을 만듭니다",
-      "현장 반응에 따라 즉석에서 퍼포먼스를 조정합니다",
+      "현장 반응을 보며 준비된 퍼포먼스의 강도를 조절합니다",
       "역동적인 에너지로 청중을 완전히 사로잡습니다"
     ],
     watchOut: [

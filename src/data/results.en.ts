@@ -625,7 +625,7 @@ export const gagResultsEn: Record<string, GagResult> = {
     bestMatch: "ONVD",
     worstMatch: "IBVB",
     bestMatchReason: "Two different formats pursuing the same sharp message. Whether on stage or online, this pairing creates intellectual, cutting synergy that hits twice as hard.",
-    worstMatchReason: "The Chaos Cherub's innocent, bubbly reactions can feel baffling to someone who takes dark humor seriously. The tonal gap is enormous.",
+    worstMatchReason: "The Chaos Cherub's innocent, bubbly reactions can feel baffling to someone who crafts dark humor with purpose and message. The tonal gap is enormous.",
     strengths: [
       "Hides sharp social critique inside absurdist setups",
       "Designs double meanings and irony with precision",
@@ -757,7 +757,7 @@ export const gagResultsEn: Record<string, GagResult> = {
     ],
     bestMatch: "INPD",
     worstMatch: "INVB",
-    bestMatchReason: "They share an emotional wavelength. Both love humor with genuine feeling, and both deconstruct that feeling into comedy. Audience immersion is maximized.",
+    bestMatchReason: "Both share Physical(P) and Dark(D) traits. They channel dark humor through emotional expression, deconstructing feeling into comedy. Audience immersion is maximized.",
     worstMatchReason: "The Crowd Captain's rhythm-and-flow approach can find the Absurd Clown's emotional chaos disorienting and hard to manage.",
     strengths: [
       "Creates uncanny pleasure from emotional and absurd collisions",

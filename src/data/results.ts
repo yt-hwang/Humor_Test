@@ -211,7 +211,7 @@ export const gagResults: Record<string, GagResult> = {
     weaknesses: [
       "감정의 깊이나 세계관 파괴력은 약할 수 있어요",
       "너무 안전하면 밋밋하게 느껴져요",
-      "독자 캐릭터 각인이 약해질 수 있어요",
+      "자기만의 캐릭터 각인이 약해질 수 있어요",
       "강한 메시지와의 결합이 어렵게 느껴질 수 있어요",
       "긴장감 있는 전환엔 소극적일 수 있어요",
     ],
@@ -330,7 +330,7 @@ export const gagResults: Record<string, GagResult> = {
     code: "ONVD",
     nickname: "개그 비평가",
     summary: "언어적이고 준비된 구조의 블랙 유머를 선호합니다. 메시지와 논리가 있는 풍자, 직설적인 한 줄로 전환되는 유머에 끌립니다.",
-    examples: ["김경진 블랙풍자식 콩트", "면접에서 이런 질문 나옴"],
+    examples: ["김경진 블랙풍자식 콩트", "면접에서 이런 질문 나옴", "사회 이슈를 논리적으로 풀어내는 직설 토크"],
     bestMatch: "OBVD",
     worstMatch: "INPB",
     bestMatchReason: "둘 다 비판적 유머에 강점이 있어요. 하나는 언어적으로, 다른 하나는 설정적으로 사회를 비트니 깊이와 메시지가 탄탄해져요.",
@@ -398,7 +398,7 @@ export const gagResults: Record<string, GagResult> = {
     bestMatch: "INVB",
     worstMatch: "IBPB",
     bestMatchReason: "패러디 장인이 만든 설정을 국민MC가 잘 리드하면서 설명해주면 관객은 더 쉽게 몰입하게 돼요. 해석자 + 창작자의 조합이에요.",
-    worstMatchReason: "하나는 설정과 풍자에 기반한 연출형, 하나는 감정과 타이밍에 기반한 즉흥형. 코드가 완전히 다르기에 개그 타이밍도 충돌할 수 있어요.",
+    worstMatchReason: "하나는 설정과 풍자에 기반한 연출형, 하나는 즉흥적인 물리적 퍼포먼스에 기반한 몸개그형. 개그의 방향과 리듬이 달라 타이밍 충돌이 잦을 수 있어요.",
     strengths: [
       "현실 모사와 억양 재현이 뛰어나요",
       "캐릭터화와 과장 연출로 몰입을 만들어요",
@@ -458,7 +458,7 @@ export const gagResults: Record<string, GagResult> = {
     code: "INVD",
     nickname: "디스 장인",
     summary: "말은 적지만 핵심을 찌르는 한 마디에 끌려요. 감정보다 관찰력이 앞서는 스타일을 좋아하고, 짧지만 강렬한 풍자에서 쾌감을 느껴요. 직설적이고 냉소적인 유머에서 긴장감과 웃음을 동시에 즐깁니다.",
-    examples: ["사회 풍자형 예능 리액터", "신랄한 시사 밈 코멘터리"],
+    examples: ["사회 풍자형 예능 리액터", "신랄한 시사 밈 코멘터리", "짧지만 핵심을 찌르는 냉소적 한 줄 코멘트"],
     bestMatch: "IBPD",
     worstMatch: "ONPB",
     bestMatchReason: "디스 장인의 날카로운 한 마디와 무표정 광대의 퍼포먼스가 만나면 웃음이 두 배가 돼요. 둘 다 쿨하게 웃기는 스타일이라 찰떡이에요.",
@@ -652,11 +652,11 @@ export const gagResults: Record<string, GagResult> = {
     code: "OBVD",
     nickname: "블랙 스탠드업 코미디언",
     summary: "병맛 설정 안에 현실 비판이 숨어있는 블랙 유머를 좋아해요. 그냥 황당한 게 아니라, 잘 보면 '아 이거 우리 사회 얘기네?' 싶은 유머에서 재미를 느껴요. 웃으면서 생각하게 만드는 스타일이에요.",
-    examples: ["SNL 풍자극", "다크 유토피아류 블랙컨텐츠"],
+    examples: ["SNL 풍자극", "다크 유토피아류 블랙컨텐츠", "황당한 설정 속에 사회 비판이 숨어있는 코미디 스케치"],
     bestMatch: "ONVD",
     worstMatch: "IBVB",
     bestMatchReason: "서로 다른 포맷으로 동일한 메시지를 추구하는 조합입니다. 무대 위에서든 댓글창에서든 지적이고 날카로운 시너지를 만들어요.",
-    worstMatchReason: "블랙 유머를 진지하게 받아들이는 OBVD에게 천진난만한 반응은 당혹스러울 수 있어요. 톤이 완전히 다릅니다.",
+    worstMatchReason: "블랙 유머를 설계하고 메시지를 담는 OBVD에게 천진난만한 반응은 당혹스러울 수 있어요. 톤이 완전히 다릅니다.",
     strengths: [
       "병맛 안에 현실 비판 코드를 숨겨요",
       "이중 해석과 아이러니를 잘 설계해요",
@@ -716,7 +716,7 @@ export const gagResults: Record<string, GagResult> = {
     code: "OBPB",
     nickname: "컨셉 광대",
     summary: "옷, 소품, 효과음까지 다 갖춰놓고 치는 병맛 개그를 좋아해요. '이거 찍으려고 얼마나 준비한 거야ㅋㅋ' 싶은 정성에 웃음이 나고, 비주얼부터 웃긴 기획형 콘텐츠에 잘 반응해요.",
-    examples: ["패러디 유튜버", "B급 개그 콩트 크리에이터"],
+    examples: ["패러디 유튜버", "B급 개그 콩트 크리에이터", "소품·의상까지 갖춘 기획형 병맛 숏폼"],
     bestMatch: "IBPB",
     worstMatch: "ONVD",
     bestMatchReason: "퍼포먼스형 병맛과 즉흥형 병맛의 조합! 하나는 콘셉트를 짜고, 다른 하나는 터뜨립니다. 무대형 유머의 완벽한 파트너예요.",
@@ -726,7 +726,7 @@ export const gagResults: Record<string, GagResult> = {
       "콘셉트 일관성과 완성도가 높아요",
       "무대형 퍼포먼스로 확장하기 쉬워요",
       "그림만으로도 웃음을 만들어요",
-      "준비가 잘 된 병맛을 좋아해요",
+      "기획력과 실행력으로 완성도 높은 콘텐츠를 만들어요",
     ],
     weaknesses: [
       "말유머·분석유머와 리듬이 어긋날 수 있어요",
@@ -780,10 +780,10 @@ export const gagResults: Record<string, GagResult> = {
     code: "OBPD",
     nickname: "병맛 광대",
     summary: "병맛인데 갑자기 감동적이거나, 웃기다가 갑자기 슬픈 유머를 좋아해요. '웃어야 하나 울어야 하나' 싶은 순간에서 묘한 쾌감을 느끼고, 감정을 확 끌어올렸다 내리는 연출에 잘 빠져들어요.",
-    examples: ["슬픈 사연 낭독하다 이상하게 웃기는 형식"],
+    examples: ["슬픈 사연 낭독하다 이상하게 웃기는 형식", "감동 영상인데 갑자기 병맛 전환되는 편집", "눈물과 웃음 사이를 오가는 감성 콩트"],
     bestMatch: "INPD",
     worstMatch: "INVB",
-    bestMatchReason: "감정의 결이 비슷합니다. 둘 다 감정선이 있는 유머를 좋아하고, 그 감정을 개그로 해체해요. 관객의 몰입도가 극대화됩니다.",
+    bestMatchReason: "둘 다 몸개그(P)와 다크(D) 성향을 공유해요. 감정선을 활용한 다크 유머를 좋아하고, 그 감정을 개그로 해체하는 방식이 비슷해서 관객의 몰입도가 극대화됩니다.",
     worstMatchReason: "구조와 리듬을 중시하는 국민MC에겐 감정적 파동 중심의 병맛 광대가 다소 산만하게 느껴질 수 있어요.",
     strengths: [
       "감정선과 병맛의 충돌로 낯선 쾌감을 줘요",
@@ -846,7 +846,7 @@ export const gagResults: Record<string, GagResult> = {
     code: "IBVB",
     nickname: "천진난만 꽃밭",
     summary: "갑자기 튀어나온 말 한마디로 분위기를 터뜨리는 유머를 좋아해요. '지금 이 타이밍에 이걸 말한다고?' 싶은 순간에 빵 터지고, 논리보다 타이밍이 중요하다고 생각해요.",
-    examples: ["노홍철 초기 스타일", "아 이건 말이 안 되잖아요~ 근데 됨ㅋㅋ"],
+    examples: ["노홍철 초기 스타일", "아 이건 말이 안 되잖아요~ 근데 됨ㅋㅋ", "갑자기 튀어나온 엉뚱한 한마디로 분위기 폭발"],
     bestMatch: "ONPB",
     worstMatch: "INPD",
     bestMatchReason: "짤 제조기의 정제된 퍼포먼스에 꽃밭의 해맑은 반응이 더해지면 인터넷에서 바이럴 날 수 있는 조합이죠. 보기만 해도 기분 좋아지는 듀오입니다.",
@@ -910,7 +910,7 @@ export const gagResults: Record<string, GagResult> = {
     code: "IBVD",
     nickname: "엉뚱한 맥커터",
     summary: "병맛이랑 풍자가 마구 섞여서 터지는 혼돈의 유머를 좋아해요. 말이 안 되는 것 같은데 갑자기 핵심을 찌르는 충격이 좋고, '이게 뭔 소리야' 하다가 '아 맞는 말이네' 하게 되는 순간이 매력적이에요.",
-    examples: ["유병재 풍 블랙개그", "갑자기 제정신인가 싶은 웃음"],
+    examples: ["유병재 풍 블랙개그", "갑자기 제정신인가 싶은 웃음", "말이 안 되는 것 같은데 핵심을 찌르는 혼돈의 한마디"],
     bestMatch: "OBVB",
     worstMatch: "INPB",
     bestMatchReason: "꽁트 장인이 만든 세계에 맥커터가 돌발 반응을 넣으면 유머가 예측불가능해집니다. 흐름 있는 설정 + 흐름 깨는 반응 = 웃음폭발.",
@@ -974,7 +974,7 @@ export const gagResults: Record<string, GagResult> = {
     code: "IBPB",
     nickname: "괴짜 몸개그 장인",
     summary: "말 없이 몸으로 웃기는 개그를 좋아해요. 갑자기 이상한 동작을 하거나, 온몸으로 리액션하는 스타일에 빵 터지고, 대사 없이도 뭔지 다 알겠는 몸개그에 잘 반응해요.",
-    examples: ["몸으로 말하는 유튜버", "반응형 밈 제조기"],
+    examples: ["몸으로 말하는 유튜버", "반응형 밈 제조기", "대사 없이 동작만으로 상황을 설명하는 슬랩스틱"],
     bestMatch: "OBPB",
     worstMatch: "INVD",
     bestMatchReason: "병맛 무대 세팅 + 즉흥 몸개그는 '뭘 해도 웃긴' 조합입니다. 하나가 판을 깔고, 다른 하나가 뛰어다녀요.",
@@ -1152,11 +1152,16 @@ export function calculateResult(answers: (number | null)[]): GagResult {
   return gagResults[code] || gagResults["ONVB"]; // 기본값
 }
 
-// 두 코드간 궁합 (같은 축 개수: 0~4)
+// 두 코드간 궁합 (가중치 적용: BD축 불일치 시 추가 감점)
+// BD축(밝음/다크)은 유머의 톤을 결정하는 핵심 축이므로 가중치를 둠
 export function calculateCompatibility(codeA: string, codeB: string): number {
   let matches = 0;
   for (let i = 0; i < 4; i++) {
     if (codeA[i] === codeB[i]) matches++;
+  }
+  // BD축(4번째 글자) 불일치 시 추가 -1 감점 (톤 차이는 궁합에 큰 영향)
+  if (codeA[3] !== codeB[3]) {
+    matches = Math.max(0, matches - 1);
   }
   return matches;
 }
