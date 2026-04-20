@@ -65,6 +65,104 @@ export async function recordVisit(page: string): Promise<void> {
   }
 }
 
+// 실패 재전송용 localStorage 큐 (key, 크기 상한, 재시도 정책)
+const PENDING_RESULT_QUEUE_KEY = 'humor_test_pending_results_v1'
+const PENDING_QUEUE_MAX = 50
+const INSERT_RETRY_ATTEMPTS = 3
+const INSERT_RETRY_BASE_MS = 500
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((r) => setTimeout(r, ms))
+}
+
+function loadPendingQueue(): TestResult[] {
+  if (typeof window === 'undefined') return []
+  try {
+    const raw = localStorage.getItem(PENDING_RESULT_QUEUE_KEY)
+    return raw ? (JSON.parse(raw) as TestResult[]) : []
+  } catch {
+    return []
+  }
+}
+
+function savePendingQueue(queue: TestResult[]): void {
+  if (typeof window === 'undefined') return
+  try {
+    const trimmed = queue.slice(-PENDING_QUEUE_MAX)
+    localStorage.setItem(PENDING_RESULT_QUEUE_KEY, JSON.stringify(trimmed))
+  } catch {
+    // storage full / blocked
+  }
+}
+
+function enqueuePendingResult(record: TestResult): void {
+  const q = loadPendingQueue()
+  q.push(record)
+  savePendingQueue(q)
+}
+
+async function insertTestResultOnce(client: SupabaseClient, record: TestResult): Promise<void> {
+  const { error } = await client.from('test_results').insert([record])
+  if (error) throw new Error(error.message)
+}
+
+async function insertTestResultViaApi(record: TestResult): Promise<void> {
+  const res = await fetch('/api/analytics/result', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(record),
+  })
+  if (!res.ok) {
+    const json = await res.json().catch(() => ({} as unknown))
+    throw new Error((json as { error?: string } | null | undefined)?.error || `API ${res.status}`)
+  }
+}
+
+async function insertWithRetry(
+  record: TestResult,
+  insertFn: (r: TestResult) => Promise<void>
+): Promise<boolean> {
+  for (let i = 0; i < INSERT_RETRY_ATTEMPTS; i++) {
+    try {
+      await insertFn(record)
+      return true
+    } catch (e) {
+      if (i === INSERT_RETRY_ATTEMPTS - 1) {
+        console.error(`[recordTestResult] insert failed after ${INSERT_RETRY_ATTEMPTS} attempts:`, e)
+      }
+      if (i < INSERT_RETRY_ATTEMPTS - 1) {
+        await sleep(INSERT_RETRY_BASE_MS * Math.pow(2, i))
+      }
+    }
+  }
+  return false
+}
+
+// 누적된 실패분을 조용히 재전송 (ResultClient/메인에서 호출)
+export async function flushPendingTestResults(): Promise<void> {
+  if (typeof window === 'undefined') return
+  const queue = loadPendingQueue()
+  if (queue.length === 0) return
+
+  const USE_SERVER = process.env.NEXT_PUBLIC_USE_SERVER_ANALYTICS === '1'
+  let insertFn: (r: TestResult) => Promise<void>
+  if (USE_SERVER) {
+    insertFn = insertTestResultViaApi
+  } else {
+    const { supabase, isSupabaseConfigured } = await import('../lib/supabase')
+    if (!isSupabaseConfigured || !supabase) return
+    const client = supabase as SupabaseClient
+    insertFn = (r) => insertTestResultOnce(client, r)
+  }
+
+  const remaining: TestResult[] = []
+  for (const rec of queue) {
+    const ok = await insertWithRetry(rec, insertFn)
+    if (!ok) remaining.push(rec)
+  }
+  savePendingQueue(remaining)
+}
+
 // 사용자 테스트 결과 기록
 export async function recordTestResult(
   resultType: string,
@@ -82,16 +180,14 @@ export async function recordTestResult(
     const sessionId = getSessionId()
     const timestamp = new Date().toISOString()
 
-  // 선택 입력: 사용자 이름/MBTI (메인에서 저장해 둔 값 사용)
-  let storedUserName: string | null = null
-  let storedUserMbti: string | null = null
-    if (typeof window !== 'undefined') {
-      try {
-        storedUserName = localStorage.getItem('humor_test_user_name')
-        storedUserMbti = localStorage.getItem('humor_test_user_mbti')
-      } catch {
-        // localStorage 접근 안될 때는 무시
-      }
+    // 선택 입력: 사용자 이름/MBTI (메인에서 저장해 둔 값 사용)
+    let storedUserName: string | null = null
+    let storedUserMbti: string | null = null
+    try {
+      storedUserName = localStorage.getItem('humor_test_user_name')
+      storedUserMbti = localStorage.getItem('humor_test_user_mbti')
+    } catch {
+      // localStorage 접근 안될 때는 무시
     }
 
     const testResult: TestResult = {
@@ -100,42 +196,32 @@ export async function recordTestResult(
       result_description: resultDescription,
       session_id: sessionId,
       timestamp,
-    user_name: (extra?.userName ?? storedUserName) || null,
-    user_mbti: (extra?.mbti ?? storedUserMbti) || null,
+      user_name: (extra?.userName ?? storedUserName) || null,
+      user_mbti: (extra?.mbti ?? storedUserMbti) || null,
     }
 
-    // 서버 경유 모드: API 호출
+    let insertFn: ((r: TestResult) => Promise<void>) | null = null
     if (USE_SERVER) {
-      const res = await fetch('/api/analytics/result', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(testResult),
-      })
-      const json: unknown = await res.json().catch(() => ({} as unknown))
-      if (DEBUG) console.log('[recordTestResult] via API ->', res.status, json)
-      if (!res.ok) throw new Error((json as { error?: string } | null | undefined)?.error || `API ${res.status}`)
-      return
+      insertFn = insertTestResultViaApi
+    } else {
+      const { supabase, isSupabaseConfigured } = await import('../lib/supabase')
+      if (!isSupabaseConfigured || !supabase) {
+        console.warn('Supabase not configured; queuing test result for later')
+        enqueuePendingResult(testResult)
+        return
+      }
+      const client: SupabaseClient = supabase as SupabaseClient
+      insertFn = (r) => insertTestResultOnce(client, r)
     }
-
-    const { supabase, isSupabaseConfigured } = await import('../lib/supabase')
-    if (!isSupabaseConfigured || !supabase) {
-      console.warn('Supabase not configured; skipping test result record')
-      return
-    }
-    const client: SupabaseClient = supabase as SupabaseClient
 
     if (DEBUG) console.log('[recordTestResult] inserting to test_results', testResult)
-    const { data, error } = await client
-      .from('test_results')
-      .insert([testResult])
-      .select()
-      .single()
-
-    if (error) {
-      console.error('Error recording test result:', error)
+    const ok = await insertWithRetry(testResult, insertFn)
+    if (!ok) {
+      enqueuePendingResult(testResult)
+      if (DEBUG) console.log('[recordTestResult] enqueued after retries exhausted')
       return
     }
-    if (DEBUG) console.log('[recordTestResult] ok', { id: (data as { id?: string } | null | undefined)?.id })
+    if (DEBUG) console.log('[recordTestResult] ok')
   } catch (error) {
     console.error('Failed to record test result:', error)
   }

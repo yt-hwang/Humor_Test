@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
 import ShareButtons from "../../src/components/ShareButtons";
 import SaveImageButton from "../../src/components/SaveImageButton";
 import Footer from "../../src/components/Footer";
-import { recordVisit } from "../../src/utils/analytics";
+import { recordVisit, flushPendingTestResults } from "../../src/utils/analytics";
 import { gagResults, calculateAxisScores, getTopCompatibleTypes, getCompatibilityLabel } from "../../src/data/results";
 import { gagResultsEn } from "../../src/data/results.en";
 import type { AxisScores, GagResult } from "../../src/data/results";
@@ -39,7 +39,10 @@ export default function ResultClient() {
   useEffect(() => {
     // 결과 페이지 방문 기록
     recordVisit('/result');
-    
+
+    // 이전에 insert 실패로 큐잉된 결과들을 재전송 시도 (best-effort)
+    void flushPendingTestResults();
+
     // 결과 페이지 공유 통계
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', 'view_item', {
