@@ -163,7 +163,7 @@ export default function StrengthsWeaknesses({
   const weaknesses = (customWeaknesses && customWeaknesses.length > 0) ? customWeaknesses : built.weaknesses;
 
   return (
-    <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/30">
+    <div className="bg-white rounded-2xl p-6 mb-6 border border-gray-100">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">

@@ -12,7 +12,7 @@ export default function HumorPhilosophy({ philosophy, categoryColor }: HumorPhil
   const { lang } = useLang();
 
   return (
-    <section className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl border border-white/20 p-6 mb-6">
+    <section className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 mb-6">
       <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
         <span>💭</span>
         {t("typeDetailHumorPhilosophy", lang)}

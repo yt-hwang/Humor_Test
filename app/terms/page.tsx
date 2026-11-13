@@ -9,12 +9,12 @@ export default function TermsPage() {
   const { lang } = useLang()
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 py-12 px-4">
+    <main className="min-h-screen bg-gradient-to-b from-yellow-50 to-pink-50 py-12 px-4">
       <div className="max-w-3xl mx-auto">
-        <div className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/20 p-8">
+        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
           {/* 헤더 */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent mb-2">
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">
               {t('termsTitle', lang)}
             </h1>
             <p className="text-gray-400 text-xs mt-2">{t('lastUpdated', lang)}</p>
@@ -133,7 +133,7 @@ export default function TermsPage() {
           <div className="mt-10 text-center">
             <Link
               href={`/?lang=${lang}`}
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-700 hover:from-blue-700 hover:to-purple-800 text-white rounded-xl px-6 py-3 font-medium shadow-lg transition-all duration-300"
+              className="inline-flex items-center gap-2 bg-blue-500 text-white rounded-xl px-6 py-3 font-medium shadow-lg"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />

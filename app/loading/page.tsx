@@ -18,11 +18,8 @@ export default function LoadingPage() {
   }, [router]);
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100">
-      <div className="bg-white/80 backdrop-blur-md rounded-3xl shadow-2xl border border-white/30 px-8 py-10 text-center">
-        <div className="flex items-center justify-center mb-4">
-          <div className="w-10 h-10 rounded-full border-4 border-purple-300 border-t-transparent animate-spin"></div>
-        </div>
+    <main className="min-h-screen flex items-center justify-center bg-gradient-to-b from-yellow-100 to-pink-100 p-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg px-6 py-10 text-center">
         <h2 className="text-xl font-bold text-gray-800 mb-1">{t('loading', lang)}</h2>
         <p className="text-sm text-gray-600">{t('loadingSub', lang)}</p>
       </div>

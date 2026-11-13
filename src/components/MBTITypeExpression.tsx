@@ -263,14 +263,14 @@ export default function MBTITypeExpression({ humorCode, categoryColor }: MBTITyp
 
   // Group gradient colors
   const groupGradients: Record<string, string> = {
-    purple: 'from-purple-500 to-violet-500',
-    green: 'from-green-500 to-emerald-500',
-    blue: 'from-blue-500 to-cyan-500',
-    yellow: 'from-yellow-500 to-orange-500'
+    purple: 'from-purple-500 to-purple-500',
+    green: 'from-green-500 to-green-500',
+    blue: 'from-blue-500 to-blue-500',
+    yellow: 'from-yellow-500 to-yellow-500'
   };
 
   return (
-    <section className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl border border-white/20 p-6 mb-6">
+    <section className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 mb-6">
       <h2 className="text-lg font-bold text-gray-800 mb-2 flex items-center gap-2">
         <span>🎭</span>
         {uiStrings.title[lang]}
@@ -301,9 +301,9 @@ export default function MBTITypeExpression({ humorCode, categoryColor }: MBTITyp
                     key={mbtiType}
                     onClick={() => openModal(mbtiType)}
                     className={`
-                      relative p-3 rounded-xl border-2 transition-all
-                      hover:scale-105 hover:shadow-md
-                      bg-gradient-to-br from-white to-gray-50
+                      relative p-3 rounded-xl border-2
+                      hover:shadow-md
+                      bg-white
                       ${compat === 'high' ? 'border-green-300 hover:border-green-400' : ''}
                       ${compat === 'medium' ? 'border-yellow-300 hover:border-yellow-400' : ''}
                       ${compat === 'low' ? 'border-red-300 hover:border-red-400' : ''}
@@ -333,7 +333,7 @@ export default function MBTITypeExpression({ humorCode, categoryColor }: MBTITyp
       {/* Modal Popup - Rendered via Portal to body */}
       {isModalOpen && selectedMBTI && typeof document !== 'undefined' && createPortal(
         <div
-          className={`fixed inset-0 z-[9999] flex items-center justify-center p-4 transition-colors duration-200 ${
+          className={`fixed inset-0 z-[9999] flex items-center justify-center p-4 ${
             isAnimating ? 'bg-black/60' : 'bg-black/0'
           }`}
           onClick={handleBackdropClick}
@@ -343,10 +343,10 @@ export default function MBTITypeExpression({ humorCode, categoryColor }: MBTITyp
           style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
         >
           <div
-            className={`w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden transform transition-all duration-200 max-h-[90vh] ${
+            className={`w-full max-w-lg bg-white rounded-2xl shadow-lg overflow-hidden transform max-h-[90vh] ${
               isAnimating
-                ? 'opacity-100 scale-100 translate-y-0'
-                : 'opacity-0 scale-95 translate-y-4'
+                ? 'opacity-100'
+                : 'opacity-0'
             }`}
           >
             {/* Modal Header with gradient background */}
@@ -354,7 +354,7 @@ export default function MBTITypeExpression({ humorCode, categoryColor }: MBTITyp
               {/* Close button (X) in top right */}
               <button
                 onClick={closeModal}
-                className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors text-white"
+                className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-white hover:bg-white text-white"
                 aria-label={uiStrings.close[lang]}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -374,7 +374,7 @@ export default function MBTITypeExpression({ humorCode, categoryColor }: MBTITyp
                   }
                 </p>
                 {overallCompat && (
-                  <span className="inline-block mt-2 px-3 py-1 rounded-full text-xs font-medium bg-white/20 backdrop-blur">
+                  <span className="inline-block mt-2 px-3 py-1 rounded-full text-xs font-medium bg-white">
                     {uiStrings[overallCompat][lang]} {lang === 'ko' ? '시너지' : 'synergy'}
                   </span>
                 )}
@@ -390,7 +390,7 @@ export default function MBTITypeExpression({ humorCode, categoryColor }: MBTITyp
                   // Fallback to dynamic generation if no pre-defined data
                   const fallback = generateCustomCoaching(insights, selectedMBTI, humorCode, lang);
                   return (
-                    <div className="bg-gradient-to-br from-gray-50 to-white rounded-xl p-4 border border-gray-100 mb-4">
+                    <div className="bg-gray-50 rounded-xl p-4 border border-gray-100 mb-4">
                       <p className="text-gray-700 leading-relaxed break-keep text-base">
                         {fallback.summary}
                       </p>
@@ -404,7 +404,7 @@ export default function MBTITypeExpression({ humorCode, categoryColor }: MBTITyp
                     <div className="space-y-3 mb-4">
                       {/* Strengths */}
                       {coaching.strengths.length > 0 && (
-                        <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-4 border border-green-100">
+                        <div className="bg-green-50 rounded-xl p-4 border border-green-100">
                           <h4 className="font-semibold text-green-700 mb-2 flex items-center gap-2 text-sm">
                             <span>✨</span>
                             {lang === 'ko' ? '이 조합의 강점' : 'Strengths'}
@@ -422,7 +422,7 @@ export default function MBTITypeExpression({ humorCode, categoryColor }: MBTITyp
 
                       {/* Watch Out */}
                       {coaching.watchOut.length > 0 && (
-                        <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl p-4 border border-amber-100">
+                        <div className="bg-amber-50 rounded-xl p-4 border border-amber-100">
                           <h4 className="font-semibold text-amber-700 mb-2 flex items-center gap-2 text-sm">
                             <span>⚠️</span>
                             {lang === 'ko' ? '주의할 점' : 'Watch Out'}
@@ -440,7 +440,7 @@ export default function MBTITypeExpression({ humorCode, categoryColor }: MBTITyp
 
                       {/* Coaching Tips */}
                       {coaching.coachingTips.length > 0 && (
-                        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-100">
+                        <div className="bg-blue-50 rounded-xl p-4 border border-blue-100">
                           <h4 className="font-semibold text-blue-700 mb-2 flex items-center gap-2 text-sm">
                             <span>💡</span>
                             {lang === 'ko' ? '코칭 포인트' : 'Coaching Tips'}
@@ -471,7 +471,7 @@ export default function MBTITypeExpression({ humorCode, categoryColor }: MBTITyp
                       key={type}
                       onClick={() => setSelectedMBTI(type)}
                       className={`
-                        px-2 py-1 text-xs rounded-md transition-colors
+                        px-2 py-1 text-xs rounded-md
                         ${type === selectedMBTI
                           ? `bg-gradient-to-r ${categoryColor} text-white`
                           : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -489,7 +489,7 @@ export default function MBTITypeExpression({ humorCode, categoryColor }: MBTITyp
             <div className="p-4 border-t border-gray-100 flex justify-end">
               <button
                 onClick={closeModal}
-                className="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-semibold transition-colors"
+                className="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-semibold"
               >
                 {uiStrings.close[lang]}
               </button>

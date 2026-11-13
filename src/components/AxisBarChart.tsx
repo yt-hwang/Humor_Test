@@ -32,7 +32,7 @@ const axisConfigs: Record<keyof AxisScores, AxisConfig> = {
     rightKorean: "즉흥적",
     leftEn: "Organized",
     rightEn: "Improvised",
-    color: "from-blue-400 to-indigo-400"
+    color: "from-blue-400 to-blue-400"
   },
   NB: {
     leftLabel: "Intuitive",
@@ -41,7 +41,7 @@ const axisConfigs: Record<keyof AxisScores, AxisConfig> = {
     rightKorean: "추상적",
     leftEn: "Intuitive",
     rightEn: "Abstract",
-    color: "from-purple-400 to-violet-400"
+    color: "from-purple-400 to-purple-400"
   },
   VP: {
     leftLabel: "Verbal",
@@ -50,7 +50,7 @@ const axisConfigs: Record<keyof AxisScores, AxisConfig> = {
     rightKorean: "비언어적",
     leftEn: "Verbal",
     rightEn: "Physical",
-    color: "from-yellow-400 to-orange-400"
+    color: "from-yellow-400 to-yellow-400"
   },
   BD: {
     leftLabel: "Bright",
@@ -59,7 +59,7 @@ const axisConfigs: Record<keyof AxisScores, AxisConfig> = {
     rightKorean: "어두운",
     leftEn: "Bright",
     rightEn: "Dark",
-    color: "from-red-400 to-pink-400"
+    color: "from-red-400 to-red-400"
   }
 };
 
@@ -85,7 +85,7 @@ const AxisBarChart: React.FC<AxisBarChartProps> = ({ scores, lang = "ko" }) => {
     scores.OI === 4 && scores.NB === 4 && scores.VP === 4 && scores.BD === 4;
 
   return (
-    <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/30">
+    <div className="bg-white rounded-2xl p-6 mb-6 border border-gray-100">
       <h3 className="text-lg font-semibold text-gray-800 mb-6 flex items-center justify-center gap-2">
         <span>📊</span>
         {t('chartTitle', lang)}
@@ -119,7 +119,7 @@ const AxisBarChart: React.FC<AxisBarChartProps> = ({ scores, lang = "ko" }) => {
 
               <>
                 <div
-                  className="absolute top-1/2 z-20 transition-all duration-1500 ease-out"
+                  className="absolute top-1/2 z-20"
                   style={{
                     left: positionLeft,
                     transform: 'translate(-50%, -50%)'
@@ -130,7 +130,7 @@ const AxisBarChart: React.FC<AxisBarChartProps> = ({ scores, lang = "ko" }) => {
                   </div>
                 </div>
                 <div
-                  className={`absolute z-10 px-2 py-0.5 rounded-md text-xs font-bold text-white bg-gradient-to-r ${config.color} shadow transition-all duration-1500 ease-out`}
+                  className={`absolute z-10 px-2 py-0.5 rounded-md text-xs font-bold text-white bg-gradient-to-r ${config.color} shadow`}
                   style={{
                     top: 'calc(100% + 4px)',
                     left: positionLeft,

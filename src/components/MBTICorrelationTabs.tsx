@@ -16,28 +16,28 @@ const dimensionInfo = {
     nameEn: "E/I",
     descKo: "표현 스타일",
     descEn: "Expression Style",
-    color: "from-orange-400 to-amber-400"
+    color: "from-orange-400 to-orange-400"
   },
   NS: {
     nameKo: "직관(N) / 감각(S)",
     nameEn: "N/S",
     descKo: "접근 방식",
     descEn: "Approach",
-    color: "from-green-400 to-emerald-400"
+    color: "from-green-400 to-green-400"
   },
   TF: {
     nameKo: "사고(T) / 감정(F)",
     nameEn: "T/F",
     descKo: "수용 및 회복",
     descEn: "Reception",
-    color: "from-blue-400 to-indigo-400"
+    color: "from-blue-400 to-blue-400"
   },
   JP: {
     nameKo: "판단(J) / 인식(P)",
     nameEn: "J/P",
     descKo: "상황 대처",
     descEn: "Handling",
-    color: "from-purple-400 to-violet-400"
+    color: "from-purple-400 to-purple-400"
   }
 };
 
@@ -52,7 +52,7 @@ export default function MBTICorrelationTabs({ correlations, categoryColor }: MBT
   }
 
   return (
-    <section className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl border border-white/20 p-6 mb-6">
+    <section className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 mb-6">
       <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
         <span>🧬</span>
         {t("typeDetailMBTICorrelations", lang)}
@@ -67,7 +67,7 @@ export default function MBTICorrelationTabs({ correlations, categoryColor }: MBT
             <button
               key={dim}
               onClick={() => setActiveTab(dim)}
-              className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all ${
+              className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium ${
                 isActive
                   ? `bg-gradient-to-r ${info.color} text-white shadow-md`
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -84,7 +84,7 @@ export default function MBTICorrelationTabs({ correlations, categoryColor }: MBT
       {activeCorrelation && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Letter A */}
-          <div className={`bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-5 border border-blue-200`}>
+          <div className={`bg-blue-50 rounded-2xl p-5 border border-blue-200`}>
             <div className="flex items-center gap-3 mb-4">
               <span className={`w-10 h-10 rounded-full bg-gradient-to-r ${dimensionInfo[activeTab].color} text-white flex items-center justify-center font-bold text-lg shadow`}>
                 {activeCorrelation.letterA.letter}
@@ -119,7 +119,7 @@ export default function MBTICorrelationTabs({ correlations, categoryColor }: MBT
           </div>
 
           {/* Letter B */}
-          <div className={`bg-gradient-to-br from-purple-50 to-violet-50 rounded-2xl p-5 border border-purple-200`}>
+          <div className={`bg-purple-50 rounded-2xl p-5 border border-purple-200`}>
             <div className="flex items-center gap-3 mb-4">
               <span className={`w-10 h-10 rounded-full bg-gradient-to-r ${dimensionInfo[activeTab].color} text-white flex items-center justify-center font-bold text-lg shadow`}>
                 {activeCorrelation.letterB.letter}

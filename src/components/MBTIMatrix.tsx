@@ -46,7 +46,7 @@ export default function MBTIMatrix({ typeCode, categoryColor }: MBTIMatrixProps)
   };
 
   return (
-    <section className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl border border-white/20 p-6 mb-6">
+    <section className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 mb-6">
       <h2 className="text-lg font-bold text-gray-800 mb-2 flex items-center gap-2">
         <span>📊</span>
         {t("typeDetailMBTIMatrix", lang)}
@@ -119,9 +119,9 @@ export default function MBTIMatrix({ typeCode, categoryColor }: MBTIMatrixProps)
                     <button
                       key={mbtiLetter}
                       onClick={() => setSelectedCell(cell)}
-                      className={`flex-1 h-12 ${getCompatibilityBgColor(cell.compatibility)} transition-colors cursor-pointer ${
-                        isHighlighted ? 'ring-2 ring-white/50' : ''
-                      } ${selectedCell?.humorLetter === humorLetter && selectedCell?.mbtiLetter === mbtiLetter ? 'ring-2 ring-blue-600' : ''}`}
+                      className={`flex-1 h-12 ${getCompatibilityBgColor(cell.compatibility)} cursor-pointer ${
+                        isHighlighted ? '' : ''
+                      } ${selectedCell?.humorLetter === humorLetter && selectedCell?.mbtiLetter === mbtiLetter ? '' : ''}`}
                       title={`${humorLetter} × ${mbtiLetter}`}
                     >
                       <span className="sr-only">{humorLetter} × {mbtiLetter}</span>
@@ -140,7 +140,7 @@ export default function MBTIMatrix({ typeCode, categoryColor }: MBTIMatrixProps)
 
       {/* Selected Cell Detail */}
       {selectedCell && (
-        <div className="mt-4 bg-gradient-to-br from-gray-50 to-white rounded-2xl p-4 border border-gray-200">
+        <div className="mt-4 bg-gray-50 rounded-2xl p-4 border border-gray-200">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
               <span className={`px-3 py-1 rounded-full text-sm font-bold ${getCompatibilityColor(selectedCell.compatibility)}`}>

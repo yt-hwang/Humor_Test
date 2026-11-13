@@ -13,7 +13,7 @@ const AXIS = [
     key: "OI",
     titleKo: "개그의 준비",
     titleEn: "Preparedness",
-    gradient: "from-blue-400 to-indigo-400",
+    gradient: "from-blue-400 to-blue-400",
     left: {
       code: "O",
       ko: "Organized (짜여진)",
@@ -55,7 +55,7 @@ const AXIS = [
     key: "NB",
     titleKo: "개그의 맥락",
     titleEn: "Context",
-    gradient: "from-purple-400 to-violet-400",
+    gradient: "from-purple-400 to-purple-400",
     left: {
       code: "N",
       ko: "Intuitive (직관적)",
@@ -93,7 +93,7 @@ const AXIS = [
     key: "VP",
     titleKo: "개그의 전달 방식",
     titleEn: "Delivery Mode",
-    gradient: "from-yellow-400 to-orange-400",
+    gradient: "from-yellow-400 to-yellow-400",
     left: {
       code: "V",
       ko: "Verbal (언어적)",
@@ -131,7 +131,7 @@ const AXIS = [
     key: "BD",
     titleKo: "개그의 주제",
     titleEn: "Theme",
-    gradient: "from-red-400 to-pink-400",
+    gradient: "from-red-400 to-red-400",
     left: {
       code: "B",
       ko: "Bright (밝음)",
@@ -175,16 +175,13 @@ export default function GuidePage() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 relative overflow-hidden p-4">
+    <main className="min-h-screen bg-gradient-to-b from-yellow-50 to-pink-50 relative overflow-hidden p-4">
       {/* Background decorations */}
-      <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full opacity-20 blur-xl animate-pulse" />
-      <div className="absolute bottom-10 right-10 w-40 h-40 bg-gradient-to-r from-pink-400 to-orange-400 rounded-full opacity-20 blur-xl animate-pulse delay-1000" />
-      <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full opacity-15 blur-lg animate-bounce" />
 
       <div className="relative z-10 max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
+          <div className="inline-flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
             <span>ℹ️</span>
             <span>{t('guideTitle', lang)}</span>
           </div>
@@ -195,7 +192,7 @@ export default function GuidePage() {
         {/* Axis cards */}
         <div className="space-y-6">
           {AXIS.map((axis) => (
-            <section key={axis.key} className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/20 p-6">
+            <section key={axis.key} className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <h2 className="text-xl font-bold text-gray-800">
@@ -207,7 +204,7 @@ export default function GuidePage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Left side */}
-                <div className="rounded-2xl border border-white/40 bg-white/60 p-4">
+                <div className="rounded-2xl border border-gray-100 bg-white p-4">
                   <div className={`inline-flex items-center gap-2 text-white text-xs font-semibold px-3 py-1 rounded-full bg-gradient-to-r ${axis.gradient} mb-3`}>
                     <span className="font-mono">{axis.left.code}</span>
                     <span>{lang === "en" ? axis.left.en : axis.left.ko}</span>
@@ -219,7 +216,7 @@ export default function GuidePage() {
                   </ul>
                 </div>
                 {/* Right side */}
-                <div className="rounded-2xl border border-white/40 bg-white/60 p-4">
+                <div className="rounded-2xl border border-gray-100 bg-white p-4">
                   <div className={`inline-flex items-center gap-2 text-white text-xs font-semibold px-3 py-1 rounded-full bg-gradient-to-r ${axis.gradient} mb-3`}>
                     <span className="font-mono">{axis.right.code}</span>
                     <span>{lang === "en" ? axis.right.en : axis.right.ko}</span>
@@ -239,12 +236,12 @@ export default function GuidePage() {
         <div className="text-center mt-10 flex items-center justify-center gap-3">
           <button
             onClick={() => router.back()}
-            className="inline-flex items-center gap-2 text-xs sm:text-sm text-white bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl px-4 py-2.5 shadow-sm hover:opacity-95 transition"
+            className="inline-flex items-center gap-2 text-xs sm:text-sm text-white bg-blue-500 rounded-xl px-4 py-2.5 shadow-sm hover:opacity-95"
           >
             {t('backToResult', lang)}
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
           </button>
-          <Link href="/types" className="inline-flex items-center gap-2 text-xs sm:text-sm text-gray-600 hover:text-gray-800 transition-colors bg-white/70 backdrop-blur-sm rounded-xl px-4 py-2.5 border border-white/30">
+          <Link href="/types" className="inline-flex items-center gap-2 text-xs sm:text-sm text-gray-600 hover:text-gray-800 bg-white rounded-xl px-4 py-2.5 border border-gray-100">
             {t('typesLink', lang)}
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
           </Link>

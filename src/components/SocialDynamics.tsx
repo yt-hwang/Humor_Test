@@ -21,7 +21,7 @@ export default function SocialDynamics({ dynamics, categoryColor }: SocialDynami
       icon: "👥",
       title: t("typeDetailInGroups", lang),
       content: dynamics.inGroups,
-      gradient: "from-blue-50 to-indigo-50",
+      gradient: "from-blue-50 to-blue-50",
       borderColor: "border-blue-200",
       iconBg: "bg-blue-100"
     },
@@ -30,7 +30,7 @@ export default function SocialDynamics({ dynamics, categoryColor }: SocialDynami
       icon: "💬",
       title: t("typeDetailOneOnOne", lang),
       content: dynamics.oneOnOne,
-      gradient: "from-purple-50 to-violet-50",
+      gradient: "from-purple-50 to-purple-50",
       borderColor: "border-purple-200",
       iconBg: "bg-purple-100"
     },
@@ -39,14 +39,14 @@ export default function SocialDynamics({ dynamics, categoryColor }: SocialDynami
       icon: "👀",
       title: t("typeDetailAsAudience", lang),
       content: dynamics.asAudience,
-      gradient: "from-pink-50 to-rose-50",
+      gradient: "from-pink-50 to-pink-50",
       borderColor: "border-pink-200",
       iconBg: "bg-pink-100"
     }
   ];
 
   return (
-    <section className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl border border-white/20 p-6 mb-6">
+    <section className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 mb-6">
       <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
         <span>🎭</span>
         {t("typeDetailSocialDynamics", lang)}

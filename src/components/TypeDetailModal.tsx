@@ -25,11 +25,11 @@ function getCategoryGradient(code: string): string {
   const pack = new Set(["ONVD", "ONPD", "INVD", "INPD"]);
   const concept = new Set(["OBVB", "OBVD", "OBPB", "OBPD"]);
   const unpredict = new Set(["IBVB", "IBVD", "IBPB", "IBPD"]);
-  if (mood.has(code)) return "from-yellow-400 to-orange-400";
-  if (pack.has(code)) return "from-red-400 to-pink-400";
-  if (concept.has(code)) return "from-blue-400 to-indigo-400";
-  if (unpredict.has(code)) return "from-purple-400 to-violet-400";
-  return "from-slate-400 to-gray-500";
+  if (mood.has(code)) return "from-yellow-400 to-yellow-400";
+  if (pack.has(code)) return "from-red-400 to-red-400";
+  if (concept.has(code)) return "from-blue-400 to-blue-400";
+  if (unpredict.has(code)) return "from-purple-400 to-purple-400";
+  return "from-slate-400 to-slate-400";
 }
 
 export default function TypeDetailModal({
@@ -53,7 +53,7 @@ export default function TypeDetailModal({
 
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-black/40" role="dialog" aria-modal="true">
-      <div className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
+      <div className="w-full max-w-2xl bg-white rounded-2xl shadow-lg overflow-hidden max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="p-4 border-b flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -65,7 +65,7 @@ export default function TypeDetailModal({
 
         <div className="p-4">
           {/* Summary */}
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-5 mb-4 border border-blue-100">
+          <div className="bg-blue-50 rounded-2xl p-5 mb-4 border border-blue-100">
             <p className="text-center text-gray-800 leading-relaxed font-medium text-base">
               {data.summary}
             </p>
@@ -93,7 +93,7 @@ export default function TypeDetailModal({
           )}
 
           {tab==='compat' && data.bestMatch && data.worstMatch && (
-            <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 mb-2 border border-white/30">
+            <div className="bg-white rounded-2xl p-6 mb-2 border border-gray-100">
               <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center justify-center gap-2">
                 <span>💕</span>
                 {t('compatTitle', lang)}

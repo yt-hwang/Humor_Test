@@ -441,7 +441,7 @@ export default function SaveImageButton({
 
   return (
     <button onClick={handleSave} disabled={saving}
-      className="flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 disabled:from-gray-400 disabled:to-gray-500 text-white text-sm font-medium transition-all duration-200 hover:scale-105 disabled:scale-100 aspect-square">
+      className="flex items-center justify-center w-14 h-14 rounded-2xl bg-emerald-500 text-white text-sm font-medium disabled: aspect-square">
       {saving ? (
         <svg className="w-6 h-6 animate-spin" fill="none" viewBox="0 0 24 24">
           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />

@@ -24,7 +24,7 @@ export default function Footer() {
           <span key={link.key} className="whitespace-nowrap">
             <Link
               href={`${link.href}?lang=${lang}`}
-              className="hover:text-gray-600 transition-colors"
+              className="hover:text-gray-600"
             >
               {t(link.key, lang)}
             </Link>

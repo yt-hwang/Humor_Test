@@ -16,10 +16,10 @@ import MBTITypeExpression from "../../../src/components/MBTITypeExpression";
 
 // 카테고리 정보
 const categories = {
-  NB: { nameKo: "분위기메이커형", nameEn: "Mood Makers", color: "from-yellow-400 to-orange-400", emoji: "🌟" },
-  ND: { nameKo: "팩폭형", nameEn: "Truth Bombers", color: "from-red-400 to-pink-400", emoji: "💣" },
-  OB: { nameKo: "컨셉형", nameEn: "Concept Creators", color: "from-blue-400 to-indigo-400", emoji: "🎨" },
-  IB: { nameKo: "예측불가형", nameEn: "Wildcards", color: "from-purple-400 to-violet-400", emoji: "🎲" },
+  NB: { nameKo: "분위기메이커형", nameEn: "Mood Makers", color: "from-yellow-400 to-yellow-400", emoji: "🌟" },
+  ND: { nameKo: "팩폭형", nameEn: "Truth Bombers", color: "from-red-400 to-red-400", emoji: "💣" },
+  OB: { nameKo: "컨셉형", nameEn: "Concept Creators", color: "from-blue-400 to-blue-400", emoji: "🎨" },
+  IB: { nameKo: "예측불가형", nameEn: "Wildcards", color: "from-purple-400 to-purple-400", emoji: "🎲" },
 };
 
 function getCategory(code: string) {
@@ -60,7 +60,7 @@ export default function TypeDetailPage() {
 
   if (!typeData) {
     return (
-      <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 p-4">
+      <main className="min-h-screen flex items-center justify-center bg-gradient-to-b from-yellow-50 to-pink-50 p-4">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-800 mb-4">
             {lang === "en" ? "Type not found" : "유형을 찾을 수 없습니다"}
@@ -77,10 +77,8 @@ export default function TypeDetailPage() {
   const codeChars = code.split("");
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 relative overflow-hidden p-4">
+    <main className="min-h-screen bg-gradient-to-b from-yellow-50 to-pink-50 relative overflow-hidden p-4">
       {/* Background decorations */}
-      <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full opacity-20 blur-xl animate-pulse" />
-      <div className="absolute bottom-10 right-10 w-40 h-40 bg-gradient-to-r from-pink-400 to-orange-400 rounded-full opacity-20 blur-xl animate-pulse delay-1000" />
 
       <div className="relative z-10 max-w-4xl mx-auto">
         {/* Header */}
@@ -102,7 +100,7 @@ export default function TypeDetailPage() {
         </div>
 
         {/* Code Breakdown */}
-        <section className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl border border-white/20 p-6 mb-6">
+        <section className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 mb-6">
           <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
             <span>🔤</span>
             {lang === "en" ? "What Your Code Means" : "코드의 의미"}
@@ -116,7 +114,7 @@ export default function TypeDetailPage() {
               else info = char === "B" ? axisInfo.Bright : axisInfo.Dark;
 
               return (
-                <div key={i} className="bg-gradient-to-br from-gray-50 to-white rounded-xl p-3 border border-gray-100 text-center">
+                <div key={i} className="bg-gray-50 rounded-xl p-3 border border-gray-100 text-center">
                   <div className={`inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r ${category.color} text-white font-mono font-bold text-lg mb-2`}>
                     {char}
                   </div>
@@ -133,7 +131,7 @@ export default function TypeDetailPage() {
         </section>
 
         {/* Summary */}
-        <section className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl border border-white/20 p-6 mb-6">
+        <section className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 mb-6">
           <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
             <span>📝</span>
             {lang === "en" ? "Overview" : "유형 요약"}
@@ -144,7 +142,7 @@ export default function TypeDetailPage() {
         </section>
 
         {/* Examples */}
-        <section className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl border border-white/20 p-6 mb-6">
+        <section className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 mb-6">
           <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
             <span>💡</span>
             {lang === "en" ? "Signature Moves" : "대표적인 스타일"}
@@ -162,14 +160,14 @@ export default function TypeDetailPage() {
         </section>
 
         {/* Strengths & Weaknesses */}
-        <section className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl border border-white/20 p-6 mb-6">
+        <section className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 mb-6">
           <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
             <span>⚖️</span>
             {lang === "en" ? "Strengths & Weaknesses" : "강점과 약점"}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Strengths */}
-            <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-4 border border-green-100">
+            <div className="bg-green-50 rounded-2xl p-4 border border-green-100">
               <h3 className="font-semibold text-green-700 mb-3 flex items-center gap-2">
                 <span>✅</span>
                 {lang === "en" ? "Strengths" : "강점"}
@@ -184,7 +182,7 @@ export default function TypeDetailPage() {
               </ul>
             </div>
             {/* Weaknesses */}
-            <div className="bg-gradient-to-br from-red-50 to-pink-50 rounded-2xl p-4 border border-red-100">
+            <div className="bg-red-50 rounded-2xl p-4 border border-red-100">
               <h3 className="font-semibold text-red-700 mb-3 flex items-center gap-2">
                 <span>⚠️</span>
                 {lang === "en" ? "Weaknesses" : "약점"}
@@ -220,7 +218,7 @@ export default function TypeDetailPage() {
         )}
 
         {/* Compatibility */}
-        <section className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl border border-white/20 p-6 mb-6">
+        <section className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 mb-6">
           <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
             <span>💕</span>
             {lang === "en" ? "Compatibility" : "유형 궁합"}
@@ -229,7 +227,7 @@ export default function TypeDetailPage() {
           {/* Best & Worst Match */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             {typeData.bestMatch && (
-              <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-4 border border-green-200">
+              <div className="bg-green-50 rounded-2xl p-4 border border-green-200">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-green-500 text-lg">✅</span>
                   <span className="font-semibold text-green-700">
@@ -244,7 +242,7 @@ export default function TypeDetailPage() {
               </div>
             )}
             {typeData.worstMatch && (
-              <div className="bg-gradient-to-br from-red-50 to-pink-50 rounded-2xl p-4 border border-red-200">
+              <div className="bg-red-50 rounded-2xl p-4 border border-red-200">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-red-500 text-lg">❌</span>
                   <span className="font-semibold text-red-700">
@@ -273,7 +271,7 @@ export default function TypeDetailPage() {
                 <Link
                   key={matchCode}
                   href={`/types/${matchCode}?lang=${lang}`}
-                  className="flex items-center gap-3 p-3 bg-white/60 rounded-xl border border-gray-100 hover:bg-white hover:shadow-md transition-all"
+                  className="flex items-center gap-3 p-3 bg-white rounded-xl border border-gray-100 hover:bg-white hover:shadow-md"
                 >
                   <span className="text-xl">{compat.emoji}</span>
                   <span className="font-mono font-bold text-indigo-600">{matchCode}</span>
@@ -291,21 +289,21 @@ export default function TypeDetailPage() {
         <div className="flex flex-wrap justify-center gap-3 mt-8">
           <button
             onClick={() => router.back()}
-            className="inline-flex items-center gap-2 bg-white/80 hover:bg-white text-gray-700 border border-gray-200 rounded-xl px-6 py-3 font-medium transition-colors"
+            className="inline-flex items-center gap-2 bg-white hover:bg-white text-gray-700 border border-gray-200 rounded-xl px-6 py-3 font-medium"
           >
             <span>←</span>
             {lang === "en" ? "Go Back" : "뒤로가기"}
           </button>
           <Link
             href={`/?lang=${lang}`}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-700 hover:from-blue-700 hover:to-purple-800 text-white rounded-xl px-6 py-3 font-medium shadow-lg transition-all"
+            className="inline-flex items-center gap-2 bg-blue-500 text-white rounded-xl px-6 py-3 font-medium shadow-lg"
           >
             <span>🎯</span>
             {lang === "en" ? "Take the Test" : "테스트 하러가기"}
           </Link>
           <Link
             href={`/types?lang=${lang}`}
-            className="inline-flex items-center gap-2 bg-white/80 hover:bg-white text-gray-700 border border-gray-200 rounded-xl px-6 py-3 font-medium transition-colors"
+            className="inline-flex items-center gap-2 bg-white hover:bg-white text-gray-700 border border-gray-200 rounded-xl px-6 py-3 font-medium"
           >
             <span>🎭</span>
             {lang === "en" ? "All Types" : "전체 유형 보기"}

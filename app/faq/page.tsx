@@ -91,15 +91,13 @@ export default function FAQPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 relative overflow-hidden p-4">
+    <main className="min-h-screen bg-gradient-to-b from-yellow-50 to-pink-50 relative overflow-hidden p-4">
       {/* Background decorations */}
-      <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full opacity-20 blur-xl animate-pulse" />
-      <div className="absolute bottom-10 right-10 w-40 h-40 bg-gradient-to-r from-pink-400 to-orange-400 rounded-full opacity-20 blur-xl animate-pulse delay-1000" />
 
       <div className="relative z-10 max-w-3xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
+          <div className="inline-flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
             <span>❓</span>
             <span>FAQ</span>
           </div>
@@ -118,17 +116,17 @@ export default function FAQPage() {
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg border border-white/20 overflow-hidden"
+              className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden"
             >
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full text-left p-5 flex items-center justify-between gap-4 hover:bg-white/90 transition-colors"
+                className="w-full text-left p-5 flex items-center justify-between gap-4 hover:bg-white"
               >
                 <span className="font-semibold text-gray-800 break-keep">
                   {lang === "en" ? faq.questionEn : faq.questionKo}
                 </span>
                 <svg
-                  className={`w-5 h-5 text-gray-500 flex-shrink-0 transition-transform ${
+                  className={`w-5 h-5 text-gray-500 flex-shrink-0 ${
                     openIndex === index ? "rotate-180" : ""
                   }`}
                   fill="none"
@@ -155,7 +153,7 @@ export default function FAQPage() {
         </div>
 
         {/* Still have questions */}
-        <div className="mt-8 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 border border-blue-100 text-center">
+        <div className="mt-8 bg-blue-50 rounded-2xl p-6 border border-blue-100 text-center">
           <h2 className="text-lg font-semibold text-gray-800 mb-2 break-keep">
             {lang === "en" ? "Still have questions?" : "더 궁금한 게 있으신가요?"}
           </h2>
@@ -166,7 +164,7 @@ export default function FAQPage() {
           </p>
           <Link
             href={`/theory?lang=${lang}`}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-700 hover:from-blue-700 hover:to-purple-800 text-white rounded-xl px-6 py-3 font-medium shadow-lg transition-all"
+            className="inline-flex items-center gap-2 bg-blue-500 text-white rounded-xl px-6 py-3 font-medium shadow-lg"
           >
             <span>📚</span>
             {lang === "en" ? "Read the Theory" : "이론 알아보기"}
@@ -177,21 +175,21 @@ export default function FAQPage() {
         <div className="flex flex-wrap justify-center gap-3 mt-8">
           <button
             onClick={() => router.back()}
-            className="inline-flex items-center gap-2 bg-white/80 hover:bg-white text-gray-700 border border-gray-200 rounded-xl px-6 py-3 font-medium transition-colors"
+            className="inline-flex items-center gap-2 bg-white hover:bg-white text-gray-700 border border-gray-200 rounded-xl px-6 py-3 font-medium"
           >
             <span>←</span>
             {lang === "en" ? "Go Back" : "뒤로가기"}
           </button>
           <Link
             href={`/?lang=${lang}`}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-700 hover:from-blue-700 hover:to-purple-800 text-white rounded-xl px-6 py-3 font-medium shadow-lg transition-all"
+            className="inline-flex items-center gap-2 bg-blue-500 text-white rounded-xl px-6 py-3 font-medium shadow-lg"
           >
             <span>🎯</span>
             {lang === "en" ? "Take the Test" : "테스트 하러가기"}
           </Link>
           <Link
             href={`/types?lang=${lang}`}
-            className="inline-flex items-center gap-2 bg-white/80 hover:bg-white text-gray-700 border border-gray-200 rounded-xl px-6 py-3 font-medium transition-colors"
+            className="inline-flex items-center gap-2 bg-white hover:bg-white text-gray-700 border border-gray-200 rounded-xl px-6 py-3 font-medium"
           >
             <span>🎭</span>
             {lang === "en" ? "All Types" : "전체 유형 보기"}

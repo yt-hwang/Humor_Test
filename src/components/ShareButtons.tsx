@@ -110,7 +110,7 @@ export default function ShareButtons({ data }: ShareButtonsProps) {
   };
 
   const getButtonStyle = (platform: string) => {
-    const baseStyle = "flex items-center justify-center w-14 h-14 rounded-2xl text-sm font-medium transition-all duration-300 transform hover:scale-105 aspect-square";
+    const baseStyle = "flex items-center justify-center w-14 h-14 rounded-2xl text-sm font-medium transform aspect-square";
     
     if (isLoading === platform) {
       return `${baseStyle} bg-blue-100 text-blue-700 cursor-not-allowed`;
