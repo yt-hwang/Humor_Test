@@ -41,7 +41,8 @@ function ResultContent() {
     setIsSubmitting(true)
     const result = calculateResult(finalAnswers);
 
-    await recordTestResult(
+    // 기록은 백그라운드로 보낸다. 저장소가 느리거나 죽어 있어도 결과 화면 이동을 막지 않음.
+    void recordTestResult(
       result.code,
       result.nickname,
       result.summary,

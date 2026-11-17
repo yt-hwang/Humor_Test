@@ -75,6 +75,19 @@ function sleep(ms: number): Promise<void> {
   return new Promise((r) => setTimeout(r, ms))
 }
 
+const INSERT_TIMEOUT_MS = 5000
+
+// 응답 없는 요청이 영원히 대기하지 않도록 시간 제한
+function withTimeout<T>(p: Promise<T>, ms: number): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error(`timeout after ${ms}ms`)), ms)
+    p.then(
+      (v) => { clearTimeout(timer); resolve(v) },
+      (e) => { clearTimeout(timer); reject(e) }
+    )
+  })
+}
+
 function loadPendingQueue(): TestResult[] {
   if (typeof window === 'undefined') return []
   try {
@@ -124,7 +137,7 @@ async function insertWithRetry(
 ): Promise<boolean> {
   for (let i = 0; i < INSERT_RETRY_ATTEMPTS; i++) {
     try {
-      await insertFn(record)
+      await withTimeout(insertFn(record), INSERT_TIMEOUT_MS)
       return true
     } catch (e) {
       if (i === INSERT_RETRY_ATTEMPTS - 1) {
